@@ -3,219 +3,272 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Truckee Snowbotics — FTC robotics team from Truckee, CA." />
-
-  <title>Truckee Snowbotics</title>
+  <meta name="description" content="Truckee Snowbotics — FTC Team #32587. Student robotics team from Tahoe-Truckee High School, Truckee, CA." />
+  <title>Truckee Snowbotics · FTC #32587</title>
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
 
-  <div class="noise" aria-hidden="true"></div>
-  <canvas id="grid-canvas" aria-hidden="true"></canvas>
-
-  <!-- Header -->
-  <header class="site-header">
+  <!-- ── HEADER ─────────────────────────────── -->
+  <header class="site-header" id="top">
     <div class="header-inner">
-      <a href="#" class="logo" aria-label="Truckee Snowbotics home">
-        <span class="logo-slash">//</span>snowbotics
+
+      <a href="#" class="header-brand">
+        <img src="images/logo.svg" alt="" width="34" height="34" />
+        <span>Truckee Snowbotics</span>
       </a>
-      <nav class="nav" aria-label="Primary">
-        <a href="#about">about</a>
-        <a href="#season">season</a>
-        <a href="#contact">contact</a>
+
+      <nav class="nav" id="main-nav">
+        <a href="#about">About</a>
+        <a href="#team">Team</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#sponsors">Sponsors</a>
       </nav>
-      <div class="header-status">
-        <span class="status-dot"></span>
-        <span>ftc · truckee, ca</span>
+
+      <div class="header-actions">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="btn-icon" aria-label="Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://github.com/NoisyDream18" target="_blank" rel="noopener" class="btn-icon" aria-label="GitHub">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+        </a>
+        <a href="#" class="btn-primary">Join</a>
+        <a href="#contact" class="btn-outline">Contact</a>
       </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
     </div>
   </header>
 
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="#about">About</a>
+    <a href="#team">Team</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#sponsors">Sponsors</a>
+    <a href="#contact">Contact</a>
+    <div class="mobile-nav-actions">
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://github.com/NoisyDream18" target="_blank" rel="noopener">GitHub</a>
+      <a href="#">Join the Team</a>
+    </div>
+  </div>
+
   <main>
 
-    <!-- ── HERO ─────────────────────────────── -->
+    <!-- ── INTRO ──────────────────────────────── -->
     <section class="hero" id="about">
-      <div class="hero-content">
+      <div class="hero-inner">
 
-        <div class="hero-eyebrow">
-          <span class="eyebrow-line"></span>
-          <span>FIRST Tech Challenge</span>
-        </div>
-
-        <h1 class="hero-name">
-          <span class="name-first">Truckee</span>
-          <span class="name-last">Snowbotics</span>
-        </h1>
-
-        <p class="hero-role">
-          FTC Robotics · Tahoe-Truckee High School
-        </p>
-
-        <p class="hero-bio">
-          A student-run FIRST Tech Challenge team based in Truckee, CA.
-          We design, build, and program competitive robots from the ground up —
-          mechanical, electrical, and software, all in-house.
-        </p>
-
-        <div class="hero-tags">
-          <span>java</span>
-          <span>ftc sdk</span>
-          <span>cad</span>
-          <span>embedded systems</span>
-          <span>3d printing</span>
-          <span>machining</span>
-        </div>
-
-        <div class="hero-actions">
-          <a href="#season" class="btn-primary">this season</a>
-          <a href="https://github.com/NoisyDream18" target="_blank" rel="noopener" class="btn-ghost">
-            github
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-              <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </a>
-        </div>
-
-      </div>
-
-      <div class="hero-stats">
-        <div class="stat-card">
-          <span class="stat-num">2024</span>
-          <span class="stat-label">founded</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-num">FTC</span>
-          <span class="stat-label">competition</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-num">6</span>
-          <span class="stat-label">team members</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-num">CA</span>
-          <span class="stat-label">truckee, ca</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SEASON ──────────────────────────── -->
-    <section class="section" id="season">
-      <header class="section-header">
-        <div class="section-label">
-          <span class="sl-num">01</span>
-          <span class="sl-line"></span>
-          2024–25 season
-        </div>
-      </header>
-
-      <div class="project-grid">
-
-        <article class="project-card project-card--featured">
-          <div class="pc-top">
-            <span class="pc-type">into the deep</span>
-            <span class="pc-year">2024–25</span>
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            FTC Team #32587
           </div>
-          <h3 class="pc-title">Current Robot</h3>
-          <p class="pc-desc">
-            Our competition robot for the <em>Into The Deep</em> season. Built around a
-            four-wheel drive chassis with a custom arm and claw for collecting and placing
-            samples. Autonomous routines written in Java using the FTC SDK.
+          <h1 class="hero-title">Truckee<br>Snowbotics</h1>
+          <p class="hero-location">Tahoe-Truckee High School · Truckee, CA</p>
+          <p class="hero-body">
+            A student-run FIRST Tech Challenge robotics team. We design, build, and program
+            competitive robots entirely in-house — mechanical, electrical, and software.
+            Competing in the Northern California FTC region.
           </p>
-          <ul class="pc-stack">
-            <li>Java</li><li>FTC SDK</li><li>REV Hardware</li><li>Fusion 360</li><li>3D Print</li>
-          </ul>
-          <div class="pc-links">
-            <a href="https://github.com/NoisyDream18" class="pcl" target="_blank" rel="noopener">code →</a>
+          <div class="hero-cta">
+            <a href="#team" class="btn-primary">Meet the Team</a>
+            <a href="#" class="btn-outline">Join Us</a>
           </div>
-        </article>
+        </div>
 
-        <article class="project-card">
-          <div class="pc-top">
-            <span class="pc-type">software</span>
+        <div class="hero-visual">
+          <img src="images/logo.svg" alt="Truckee Snowbotics logo" class="hero-logo-img" />
+          <div class="hero-stats">
+            <div class="hstat">
+              <span class="hstat-val">#32587</span>
+              <span class="hstat-key">Team Number</span>
+            </div>
+            <div class="hstat">
+              <span class="hstat-val">2024</span>
+              <span class="hstat-key">Founded</span>
+            </div>
+            <div class="hstat">
+              <span class="hstat-val">FTC</span>
+              <span class="hstat-key">League</span>
+            </div>
+            <div class="hstat">
+              <span class="hstat-val">NorCal</span>
+              <span class="hstat-key">Region</span>
+            </div>
           </div>
-          <h3 class="pc-title">Autonomous</h3>
-          <p class="pc-desc">
-            30-second autonomous period routines using encoders and IMU-based heading
-            correction. Multiple paths for different starting positions.
-          </p>
-          <ul class="pc-stack">
-            <li>Java</li><li>Encoders</li><li>IMU</li>
-          </ul>
-        </article>
-
-        <article class="project-card">
-          <div class="pc-top">
-            <span class="pc-type">hardware</span>
-          </div>
-          <h3 class="pc-title">Mechanism Design</h3>
-          <p class="pc-desc">
-            Arm and claw assembly designed in Fusion 360 and printed in-house.
-            Iterated through multiple prototypes to hit weight and reach targets.
-          </p>
-          <ul class="pc-stack">
-            <li>Fusion 360</li><li>PLA/PETG</li><li>Servo</li>
-          </ul>
-        </article>
-
-        <article class="project-card">
-          <div class="pc-top">
-            <span class="pc-type">team</span>
-          </div>
-          <h3 class="pc-title">Engineering Notebook</h3>
-          <p class="pc-desc">
-            Full documentation of our design process, iterations, testing data,
-            and lessons learned — submitted for judged awards at competitions.
-          </p>
-          <ul class="pc-stack">
-            <li>Design Process</li><li>Testing</li><li>Iteration</li>
-          </ul>
-        </article>
+        </div>
 
       </div>
     </section>
 
-    <!-- ── CONTACT ───────────────────────────── -->
+    <!-- ── TEAM ───────────────────────────────── -->
+    <section class="section section--alt" id="team">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2>Our Team</h2>
+          <p>The students behind Snowbotics.</p>
+        </div>
+        <div class="team-grid">
+
+          <div class="member-card">
+            <div class="member-avatar">JW</div>
+            <div class="member-info">
+              <span class="member-name">Jack West</span>
+              <span class="member-role">President · Programming</span>
+            </div>
+          </div>
+
+          <div class="member-card member-card--empty">
+            <div class="member-avatar member-avatar--empty">?</div>
+            <div class="member-info">
+              <span class="member-name">Your Name Here</span>
+              <span class="member-role">Join the team →</span>
+            </div>
+          </div>
+
+          <div class="member-card member-card--empty">
+            <div class="member-avatar member-avatar--empty">?</div>
+            <div class="member-info">
+              <span class="member-name">Your Name Here</span>
+              <span class="member-role">Join the team →</span>
+            </div>
+          </div>
+
+          <div class="member-card member-card--empty">
+            <div class="member-avatar member-avatar--empty">?</div>
+            <div class="member-info">
+              <span class="member-name">Your Name Here</span>
+              <span class="member-role">Join the team →</span>
+            </div>
+          </div>
+
+          <div class="member-card member-card--empty">
+            <div class="member-avatar member-avatar--empty">?</div>
+            <div class="member-info">
+              <span class="member-name">Your Name Here</span>
+              <span class="member-role">Join the team →</span>
+            </div>
+          </div>
+
+          <div class="member-card member-card--empty">
+            <div class="member-avatar member-avatar--empty">?</div>
+            <div class="member-info">
+              <span class="member-name">Your Name Here</span>
+              <span class="member-role">Join the team →</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── GALLERY ────────────────────────────── -->
+    <section class="section" id="gallery">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2>Gallery</h2>
+          <p>Photos from the build floor and competitions.</p>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item"><span>Photo coming soon</span></div>
+          <div class="gallery-item"><span>Photo coming soon</span></div>
+          <div class="gallery-item"><span>Photo coming soon</span></div>
+          <div class="gallery-item"><span>Photo coming soon</span></div>
+          <div class="gallery-item"><span>Photo coming soon</span></div>
+          <div class="gallery-item"><span>Photo coming soon</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SPONSORS ───────────────────────────── -->
+    <section class="section section--alt" id="sponsors">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2>Sponsors</h2>
+          <p>We're grateful for the support that makes Snowbotics possible.</p>
+        </div>
+        <div class="sponsor-grid">
+          <div class="sponsor-item sponsor-item--cta">
+            <p>Become a Sponsor</p>
+            <span>Help fund a student robotics team. Reach out to learn about sponsorship opportunities.</span>
+            <a href="#contact" class="btn-primary">Get in Touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ────────────────────────────── -->
     <section class="section" id="contact">
-      <header class="section-header">
-        <div class="section-label">
-          <span class="sl-num">02</span>
-          <span class="sl-line"></span>
-          contact
+      <div class="section-inner section-inner--narrow">
+        <div class="section-header">
+          <h2>Contact</h2>
+          <p>Questions, sponsorship inquiries, or want to get involved?</p>
         </div>
-      </header>
-
-      <div class="contact-layout">
-        <div class="contact-left">
-          <p class="contact-heading">get in touch</p>
-          <p class="contact-body">
-            Questions about the team, sponsorship, or just want to connect?
-            Reach out — we'd love to hear from you.
-          </p>
-        </div>
-        <div class="contact-right">
-          <a href="mailto:you@example.com" class="contact-email">
-            you@example.com
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M2 14L14 2M14 2H6M14 2V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </a>
-          <div class="contact-socials">
-            <a href="https://github.com/NoisyDream18" target="_blank" rel="noopener">
-              <span>github</span>
-              <span class="cs-handle">@NoisyDream18</span>
-            </a>
-          </div>
+        <!-- Contact info will go here -->
+        <div class="contact-placeholder">
+          <p>Contact information coming soon.</p>
         </div>
       </div>
     </section>
 
   </main>
 
+  <!-- ── FOOTER ────────────────────────────────── -->
   <footer class="site-footer">
-    <span>© 2025 Truckee Snowbotics</span>
-    <span class="footer-mid">ftc · tahoe-truckee high school</span>
-    <a href="https://github.com/NoisyDream18/NoisyDream18.github.io" target="_blank" rel="noopener" class="footer-src">source</a>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <img src="images/logo.svg" alt="" width="32" height="32" />
+        <div>
+          <span class="footer-name">Truckee Snowbotics</span>
+          <span class="footer-sub">FTC Team #32587 · Truckee, CA</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav">
+        <a href="#about">About</a>
+        <a href="#team">Team</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#sponsors">Sponsors</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="footer-actions">
+        <a href="https://instagram.com" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+          Instagram
+        </a>
+        <a href="https://github.com/NoisyDream18" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="#">Join</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Truckee Snowbotics · FTC #32587</span>
+      <a href="https://github.com/NoisyDream18/NoisyDream18.github.io" target="_blank" rel="noopener">source</a>
+    </div>
   </footer>
 
   <script src="assets/js/main.js"></script>
