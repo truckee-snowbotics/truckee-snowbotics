@@ -1,0 +1,33 @@
+[
+  {
+    "id": "eden-sacks",
+    "initials": "ES",
+    "name": "Eden Sacks",
+    "role": "President",
+    "photo": ""
+  },
+  {
+    "id": "jack-west",
+    "initials": "JW",
+    "name": "Jack West",
+    "role": "Software & Electrical Lead"
+  },
+  {
+    "id": "bach-lee",
+    "initials": "BL",
+    "name": "Bach Lee",
+    "role": "Hardware & Logistics Lead"
+  },
+  {
+    "id": "eduardo-sosa",
+    "initials": "ES",
+    "name": "Eduardo Sosa",
+    "role": "Strategy & Control"
+  },
+  {
+    "id": "maura-hoff",
+    "initials": "MH",
+    "name": "Maura Hoff",
+    "role": "Faculty Advisor"
+  }
+]
