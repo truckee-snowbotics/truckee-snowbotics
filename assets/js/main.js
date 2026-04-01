@@ -1,6 +1,36 @@
 /* main.js — Truckee Snowbotics */
 'use strict';
 
+const LINK_TARGETS = {
+  instagram: 'https://www.instagram.com/truckeesnowbotics/',
+  githubRepo: 'https://github.com/NoisyDream18/FTC-Truckee-Robotics',
+  github: 'https://github.com/NoisyDream18',
+  about: '#about',
+  team: '#team',
+  gallery: '#gallery',
+  sponsors: '#sponsors',
+  contact: '#contact',
+  join: 'https://forms.gle/21LAVqmfFErDXKMv6',
+  sponsorshipForm: '#',
+  formAction: 'https://formspree.io/f/{your-form-id}'
+};
+
+function applyLinkTargets() {
+  document.querySelectorAll('[data-link-key]').forEach(el => {
+    const key = el.dataset.linkKey;
+    if (!key || !(key in LINK_TARGETS)) return;
+    el.href = LINK_TARGETS[key];
+  });
+
+  document.querySelectorAll('[data-form-action]').forEach(el => {
+    const key = el.dataset.formAction;
+    if (!key || !(key in LINK_TARGETS)) return;
+    el.action = LINK_TARGETS[key];
+  });
+}
+
+applyLinkTargets();
+
 // ── Scroll reveal ─────────────────────────────
 (function () {
   const targets = document.querySelectorAll('.section, .card, .about-stats, .about-text');
@@ -123,17 +153,19 @@ function escapeHTML(value) {
 
       const cards = items.map(item => {
         const image = item.src && item.src.trim();
-        const alt = item.alt || item.title || 'Gallery image';
         const src = item.src || '';
+        const caption = item.description && item.description.trim() ? item.description.trim() : 'No caption';
+        const alt = caption || 'Gallery image';
 
         return `
-          <div class="gallery-item" data-src="${escapeHTML(src)}" data-alt="${escapeHTML(alt)}">
-            ${image ? `<img src="${escapeHTML(src)}" alt="${escapeHTML(alt)}" />` : `<span>${escapeHTML(item.title || 'Photo coming soon')}</span>`}
+          <div class="gallery-item" data-src="${escapeHTML(src)}" data-alt="${escapeHTML(alt)}" data-caption="${escapeHTML(caption)}">
+            ${image ? `<img src="${escapeHTML(src)}" alt="${escapeHTML(alt)}" />` : `<span>${escapeHTML(caption)}</span>`}
+            <div class="gallery-caption">${escapeHTML(caption)}</div>
           </div>
         `;
       }).join('');
 
-      track.innerHTML = cards + cards;
+      track.innerHTML = cards;
       attachGalleryModal();
     })
     .catch(() => {
@@ -142,18 +174,18 @@ function escapeHTML(value) {
   function attachGalleryModal() {
     const modal = document.querySelector('.gallery-modal');
     const modalImage = document.querySelector('.gallery-modal-image');
-    const modalTitle = document.querySelector('.gallery-modal-title');
-    const modalDescription = document.querySelector('.gallery-modal-description');
+    const modalCaption = document.querySelector('.gallery-modal-caption');
     const closeButton = document.querySelector('.gallery-modal-close');
     const backdrop = document.querySelector('.gallery-modal-backdrop');
-
     if (!modal || !modalImage || !closeButton || !backdrop) return;
 
     function openModal(item) {
       const src = item.getAttribute('data-src');
       const alt = item.getAttribute('data-alt');
+      const caption = item.getAttribute('data-caption') || '';
 
       modalImage.innerHTML = src ? `<img src="${escapeHTML(src)}" alt="${escapeHTML(alt)}" />` : '';
+      if (modalCaption) modalCaption.textContent = caption;
       modal.classList.remove('hidden');
       modal.setAttribute('aria-hidden', 'false');
     }
@@ -162,6 +194,7 @@ function escapeHTML(value) {
       modal.classList.add('hidden');
       modal.setAttribute('aria-hidden', 'true');
       modalImage.innerHTML = '';
+      if (modalCaption) modalCaption.textContent = '';
     }
 
     const track = document.querySelector('.gallery-track');

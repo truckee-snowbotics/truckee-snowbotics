@@ -13,9 +13,9 @@
     "role": "Software & Electrical Lead"
   },
   {
-    "id": "bach-lee",
+    "id": "bach-le",
     "initials": "BL",
-    "name": "Bach Lee",
+    "name": "Bach Le",
     "role": "Hardware & Logistics Lead"
   },
   {
@@ -25,9 +25,27 @@
     "role": "Strategy & Control"
   },
   {
+    "id": "jonathan-bohnet",
+    "initials": "JB",
+    "name": "Jonathan Bohnet",
+    "role": "Design & Outreach"
+  },
+  {
+    "id": "corbin-hoff",
+    "initials": "CH",
+    "name": "Corbin Hoff",
+    "role": "Driver & Community"
+  },
+  {
     "id": "maura-hoff",
     "initials": "MH",
     "name": "Maura Hoff",
+    "role": "Faculty Advisor"
+  },
+  {
+    "id": "izzak-eberst",
+    "initials": "IE",
+    "name": "Izzak Eberst",
     "role": "Faculty Advisor"
   }
 ]

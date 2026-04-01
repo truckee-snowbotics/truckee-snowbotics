@@ -6,21 +6,5 @@
     "website": "https://www.drwestortho.com/",
     "logo": "images/logo.svg",
     "level": "Platinum"
-  },
-  {
-    "id": "summit-hardware",
-    "name": "Summit Hardware",
-    "description": "Helping Snowbotics with parts and fabrication resources.",
-    "website": "https://summithardware.example",
-    "logo": "images/logo.svg",
-    "level": "Gold"
-  },
-  {
-    "id": "truckee-boosters",
-    "name": "Truckee High Boosters",
-    "description": "Local community support for team travel and event registration.",
-    "website": "https://truckeehighboosters.example",
-    "logo": "images/logo.svg",
-    "level": "Silver"
   }
 ]

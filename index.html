@@ -20,27 +20,27 @@
       </a>
 
       <nav class="nav" id="main-nav">
-        <a href="#about">About</a>
-        <a href="#team">Team</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#sponsors">Sponsors</a>
+        <a href="#about" data-link-key="about">About</a>
+        <a href="#team" data-link-key="team">Team</a>
+        <a href="#gallery" data-link-key="gallery">Gallery</a>
+        <a href="#sponsors" data-link-key="sponsors">Sponsors</a>
       </nav>
 
       <div class="header-actions">
-        <a href="https://www.instagram.com/truckeesnowbotics/" target="_blank" rel="noopener" class="btn-icon" aria-label="Instagram">
+        <a href="https://www.instagram.com/truckeesnowbotics/" data-link-key="instagram" target="_blank" rel="noopener" class="btn-icon" aria-label="Instagram">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="2" width="20" height="20" rx="5"/>
             <circle cx="12" cy="12" r="5"/>
             <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
           </svg>
         </a>
-        <a href="https://github.com/NoisyDream18/FTC-Truckee-Robotics" target="_blank" rel="noopener" class="btn-icon" aria-label="GitHub">
+        <a href="https://github.com/NoisyDream18/FTC-Truckee-Robotics" data-link-key="githubRepo" target="_blank" rel="noopener" class="btn-icon" aria-label="GitHub">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
           </svg>
         </a>
-        <a href="#" class="btn-primary">Join</a>
-        <a href="#contact" class="btn-outline">Contact</a>
+        <a href="#" data-link-key="join" class="btn-primary">Join</a>
+        <a href="#contact" data-link-key="contact" class="btn-outline">Contact</a>
       </div>
 
       <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -58,9 +58,9 @@
     <a href="#sponsors">Sponsors</a>
     <a href="#contact">Contact</a>
     <div class="mobile-nav-actions">
-      <a href="https://www.instagram.com/truckeesnowbotics/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://github.com/NoisyDream18" target="_blank" rel="noopener">GitHub</a>
-      <a href="#">Join</a>
+      <a href="https://www.instagram.com/truckeesnowbotics/" data-link-key="instagram" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://github.com/NoisyDream18" data-link-key="github" target="_blank" rel="noopener">GitHub</a>
+      <a href="#" data-link-key="join">Join</a>
     </div>
   </div>
 
@@ -83,8 +83,8 @@
             Competing in the Northern California FTC region.
           </p>
           <div class="hero-cta">
-            <a href="#team" class="btn-primary">Our Team</a>
-            <a href="#" class="btn-outline">Join Us</a>
+            <a href="#team" data-link-key="team" class="btn-primary">Our Team</a>
+            <a href="#" data-link-key="join" class="btn-outline">Join Us</a>
           </div>
         </div>
 
@@ -182,7 +182,7 @@
             <h2>Gallery</h2>
             <p>Photos from the build floor and competitions.</p>
           </div>
-          <a href="#" class="btn-outline gallery-all-btn">All photos</a>
+          <a href="https://drive.google.com/drive/folders/16DrcTytSWEzsAx5qYdNiO5U8gSMufgd1?usp=sharing" class="btn-outline gallery-all-btn">All photos</a>
         </div>
         <div class="gallery-wrapper">
           <div class="gallery-track"></div>
@@ -192,6 +192,9 @@
           <div class="gallery-modal-panel">
             <button type="button" class="gallery-modal-close" aria-label="Close">×</button>
             <div class="gallery-modal-image"></div>
+            <div class="gallery-modal-copy">
+              <p class="gallery-modal-caption"></p>
+            </div>
           </div>
         </div>
       </div>
@@ -208,7 +211,7 @@
         <div class="sponsor-item sponsor-item--cta sponsor-cta">
           <p>Become a Sponsor</p>
           <span>Help fund a student robotics team. Reach out to learn about sponsorship opportunities.</span>
-          <a href="#contact" class="btn-primary">Get in Touch</a>
+          <a href="#contact" data-link-key="contact" class="btn-primary">Get in Touch</a>
         </div>
       </div>
     </section>
@@ -222,7 +225,7 @@
         </div>
         <!-- Contact form -->
         <div class="contact-placeholder">
-          <form action="https://formspree.io/f/{your-form-id}" method="POST" class="contact-form">
+          <form action="https://formspree.io/f/{your-form-id}" data-form-action="formAction" method="POST" class="contact-form">
             <label>
               <span>Your email</span>
               <input type="email" name="email" placeholder="you@example.com" required>
@@ -240,8 +243,8 @@
           </form>
         </div>
         <div class="contact-actions">
-          <a href="#" class="btn-primary">Join Truckee Snowbotics</a>
-          <a href="#" class="btn-outline">Sponsorship Form</a>
+          <a href="#" data-link-key="join" class="btn-primary">Join Truckee Snowbotics</a>
+          <a href="#" data-link-key="sponsorshipForm" class="btn-outline">Sponsorship Form</a>
         </div>
       </div>
     </section>
@@ -261,11 +264,11 @@
       </div>
 
       <nav class="footer-nav">
-        <a href="#about">About</a>
-        <a href="#team">Team</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#sponsors">Sponsors</a>
-        <a href="#contact">Contact</a>
+        <a href="#about" data-link-key="about">About</a>
+        <a href="#team" data-link-key="team">Team</a>
+        <a href="#gallery" data-link-key="gallery">Gallery</a>
+        <a href="#sponsors" data-link-key="sponsors">Sponsors</a>
+        <a href="#contact" data-link-key="contact">Contact</a>
       </nav>
 
       <div class="footer-actions">
