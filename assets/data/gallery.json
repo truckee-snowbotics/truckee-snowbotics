@@ -1,26 +1,14 @@
 [
   {
-    "src": "images/early_robot.webp",
+    "src": "images/early_robotv1.webp",
     "description": "Early prototype robot."
   },
   {
-    "src": "images/logo.svg",
-    "description": "A practice run on the field before competition."
+    "src": "images/early_match.webp",
+    "description": "Competition match in early 2026."
   },
   {
-    "src": "images/logo.svg",
-    "description": "Equipment and strategy planning in the pit."
-  },
-  {
-    "src": "images/logo.svg",
-    "description": "Planning the next match approach."
-  },
-  {
-    "src": "images/logo.svg",
-    "description": "Celebratory moment after a strong run."
-  },
-  {
-    "src": "images/logo.svg",
-    "description": "Working with local sponsors and families."
+    "src": "images/development.webp",
+    "description": "Developing the robot."
   }
 ]

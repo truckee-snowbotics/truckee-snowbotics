@@ -159,8 +159,9 @@ function escapeHTML(value) {
 
         return `
           <div class="gallery-item" data-src="${escapeHTML(src)}" data-alt="${escapeHTML(alt)}" data-caption="${escapeHTML(caption)}">
-            ${image ? `<img src="${escapeHTML(src)}" alt="${escapeHTML(alt)}" />` : `<span>${escapeHTML(caption)}</span>`}
-            <div class="gallery-caption">${escapeHTML(caption)}</div>
+            <div class="gallery-image">
+              ${image ? `<img src="${escapeHTML(src)}" alt="${escapeHTML(alt)}" />` : `<span>${escapeHTML(caption)}</span>`}
+            </div>
           </div>
         `;
       }).join('');
