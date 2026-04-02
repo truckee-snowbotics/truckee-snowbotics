@@ -11,8 +11,8 @@
 const LINK_TARGETS = {
   // ── Socials ──────────────────────────────────────
   instagram:      'https://www.instagram.com/truckeesnowbotics/',
-  github:         'https://github.com/NoisyDream18',
-  githubRepo:     'https://github.com/NoisyDream18/FTC-Truckee-Robotics',
+  github:         'https://github.com/truckee-snowbotics',
+  githubRepo:     'https://github.com/truckee-snowbotics/truckee-snowbotics',
 
   // ── Forms ─────────────────────────────────────────
   join:           'https://forms.gle/21LAVqmfFErDXKMv6',
