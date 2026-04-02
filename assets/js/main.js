@@ -16,7 +16,7 @@ const LINK_TARGETS = {
 
   // ── Forms ─────────────────────────────────────────
   join:           'https://forms.gle/21LAVqmfFErDXKMv6',
-  sponsorshipForm:'/assets/files/2026-sponsorship-form.pdf',
+  sponsorshipForm:'/assets/files/sponsorship-form.pdf',
   formAction:     'https://formspree.io/f/xkopzlvz',
   donate:         'https://hcb.hackclub.com/donations/start/truckee-snowbotics',
 
