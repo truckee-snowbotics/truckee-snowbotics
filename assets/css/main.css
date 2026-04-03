@@ -756,7 +756,7 @@ a.sponsor-item:hover { border-color: var(--blue-border); box-shadow: 0 4px 16px 
 }
 .sponsor-bar-logo:hover { filter: grayscale(1) opacity(.5); }
 .sponsor-bar-logo img {
-  height: 280px;
+  height: 250px;
   width: auto;
   display: block;
   object-fit: contain;
