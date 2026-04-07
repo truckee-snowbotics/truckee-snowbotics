@@ -26,7 +26,7 @@
   --ease:        cubic-bezier(0.22, 1, 0.36, 1);
   --max:         1100px;
   --max-narrow:  680px;
-  --r:           8px;
+  --r:           0;
 }
 
 /* ── Reset ──────────────────────────────────── */
@@ -68,7 +68,7 @@ img, svg { filter: none; }
 .btn-outline:hover { border-color: var(--blue); background: var(--blue-light); }
 .btn-icon {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; border-radius: 6px;
+  width: 34px; height: 34px; border-radius: 0;
   color: var(--text-mid); border: 1.5px solid var(--border);
   transition: color .15s, border-color .15s, background .15s;
 }
@@ -105,17 +105,17 @@ img, svg { filter: none; }
 .nav a:hover, .nav a.active { color: var(--blue); }
 
 .header-actions { display: flex; align-items: center; gap: .5rem; }
-.header-actions .btn-primary { font-size: .95rem; padding: .65rem 1.5rem; }
+.header-actions .btn-primary { font-size: .95rem; padding: 0 1.5rem; height: 34px; }
 
 .hamburger {
   display: none; flex-direction: column; justify-content: center;
   gap: 5px; width: 44px; height: 44px;
   background: none; border: 1.5px solid var(--border);
-  border-radius: 8px; cursor: pointer; padding: 10px;
+  border-radius: 0; cursor: pointer; padding: 10px;
 }
 .hamburger span {
   display: block; height: 2px; background: var(--text-mid);
-  border-radius: 1px; transition: transform .2s, opacity .2s;
+  border-radius: 0; transition: transform .2s, opacity .2s;
 }
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
@@ -187,7 +187,7 @@ img, svg { filter: none; }
   background: var(--blue-light); color: var(--blue-dark);
   font-size: .75rem; font-weight: 600; letter-spacing: .06em;
   text-transform: uppercase; padding: .3rem .7rem;
-  border-radius: 100px; border: 1px solid var(--blue-border);
+  border-radius: 0; border: 1px solid var(--blue-border);
   margin-bottom: 1.5rem;
   opacity: 0; animation: fade-up .5s var(--ease) .05s forwards;
 }
@@ -270,7 +270,7 @@ img, svg { filter: none; }
 .about-split { display: flex; align-items: center; gap: 3rem; }
 .about-split__text { flex: 1; min-width: 0; }
 .about-split__img { flex: 0 0 340px; }
-.about-split__img img { width: 100%; height: 280px; object-fit: cover; border-radius: 12px; display: block; }
+.about-split__img img { width: 100%; height: 280px; object-fit: cover; border-radius: 0; display: block; }
 @media (max-width: 700px) {
   .about-split { flex-direction: column; }
   .about-split__img { flex: none; width: 100%; }
@@ -378,7 +378,7 @@ img, svg { filter: none; }
 }
 .gallery-wrapper::-webkit-scrollbar-thumb {
   background: rgba(128, 138, 150, .35);
-  border-radius: 999px;
+  border-radius: 0;
 }
 .gallery-wrapper::-webkit-scrollbar-track {
   background: transparent;
@@ -431,7 +431,7 @@ img, svg { filter: none; }
   width: 42px;
   height: 42px;
   border: none;
-  border-radius: 50%;
+  border-radius: 0;
   background: rgba(26,30,42,.9);
   color: var(--text);
   font-size: 1.5rem;
@@ -482,11 +482,20 @@ img, svg { filter: none; }
   text-transform: uppercase; color: var(--blue);
   background: color-mix(in srgb, var(--blue) 15%, transparent);
   border: 1px solid color-mix(in srgb, var(--blue) 35%, transparent);
-  padding: .2rem .55rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+  padding: .2rem .55rem; border-radius: 0; white-space: nowrap; flex-shrink: 0;
 }
 .nonprofit-banner a { color: var(--blue); font-weight: 600; white-space: nowrap; }
 
 /* ── Donate ──────────────────────────────────── */
+/* ── Team Photo ──────────────────────────────── */
+.team-photo-section { padding-top: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+.team-photo-img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  display: block;
+}
+
 /* ── News ────────────────────────────────────── */
 .section--dark {
   background: linear-gradient(135deg, #0e3a5c 0%, #14567a 60%, #1a6d98 100%);
@@ -530,7 +539,7 @@ img, svg { filter: none; }
 }
 .donate-card {
   display: flex; flex-direction: column; gap: .75rem;
-  padding: 1.75rem; border-radius: 12px;
+  padding: 1.75rem; border-radius: 0;
   background: var(--surface); border: 1px solid var(--border);
 }
 .donate-card-title { font-size: 1rem; font-weight: 700; color: var(--heading); }
