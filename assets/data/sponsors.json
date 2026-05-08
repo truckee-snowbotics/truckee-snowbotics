@@ -4,5 +4,11 @@
     "name": "West Orthodontics",
     "banner": "/images/sponsors/West_logo_RGBnoname.jpg",
     "website": "https://www.drwestortho.com/"
+  },
+  {
+    "id": "truckee-optimist-club",
+    "name": "Truckee Optimist Club",
+    "banner": "/images/sponsors/optimist.png",
+    "website": "https://www.truckeeoptimistclub.com/"
   }
 ]
