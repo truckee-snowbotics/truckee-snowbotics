@@ -1,27 +1,20 @@
 [
   {
-    "order": 3,
+    "order": 2,
     "date": "March-June 2026",
     "tag": "Season",
     "title": "Post-Season Begins",
     "text": "The season has ended, but we will continue to meet on Mondays after school for outreach, sponsors, and team building and learning."
   },
   {
-    "order": 2,
+    "order": 1,
     "date": "Sunday, June 7, 2026",
     "tag": "Outreach",
     "title": "Truckee Maker Show",
     "text": "Join us at the Truckee Maker Show at the Truckee Community Center from 11 AM to 5 PM."
   },
   {
-    "order": 1,
-    "date": "May 2026",
-    "tag": "Season",
-    "title": "FTC Announcement and Season Kickoff",
-    "text": "The FTC game for the 2026 season is announced May 2nd."
-  },
-  {
-    "order": 4,
+    "order": 3,
     "date": "Post-Season 2026",
     "tag": "Team",
     "title": "Recruiting New Members for 2026–27",

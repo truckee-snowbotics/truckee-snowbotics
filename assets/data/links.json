@@ -40,5 +40,11 @@
     "label": "Donate",
     "url": "https://hcb.hackclub.com/donations/start/truckee-snowbotics",
     "category": "Support"
+  },
+  {
+    "id": "sierra-sun-article",
+    "label": "Sierra Sun Article",
+    "url": "https://www.sierrasun.com/news/snowbotics-truckee-highs-robotics-team-makes-a-comeback/",
+    "category": "News"
   }
 ]

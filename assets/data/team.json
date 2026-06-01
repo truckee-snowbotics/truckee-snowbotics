@@ -47,5 +47,17 @@
     "initials": "IE",
     "name": "Izzak Eberst",
     "role": "Faculty Advisor"
+  },
+  {
+    "id": "noah-pilon",
+    "initials": "NP",
+    "name": "Noah Pilon",
+    "role": "Team Member"
+  },
+  {
+    "id": "rayce-rignes",
+    "initials": "RR",
+    "name": "Rayce Rignes",
+    "role": "Team Member"
   }
 ]
