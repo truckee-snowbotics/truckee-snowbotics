@@ -1,0 +1,23 @@
+# Truckee Snowbotics
+
+> FTC Team #32587 — a student-run FIRST Tech Challenge robotics team based at Tahoe-Truckee High School in Truckee, California. Founded 2025. Fiscally sponsored by Hack Club, a 501(c)(3) nonprofit (EIN: 81-2908499).
+
+We design, build, and program competitive robots for the FIRST Tech Challenge (FTC) competition circuit in the Northern Nevada region.
+
+## Pages
+
+- [Home](https://snowbotics.org/): Team overview, latest news, and donation options.
+- [Information](https://snowbotics.org/information/): Details about FTC, how to join the team, and our nonprofit structure.
+- [Gallery](https://snowbotics.org/gallery/): Photos from the build floor, competitions, and events.
+- [Season](https://snowbotics.org/season/): Current season results, robot specs, and past season archive.
+- [Sponsors](https://snowbotics.org/sponsors/): Current sponsors, donation info, and how to become a sponsor.
+- [Contact](https://snowbotics.org/contact/): Contact form and sponsorship inquiries.
+- [About](https://snowbotics.org/about/): Meet the team members and mentors.
+
+## Contact
+
+- Email: contact@snowbotics.org
+- Instagram: https://www.instagram.com/truckeesnowbotics/
+- YouTube: https://www.youtube.com/@TruckeeSnowbotics
+- GitHub: https://github.com/truckee-snowbotics
+- Donate: https://hcb.hackclub.com/donations/start/truckee-snowbotics

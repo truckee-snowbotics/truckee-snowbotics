@@ -19,6 +19,17 @@ const CONTACT_NOTICE = {
 };
 
 // ╔══════════════════════════════════════════════════╗
+// ║  SPONSORSHIP FORM NOTICE                         ║
+// ╠══════════════════════════════════════════════════╣
+// ║  Set enabled: true to show a hover popup on all  ║
+// ║  sponsorship form buttons. Edit message freely.  ║
+// ╚══════════════════════════════════════════════════╝
+const SPONSORSHIP_FORM_NOTICE = {
+  enabled: true,
+  message: 'The sponsorship form has an incorrect email. Please use contact@snowbotics.org instead.',
+};
+
+// ╔══════════════════════════════════════════════════╗
 // ║  LINKS — edit these when URLs change             ║
 // ╠══════════════════════════════════════════════════╣
 // ║  Any element with data-link-key="keyName" will   ║
@@ -37,6 +48,7 @@ const LINK_TARGETS = {
   sponsorshipForm:'/assets/files/sponsorship-form-2026.pdf',
   formAction:     'https://formspree.io/f/mqewdqbb',
   donate:         'https://hcb.hackclub.com/donations/start/truckee-snowbotics',
+  photos:         '#',
 
   // ── Internal pages ────────────────────────────────
   contact:        '/contact/',
@@ -117,6 +129,53 @@ applyLinkTargets();
   }
 })();
 
+// ── Sponsorship form hover notice ────────────
+(function () {
+  if (!SPONSORSHIP_FORM_NOTICE.enabled) return;
+
+  const tooltip = document.createElement('div');
+  tooltip.style.cssText = [
+    'position:fixed',
+    'z-index:9999',
+    'max-width:280px',
+    'padding:.6rem .9rem',
+    'background:#3b1010',
+    'color:#fca5a5',
+    'border:1px solid #7f1d1d',
+    'border-radius:0',
+    'font-size:.825rem',
+    'line-height:1.5',
+    'pointer-events:none',
+    'display:none',
+    'box-shadow:0 4px 16px rgba(0,0,0,.45)',
+  ].join(';');
+  tooltip.textContent = SPONSORSHIP_FORM_NOTICE.message;
+  document.body.appendChild(tooltip);
+
+  function show(btn) {
+    const r = btn.getBoundingClientRect();
+    tooltip.style.visibility = 'hidden';
+    tooltip.style.display = 'block';
+    const gap = 8;
+    let top = r.bottom + gap;
+    if (top + tooltip.offsetHeight > window.innerHeight) top = r.top - tooltip.offsetHeight - gap;
+    let left = r.left;
+    if (left + tooltip.offsetWidth > window.innerWidth) left = window.innerWidth - tooltip.offsetWidth - 8;
+    tooltip.style.top  = top  + 'px';
+    tooltip.style.left = left + 'px';
+    tooltip.style.visibility = '';
+  }
+
+  function hide() { tooltip.style.display = 'none'; }
+
+  document.querySelectorAll('[data-link-key="sponsorshipForm"]').forEach(btn => {
+    btn.addEventListener('mouseenter', () => show(btn));
+    btn.addEventListener('mouseleave', hide);
+    btn.addEventListener('focus',      () => show(btn));
+    btn.addEventListener('blur',       hide);
+  });
+})();
+
 // ── Scroll reveal ─────────────────────────────
 (function () {
   const targets = document.querySelectorAll('.section, .card, .about-stats, .about-text');
@@ -125,7 +184,7 @@ applyLinkTargets();
   targets.forEach(el => el.classList.add('reveal'));
 
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
+    entries.forEach((e) => {
       if (!e.isIntersecting) return;
       e.target.classList.add('visible');
       io.unobserve(e.target);
@@ -219,9 +278,7 @@ function escapeHTML(value) {
         `;
       }).join('');
     })
-    .catch(() => {
-      // keep the existing static markup if loading fails
-    });
+    .catch(() => {});
 
   function getInitials(name) {
     if (!name) return '';
@@ -234,14 +291,6 @@ function escapeHTML(value) {
       .toUpperCase();
   }
 
-  function escapeHTML(value) {
-    return String(value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
 })();
 
 // ── Load gallery from JSON ─────────────────
@@ -304,7 +353,6 @@ function escapeHTML(value) {
       if (modalCaption) modalCaption.textContent = '';
     }
 
-    const track = document.querySelector('.gallery-track');
     if (track) {
       track.addEventListener('click', (event) => {
         const item = event.target.closest('.gallery-item');
@@ -426,7 +474,7 @@ function escapeHTML(value) {
   const grid = document.getElementById('news-grid');
   if (!grid) return;
   fetch('/assets/data/news.json')
-    .then(r => r.json())
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
     .then(items => {
       // Sort by order ascending; items with same order are left in random relative positions
       items.sort((a, b) => {
@@ -448,9 +496,44 @@ function escapeHTML(value) {
 
 // ── Contact form ─────────────────────────────────────
 (function () {
-  const contactForm = document.querySelector('.contact-form');
-  if (!contactForm) return;
-  // Form submits natively to Formspree via action attribute set by applyLinkTargets()
+  const form = document.querySelector('.contact-form');
+  if (!form) return;
+
+  const btn = form.querySelector('.contact-send-btn');
+  const errorDiv = form.querySelector('.form-error');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!btn || btn.disabled) return;
+
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    if (errorDiv) errorDiv.classList.add('hidden');
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' },
+      });
+      if (!res.ok) throw new Error();
+
+      form.reset();
+      btn.textContent = 'Sent!';
+      const success = document.createElement('p');
+      success.className = 'form-success';
+      success.textContent = "Message sent! We’ll get back to you within a few business days.";
+      btn.insertAdjacentElement('afterend', success);
+    } catch {
+      if (errorDiv) {
+        errorDiv.textContent = 'Something went wrong. Please email us directly at ' + CONTACT_EMAIL + '.';
+        errorDiv.classList.remove('hidden');
+      }
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
 })();
 
 // ── Season page ───────────────────────────────────────

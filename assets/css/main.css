@@ -689,10 +689,7 @@ a.sponsor-item:hover { border-color: var(--blue-border); box-shadow: 0 4px 16px 
 .contact-form button:focus {
   box-shadow: none;
 }
-.form-error {
-  display: block; margin-top: 1rem;
-  color: #bf2912; font-size: .95rem;
-}
+/* .form-error defined at end of file */
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: 2px solid var(--blue); border-color: transparent;
@@ -1023,4 +1020,43 @@ a.sponsor-item:hover { border-color: var(--blue-border); box-shadow: 0 4px 16px 
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* ── Skip link ───────────────────────────────── */
+.skip-link {
+  position: fixed; top: -100%; left: 1rem;
+  z-index: 9999; padding: .5rem 1rem;
+  background: var(--blue); color: #fff;
+  font-weight: 600; font-size: .9rem;
+  border-radius: var(--r);
+  transition: top .15s;
+  text-decoration: none;
+}
+.skip-link:focus { top: 1rem; outline: 2px solid #fff; outline-offset: 2px; }
+
+/* ── Utility ─────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ── Form feedback ───────────────────────────── */
+.form-error {
+  display: block; margin-top: 1rem;
+  font-size: .875rem; line-height: 1.5;
+  background: #3b1010; color: #fca5a5;
+  border: 1px solid #7f1d1d; padding: .6rem .85rem;
+}
+.form-success {
+  margin-top: 1rem; font-size: .875rem; line-height: 1.5;
+  background: #0a2e1a; color: #6ee7b7;
+  border: 1px solid #064e3b; padding: .6rem .85rem;
+}
+
+/* ── Reduced motion ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  html { scroll-behavior: auto; }
 }

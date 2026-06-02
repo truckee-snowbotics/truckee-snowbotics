@@ -14,7 +14,7 @@
   Hack Club (fiscal sponsor) — hackclub.com
 
 /* SITE */
-  Last update: 2026/04
+  Last update: 2026/06
   Language: English
   Technology: HTML, CSS, JavaScript
   Hosted on: GitHub Pages
