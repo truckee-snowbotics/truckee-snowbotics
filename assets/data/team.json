@@ -1,22 +1,15 @@
 [
   {
-    "id": "eden-sacks",
-    "initials": "ES",
-    "name": "Eden Sacks",
-    "role": "President",
-    "photo": ""
+    "id": "bach-le",
+    "initials": "BL",
+    "name": "Bach Le",
+    "role": "President - Engineering Lead"
   },
   {
     "id": "jack-west",
     "initials": "JW",
     "name": "Jack West",
-    "role": "Software & Electrical Lead"
-  },
-  {
-    "id": "bach-le",
-    "initials": "BL",
-    "name": "Bach Le",
-    "role": "Hardware & Logistics Lead"
+    "role": "Co-President - Software Lead"
   },
   {
     "id": "eduardo-sosa",
@@ -37,18 +30,6 @@
     "role": "Driver & Community"
   },
   {
-    "id": "maura-hoff",
-    "initials": "MH",
-    "name": "Maura Hoff",
-    "role": "Faculty Advisor"
-  },
-  {
-    "id": "izzak-eberst",
-    "initials": "IE",
-    "name": "Izzak Eberst",
-    "role": "Faculty Advisor"
-  },
-  {
     "id": "noah-pilon",
     "initials": "NP",
     "name": "Noah Pilon",
@@ -59,5 +40,17 @@
     "initials": "RR",
     "name": "Rayce Rignes",
     "role": "Team Member"
+  },
+  {
+    "id": "maura-hoff",
+    "initials": "MH",
+    "name": "Maura Hoff",
+    "role": "Mentor & Advisor"
+  },
+  {
+    "id": "izzak-eberst",
+    "initials": "IE",
+    "name": "Izzak Eberst",
+    "role": "Faculty Advisor"
   }
 ]
