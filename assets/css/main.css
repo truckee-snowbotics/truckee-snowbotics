@@ -547,23 +547,65 @@ img, svg { filter: none; }
 .donate-card .btn-primary, .donate-card .btn-outline { align-self: flex-start; margin-top: auto; }
 
 .sponsor-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.sponsor-tier { display: flex; flex-direction: column; gap: 1rem; }
+
+.sponsor-tier-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sponsor-tier-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.sponsor-tier-badge {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .3rem .75rem;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.sponsor-tier-badge--platinum { background: #e8e8f0; color: #1a1a2e; border: 1px solid #b0b0c8; }
+.sponsor-tier-badge--gold     { background: #3d2f00; color: #fbbf24; border: 1px solid #78580a; }
+.sponsor-tier-badge--silver   { background: #1e2024; color: #cbd5e1; border: 1px solid #4b5563; }
+.sponsor-tier-badge--bronze   { background: #2a1800; color: #d97706; border: 1px solid #6b3a0a; }
+
+.sponsor-tier-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .sponsor-tier-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .sponsor-tier-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 .sponsor-item {
-  background: var(--bg-card); border: 1px solid var(--border);
+  background: var(--bg-card); border: none;
   border-radius: var(--r);
-  overflow: hidden;
-  display: block;
-  transition: border-color .2s, box-shadow .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  transition: box-shadow .2s;
   text-decoration: none;
 }
-a.sponsor-item:hover { border-color: var(--blue-border); box-shadow: 0 4px 16px rgba(29,143,209,.1); }
+a.sponsor-item:hover { box-shadow: 0 4px 16px rgba(29,143,209,.1); }
 .sponsor-item img {
   width: 100%;
-  height: auto;
+  height: 240px;
   display: block;
   object-fit: contain;
 }

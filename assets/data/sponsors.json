@@ -2,13 +2,29 @@
   {
     "id": "west-orthodontics",
     "name": "West Orthodontics",
-    "banner": "/images/sponsors/West_logo_RGBnoname.jpg",
-    "website": "https://www.drwestortho.com/"
+    "banner": "/images/sponsors/west-orthodontics.jpg",
+    "website": "https://www.drwestortho.com/",
+    "tier": "platinum"
   },
   {
     "id": "truckee-optimist-club",
     "name": "Truckee Optimist Club",
-    "banner": "/images/sponsors/optimist.png",
-    "website": "https://www.truckeeoptimistclub.com/"
+    "banner": "/images/sponsors/truckee-optimist-club.png",
+    "website": "https://www.truckeeoptimistclub.com/",
+    "tier": "platinum"
+  },
+  {
+    "id": "golden-rotisserie",
+    "name": "Golden Rotisserie",
+    "banner": "/images/sponsors/golden-rotisserie.png",
+    "website": "https://goldenrotisserieinc.com/",
+    "tier": "platinum"
+  },
+  {
+    "id": "geene-haas-foundation",
+    "name": "Geene Haas Foundation",
+    "banner": "/images/sponsors/geene-haas-foundation.avif",
+    "website": "https://www.geenehaasfoundation.org/",
+    "tier": "platinum"
   }
 ]
