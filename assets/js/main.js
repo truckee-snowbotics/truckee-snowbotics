@@ -30,45 +30,102 @@ const SPONSORSHIP_FORM_NOTICE = {
 };
 
 // ╔══════════════════════════════════════════════════╗
-// ║  LINKS — edit these when URLs change             ║
+// ║  SECTION VISIBILITY                              ║
 // ╠══════════════════════════════════════════════════╣
-// ║  Any element with data-link-key="keyName" will   ║
-// ║  automatically get its href set to the value     ║
-// ║  below. Forms use data-form-action="formAction". ║
+// ║  Hide parts of the site and/or show a notice     ║
+// ║  strip. Each rule:                               ║
+// ║    page:     optional — only apply on this page  ║
+// ║              (e.g. '/season/'; omit = all pages) ║
+// ║    selector: CSS selector for the target(s)      ║
+// ║    hide:     false → keep visible, notice only   ║
+// ║              (default true: hide the target)     ║
+// ║    message:  optional notice strip shown where   ║
+// ║              the target is/was                   ║
+// ║  Examples:                                       ║
+// ║  { page: '/gallery/', selector: '#gallery',      ║
+// ║    message: 'Gallery is being updated.' }        ║
+// ║  { selector: '#news', hide: true }  ← silent     ║
 // ╚══════════════════════════════════════════════════╝
-const LINK_TARGETS = {
-  // ── Socials ──────────────────────────────────────
-  instagram:      'https://www.instagram.com/truckeesnowbotics/',
-  youtube:        'https://www.youtube.com/@TruckeeSnowbotics',
-  github:         'https://github.com/truckee-snowbotics',
-  githubRepo:     'https://github.com/truckee-snowbotics/truckee-snowbotics',
+const SECTION_VISIBILITY = [
+  {
+    page: '/season/',
+    selector: '#main-content',
+    hide: true,
+    message: 'This page is under construction — check back soon for robot specs and competition results.',
+  },
+];
 
-  // ── Forms ─────────────────────────────────────────
-  join:           'https://forms.gle/M5mx37r9PuM68nzm7',
-  sponsorshipForm:'/assets/files/sponsorship-form-2026.pdf',
-  formAction:     'https://formspree.io/f/mqewdqbb',
-  donate:         'https://hcb.hackclub.com/donations/start/truckee-snowbotics',
-  photos:         '#',
+// ── Apply section visibility rules ────────────────
+(function () {
+  const currentPath = window.location.pathname.replace(/\/?$/, '/');
+  SECTION_VISIBILITY.forEach(rule => {
+    if (!rule.selector) return;
+    if (rule.page && rule.page.replace(/\/?$/, '/') !== currentPath) return;
+    const targets = document.querySelectorAll(rule.selector);
+    if (!targets.length) return;
+    if (rule.hide !== false) {
+      // Class with !important so later scripts toggling inline styles
+      // (e.g. the season loader) can't accidentally reveal the section.
+      targets.forEach(el => el.classList.add('section-hidden'));
+    }
+    if (rule.message) {
+      const notice = document.createElement('div');
+      notice.className = 'section-notice';
+      notice.textContent = rule.message;
+      targets[0].insertAdjacentElement('beforebegin', notice);
+    }
+  });
+})();
 
-  // ── Internal pages ────────────────────────────────
-  contact:        '/contact/',
-};
+// ╔══════════════════════════════════════════════════╗
+// ║  LINKS — single source of truth:                 ║
+// ║  /assets/data/links.json                         ║
+// ╠══════════════════════════════════════════════════╣
+// ║  Each entry: { id, label, url, category, listed }║
+// ║  - id matches data-link-key / data-form-action   ║
+// ║    attributes in the HTML                        ║
+// ║  - listed: true → also rendered on the           ║
+// ║    Information page links grid and in the footer ║
+// ║  - url "#" → no destination yet; the element is  ║
+// ║    hidden until a real URL is set                ║
+// ╚══════════════════════════════════════════════════╝
+let linksPromise = null;
+function getLinks() {
+  if (!linksPromise) {
+    linksPromise = fetch('/assets/data/links.json')
+      .then(r => { if (!r.ok) throw new Error('Links JSON not found'); return r.json(); })
+      .then(items => Array.isArray(items) ? items : []);
+  }
+  return linksPromise;
+}
 
-function applyLinkTargets() {
+// ── Wire data-link-key / data-form-action elements ──
+getLinks().then(items => {
+  const urlById = {};
+  items.forEach(item => {
+    if (item.id) urlById[item.id] = (item.url || '').trim();
+  });
+
   document.querySelectorAll('[data-link-key]').forEach(el => {
-    const key = el.dataset.linkKey;
-    if (!key || !(key in LINK_TARGETS)) return;
-    el.href = LINK_TARGETS[key];
+    const url = urlById[el.dataset.linkKey];
+    if (url === undefined) return;
+    // '#' or empty marks a link with no destination yet — hide it instead
+    // of rendering a dead button that opens a blank tab.
+    if (!url || url === '#') { el.style.display = 'none'; return; }
+    el.href = url;
+    // This runs after the eval-time external-links pass below, so external
+    // URLs assigned here must get target/rel themselves.
+    if (/^https?:/i.test(url)) {
+      el.setAttribute('target', '_blank');
+      el.setAttribute('rel', 'noopener noreferrer');
+    }
   });
 
   document.querySelectorAll('[data-form-action]').forEach(el => {
-    const key = el.dataset.formAction;
-    if (!key || !(key in LINK_TARGETS)) return;
-    el.action = LINK_TARGETS[key];
+    const url = urlById[el.dataset.formAction];
+    if (url && url !== '#') el.action = url;
   });
-}
-
-applyLinkTargets();
+}).catch(() => { /* keep the fallback hrefs hard-coded in the HTML */ });
 
 // ── Apply CONTACT_EMAIL to all mailto links ───────
 (function applyContactEmail() {
@@ -344,6 +401,7 @@ function escapeHTML(value) {
       if (modalCaption) modalCaption.textContent = caption;
       modal.classList.remove('hidden');
       modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
@@ -351,6 +409,7 @@ function escapeHTML(value) {
       modal.setAttribute('aria-hidden', 'true');
       modalImage.innerHTML = '';
       if (modalCaption) modalCaption.textContent = '';
+      document.body.style.overflow = '';
     }
 
     if (track) {
@@ -371,6 +430,19 @@ function escapeHTML(value) {
   }
 })();
 
+// ── Sponsors data (shared by grid + bar) ─────
+let sponsorsPromise = null;
+function getSponsors() {
+  if (!sponsorsPromise) {
+    sponsorsPromise = fetch('/assets/data/sponsors.json')
+      .then(response => {
+        if (!response.ok) throw new Error('Sponsors JSON not found');
+        return response.json();
+      });
+  }
+  return sponsorsPromise;
+}
+
 // ── Load sponsors from JSON ─────────────────
 (function () {
   const container = document.querySelector('.sponsor-grid');
@@ -379,11 +451,7 @@ function escapeHTML(value) {
   const TIER_ORDER = ['platinum', 'gold', 'silver', 'bronze'];
   const TIER_LABELS = { platinum: 'Platinum', gold: 'Gold', silver: 'Silver', bronze: 'Bronze' };
 
-  fetch('/assets/data/sponsors.json')
-    .then(response => {
-      if (!response.ok) throw new Error('Sponsors JSON not found');
-      return response.json();
-    })
+  getSponsors()
     .then(items => {
       if (!Array.isArray(items)) throw new Error('Invalid sponsors data');
 
@@ -427,8 +495,7 @@ function escapeHTML(value) {
   const bar = document.getElementById('sponsor-bar-logos');
   if (!bar) return;
 
-  fetch('/assets/data/sponsors.json')
-    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  getSponsors()
     .then(items => {
       if (!Array.isArray(items) || !items.length) return;
       bar.innerHTML = items.map(item => {
@@ -444,31 +511,32 @@ function escapeHTML(value) {
     .catch(() => {});
 })();
 
-// ── Load links from JSON ──────────────────────────────
+// ── Render listed links (Information grid + footer) ──
 (function () {
-  fetch('/assets/data/links.json')
-    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-    .then(items => {
-      if (!Array.isArray(items) || !items.length) return;
+  getLinks()
+    .then(allItems => {
+      // Only entries flagged listed, and skip entries without a real
+      // destination yet (url empty or '#')
+      const items = allItems.filter(item => {
+        const url = item.url && item.url.trim();
+        return item.listed && url && url !== '#';
+      });
+      if (!items.length) return;
 
       const grid = document.getElementById('links-grid');
       if (grid) {
-        grid.innerHTML = items.map(item => {
-          const url = item.url && item.url.trim() ? item.url : '#';
-          return `
-            <a class="link-card" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">
+        grid.innerHTML = items.map(item => `
+            <a class="link-card" href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">
               <span class="link-card-label">${escapeHTML(item.label || '')}</span>
               ${item.category ? `<span class="link-card-category">${escapeHTML(item.category)}</span>` : ''}
-            </a>`;
-        }).join('');
+            </a>`).join('');
       }
 
       const footerLinks = document.getElementById('footer-links-list');
       if (footerLinks) {
-        footerLinks.innerHTML = items.map(item => {
-          const url = item.url && item.url.trim() ? item.url : '#';
-          return `<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(item.label || '')}</a>`;
-        }).join('');
+        footerLinks.innerHTML = items.map(item =>
+          `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(item.label || '')}</a>`
+        ).join('');
       }
 
       const footerNav = document.querySelector('.footer-nav');
@@ -477,9 +545,8 @@ function escapeHTML(value) {
         sep.className = 'footer-nav-sep';
         footerNav.appendChild(sep);
         items.forEach(item => {
-          const url = item.url && item.url.trim() ? item.url : '#';
           const a = document.createElement('a');
-          a.href = url;
+          a.href = item.url;
           a.target = '_blank';
           a.rel = 'noopener noreferrer';
           a.textContent = item.label || '';
@@ -497,11 +564,9 @@ function escapeHTML(value) {
   fetch('/assets/data/news.json')
     .then(r => { if (!r.ok) throw new Error(); return r.json(); })
     .then(items => {
-      // Sort by order ascending; items with same order are left in random relative positions
-      items.sort((a, b) => {
-        if (a.order !== b.order) return a.order - b.order;
-        return Math.random() - 0.5;
-      });
+      // Sort by order ascending; items without an order sink to the bottom.
+      // Ties keep their order from news.json (Array.sort is stable).
+      items.sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity));
       grid.innerHTML = items.map(item => `
         <div class="news-card">
           <div class="news-card-meta">
@@ -572,6 +637,13 @@ function escapeHTML(value) {
       // Hide static SEO anchor now that real content is loading
       const seoAnchor = document.getElementById('season-intro-seo');
       if (seoAnchor) seoAnchor.style.display = 'none';
+
+      // Reveal the data-driven sections (hidden with inline display:none
+      // in the HTML so they never flash empty before data arrives)
+      ['season-hero', 'robot', 'results', 'archive'].forEach(id => {
+        const section = document.getElementById(id);
+        if (section) section.style.display = '';
+      });
 
       // Hero
       const badge = document.getElementById('season-badge');
@@ -648,6 +720,8 @@ function escapeHTML(value) {
       }
     })
     .catch(() => {
+      const results = document.getElementById('results');
+      if (results) results.style.display = '';
       const tbody = document.getElementById('results-table-body');
       if (tbody) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;">Could not load season data.</td></tr>';
     });

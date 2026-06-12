@@ -1,50 +1,86 @@
 [
   {
-    "id": "join-form",
+    "id": "join",
     "label": "Join the Team",
-    "url": "https://forms.gle/uwbNBSLdPqNiPyep8",
-    "category": "Forms"
+    "url": "https://forms.gle/M5mx37r9PuM68nzm7",
+    "category": "Forms",
+    "listed": true
   },
   {
     "id": "ftc-manual",
     "label": "FTC Game Manual",
     "url": "https://ftc-docs.firstinspires.org/",
-    "category": "Resources"
+    "category": "Resources",
+    "listed": true
   },
   {
-    "id": "team-github",
+    "id": "github",
     "label": "Team GitHub",
     "url": "https://github.com/truckee-snowbotics",
-    "category": "Resources"
+    "category": "Resources",
+    "listed": true
   },
   {
-    "id": "sponsorship-form",
+    "id": "githubRepo",
+    "label": "Website Source",
+    "url": "https://github.com/truckee-snowbotics/truckee-snowbotics",
+    "category": "Resources",
+    "listed": false
+  },
+  {
+    "id": "sponsorshipForm",
     "label": "Sponsorship Form",
     "url": "/assets/files/sponsorship-form-2026.pdf",
-    "category": "Sponsors"
+    "category": "Sponsors",
+    "listed": true
   },
   {
-    "id": "2026-27_contract",
+    "id": "contract",
     "label": "2026-27 Contract",
     "url": "#",
-    "category": "Resources"
+    "category": "Resources",
+    "listed": true
   },
   {
-    "id": "photos-videos",
+    "id": "photos",
     "label": "Photos and Videos",
     "url": "#",
-    "category": "Media"
+    "category": "Media",
+    "listed": true
   },
   {
     "id": "donate",
     "label": "Donate",
     "url": "https://hcb.hackclub.com/donations/start/truckee-snowbotics",
-    "category": "Support"
+    "category": "Support",
+    "listed": true
   },
   {
     "id": "sierra-sun-article",
     "label": "Sierra Sun Article",
     "url": "https://www.sierrasun.com/news/snowbotics-truckee-highs-robotics-team-makes-a-comeback/",
-    "category": "News"
+    "category": "News",
+    "listed": true
+  },
+  {
+    "id": "instagram",
+    "label": "Instagram",
+    "url": "https://www.instagram.com/truckeesnowbotics/",
+    "category": "Social",
+    "listed": false
+  },
+  {
+    "id": "youtube",
+    "label": "YouTube",
+    "url": "https://www.youtube.com/@TruckeeSnowbotics",
+    "category": "Social",
+    "listed": false
+  },
+  {
+    "id": "formAction",
+    "label": "Contact form endpoint (Formspree)",
+    "url": "https://formspree.io/f/mqewdqbb",
+    "category": "Forms",
+    "listed": false
   }
 ]

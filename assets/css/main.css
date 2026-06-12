@@ -22,6 +22,8 @@
   --surface:     #1a1e2a;
   --accent:      #38a3e0;
 
+  --sponsor-logo-h: 250px; /* logo height in sponsor bar + sponsors page */
+
   --font:        'Inter', system-ui, sans-serif;
   --ease:        cubic-bezier(0.22, 1, 0.36, 1);
   --max:         1100px;
@@ -582,40 +584,33 @@ img, svg { filter: none; }
 .sponsor-tier-badge--silver   { background: #1e2024; color: #cbd5e1; border: 1px solid #4b5563; }
 .sponsor-tier-badge--bronze   { background: #2a1800; color: #d97706; border: 1px solid #6b3a0a; }
 
+/* Same presentation as the sponsor bar at the bottom of each page:
+   fixed-height logos at natural width, no card background. */
 .sponsor-tier-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-@media (min-width: 640px) {
-  .sponsor-tier-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (min-width: 1024px) {
-  .sponsor-tier-grid { grid-template-columns: repeat(4, 1fr); }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
 }
 
 .sponsor-item {
-  background: var(--bg-card); border: none;
+  background: none; border: none;
   border-radius: var(--r);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
-  transition: box-shadow .2s;
+  padding: 0;
+  transition: filter .15s;
   text-decoration: none;
 }
-a.sponsor-item:hover { box-shadow: 0 4px 16px rgba(29,143,209,.1); }
+a.sponsor-item:hover { filter: grayscale(1) opacity(.5); }
 .sponsor-item img {
-  width: 100%;
-  height: 80px;
+  height: var(--sponsor-logo-h);
+  width: auto;
+  max-width: 100%;
   display: block;
   object-fit: contain;
-}
-@media (min-width: 640px) {
-  .sponsor-item img { height: 130px; }
-}
-@media (min-width: 1024px) {
-  .sponsor-item img { height: 190px; }
 }
 .sponsor-item--cta {
   display: flex; flex-direction: column; gap: .75rem; text-align: center;
@@ -817,8 +812,9 @@ a.sponsor-item:hover { box-shadow: 0 4px 16px rgba(29,143,209,.1); }
 }
 .sponsor-bar-logo:hover { filter: grayscale(1) opacity(.5); }
 .sponsor-bar-logo img {
-  height: 250px;
+  height: var(--sponsor-logo-h);
   width: auto;
+  max-width: 100%;
   display: block;
   object-fit: contain;
 }
@@ -970,7 +966,7 @@ a.sponsor-item:hover { box-shadow: 0 4px 16px rgba(29,143,209,.1); }
 
 .faq-item {
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--r);
   overflow: hidden;
 }
 
@@ -1086,6 +1082,18 @@ a.sponsor-item:hover { box-shadow: 0 4px 16px rgba(29,143,209,.1); }
 
 /* ── Utility ─────────────────────────────────── */
 .hidden { display: none !important; }
+
+/* ── Section visibility (SECTION_VISIBILITY in main.js) ── */
+.section-hidden { display: none !important; }
+.section-notice {
+  background: rgba(240,197,64,.1);
+  border-bottom: 2px solid rgba(240,197,64,.35);
+  padding: .85rem 2rem;
+  text-align: center;
+  font-size: .9rem;
+  font-weight: 600;
+  color: #f0c540;
+}
 
 /* ── Form feedback ───────────────────────────── */
 .form-error {
