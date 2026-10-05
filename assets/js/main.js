@@ -25,7 +25,7 @@ const CONTACT_NOTICE = {
 // ║  sponsorship form buttons. Edit message freely.  ║
 // ╚══════════════════════════════════════════════════╝
 const SPONSORSHIP_FORM_NOTICE = {
-  enabled: true,
+  enabled: false,
   message: 'The sponsorship form has an incorrect email. Please use contact@snowbotics.org instead.',
 };
 
