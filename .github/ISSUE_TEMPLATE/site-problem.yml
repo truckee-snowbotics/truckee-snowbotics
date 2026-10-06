@@ -1,0 +1,25 @@
+name: Report a site problem
+description: A typo, broken link, or something that looks wrong on the website.
+title: "Site problem: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. To ask us to remove a photo of someone, **email contact@snowbotics.org** instead.
+  - type: input
+    id: page
+    attributes:
+      label: Which page?
+      description: The page address, for example https://snowbotics.org/gallery/
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong?
+      description: What you saw, and what you expected. A screenshot helps (drag it in).
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser
+      description: Optional, for example "iPhone, Safari" or "Windows, Chrome".

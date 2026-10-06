@@ -96,5 +96,26 @@
     "url": "mailto:truckeesnowbotics@gmail.com",
     "category": "Contact",
     "listed": false
+  },
+  {
+    "id": "submitPhoto",
+    "label": "Submit a photo",
+    "url": "https://github.com/truckee-snowbotics/truckee-snowbotics/issues/new?template=gallery-photo.yml",
+    "category": "Forms",
+    "listed": false
+  },
+  {
+    "id": "reportProblem",
+    "label": "Report a problem",
+    "url": "https://github.com/truckee-snowbotics/truckee-snowbotics/issues/new?template=site-problem.yml",
+    "category": "Forms",
+    "listed": false
+  },
+  {
+    "id": "takedown",
+    "label": "Photo takedown request",
+    "url": "mailto:contact@snowbotics.org?subject=Photo%20takedown%20request&body=Page%20or%20photo%20link%3A%0A%0AWhat%20you%27d%20like%20removed%3A%0A%0AYour%20name%20(optional)%3A",
+    "category": "Forms",
+    "listed": false
   }
 ]

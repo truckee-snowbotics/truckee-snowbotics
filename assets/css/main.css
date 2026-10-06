@@ -717,6 +717,7 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .page-hero p { max-width: var(--max); margin: 0 auto; font-size: 1rem; color: var(--text-mid); }
 
 /* ── Prose content sections ──────────────────── */
+.content-section { max-width: 720px; margin: 0 auto; padding: 2rem var(--gutter) 4rem; }
 .content-section h2 {
   font-size: 1.2rem; font-weight: 600; color: var(--heading);
   margin: 2.5rem 0 .6rem; letter-spacing: -.015em;

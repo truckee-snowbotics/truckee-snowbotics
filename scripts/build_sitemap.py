@@ -20,7 +20,7 @@ OUTPUT = ROOT / "sitemap.xml"
 DOMAIN = (ROOT / "CNAME").read_text().strip() if (ROOT / "CNAME").exists() else "snowbotics.org"
 
 # Order of the pages in the sitemap ("" is the home page); any other page follows alphabetically.
-ORDER = ["", "about", "season", "gallery", "information", "contact", "sponsors", "privacy"]
+ORDER = ["", "about", "season", "gallery", "information", "contact", "sponsors", "terms", "privacy"]
 
 # Content a page loads at runtime, so changes to it count as changes to the page.
 DEPENDENCIES = {
