@@ -3,7 +3,8 @@
 
 Fills the marked regions of season/index.html:
   <!-- @season --> ... <!-- @endseason -->          page content
-  <!-- @seasonmeta --> ... <!-- @endseasonmeta -->  robots meta (noindex when switched off)
+  <!-- @seasonmeta --> ... <!-- @endseasonmeta -->  description meta tags (+ noindex when off)
+and the current-season stat in the home page hero (<!-- @seasonstat -->).
 
 "enabled": false in season.json turns the whole page off: the page shows only a short
 "not available" message and is marked noindex, and the Season links disappear from the
@@ -195,8 +196,23 @@ def main():
     today = datetime.date.today()
     text = PAGE.read_text()
     new = fill(text, "<!-- @season -->", "<!-- @endseason -->", page_content(data, today))
-    robots = "" if data.get("enabled", True) else '<meta name="robots" content="noindex" />'
-    new = fill(new, "<!-- @seasonmeta -->", "<!-- @endseasonmeta -->", robots)
+    season, game = data.get("season", ""), data.get("game", "")
+    summary = (f"Watch Truckee Snowbotics FTC Team #32587 compete live and see our robot for the "
+               f"{season} FIRST Tech Challenge season" + (f", {game}." if game else "."))
+    meta = [f'<meta name="description" content="{esc(summary)}" />',
+            f'<meta property="og:description" content="{esc(summary)}" />',
+            f'<meta name="twitter:description" content="{esc(summary)}" />']
+    if not data.get("enabled", True):
+        meta.append('<meta name="robots" content="noindex" />')
+    new = fill(new, "<!-- @seasonmeta -->", "<!-- @endseasonmeta -->", "\n".join(meta))
+    # Home page hero stat for the current season
+    home = ROOT / "index.html"
+    htext = home.read_text()
+    stat = (f'<div class="hstat">\n  <dt class="hstat-key">{esc(season)} season</dt>\n'
+            f'  <dd class="hstat-val">{esc(game or "FTC")}</dd>\n</div>')
+    hnew = fill(htext, "<!-- @seasonstat -->", "<!-- @endseasonstat -->", stat)
+    if hnew != htext:
+        home.write_text(hnew)
     if new != text:
         PAGE.write_text(new)
     state = "on" if data.get("enabled", True) else "OFF"

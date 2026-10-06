@@ -5,28 +5,21 @@
     <link>https://snowbotics.org/</link>
     <description>News and updates from Truckee Snowbotics, FTC Team #32587.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 12:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2026 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://snowbotics.org/news.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Truckee Maker Show</title>
-      <link>https://snowbotics.org/#news-2026-06-07-truckee-maker-show</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-06-07-truckee-maker-show</guid>
-      <pubDate>Sun, 07 Jun 2026 12:00:00 +0000</pubDate>
-      <description>Join us at the Truckee Maker Show at the Truckee Community Center from 11 AM to 5 PM.</description>
+      <title>BIOBUZZ Season Kickoff</title>
+      <link>https://snowbotics.org/#news-2026-09-12-biobuzz-season-kickoff</link>
+      <guid isPermaLink="true">https://snowbotics.org/#news-2026-09-12-biobuzz-season-kickoff</guid>
+      <pubDate>Sat, 12 Sep 2026 12:00:00 +0000</pubDate>
+      <description>The 2026–27 FIRST Tech Challenge season is here. This year&#x27;s game is BIOBUZZ presented by RTX, part of the FIRST CANOPY biodiversity season.</description>
     </item>
     <item>
       <title>Recruiting New Members for 2026–27</title>
-      <link>https://snowbotics.org/#news-2026-06-01-recruiting-new-members-for-2026-27</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-06-01-recruiting-new-members-for-2026-27</guid>
-      <pubDate>Mon, 01 Jun 2026 12:00:00 +0000</pubDate>
-      <description>Interested in robotics, engineering, or software? We&#x27;re looking for motivated students to join the team for next season. No experience needed.</description>
-    </item>
-    <item>
-      <title>Post-Season Begins</title>
-      <link>https://snowbotics.org/#news-2026-03-01-post-season-begins</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-03-01-post-season-begins</guid>
-      <pubDate>Sun, 01 Mar 2026 12:00:00 +0000</pubDate>
-      <description>The season has ended, but we will continue to meet on Mondays after school for outreach, sponsors, and team building and learning.</description>
+      <link>https://snowbotics.org/#news-2026-09-12-recruiting-new-members-for-2026-27</link>
+      <guid isPermaLink="true">https://snowbotics.org/#news-2026-09-12-recruiting-new-members-for-2026-27</guid>
+      <pubDate>Sat, 12 Sep 2026 12:00:00 +0000</pubDate>
+      <description>Interested in robotics, engineering, or software? We&#x27;re looking for motivated students to join the team this season. No experience needed.</description>
     </item>
   </channel>
 </rss>

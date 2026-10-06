@@ -2,7 +2,7 @@
 
 > FTC Team #32587 — a student-run FIRST Tech Challenge robotics team based at Tahoe-Truckee High School in Truckee, California. Founded 2025. Fiscally sponsored by Hack Club, a 501(c)(3) nonprofit (EIN: 81-2908499).
 
-We design, build, and program competitive robots for the FIRST Tech Challenge (FTC) competition circuit in the Northern Nevada region.
+We design, build, and program competitive robots for the FIRST Tech Challenge (FTC) competition circuit in the Northern Nevada region. The current season is 2026–27: BIOBUZZ presented by RTX.
 
 ## Pages
 
