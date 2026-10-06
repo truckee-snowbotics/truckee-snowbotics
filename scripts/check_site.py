@@ -440,6 +440,14 @@ def check_llms():
             warn("llms.txt", f"doesn't mention {url}")
 
 
+def check_big_images():
+    """Phone photos dropped in as-is are huge; the build shrinks them, but flag them early."""
+    for f in sorted((ROOT / "images").rglob("*")):
+        if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp", ".avif") \
+                and "thumbs" not in f.parts and f.stat().st_size > 1_500_000:
+            warn(str(f.relative_to(ROOT)), f"is {f.stat().st_size // 1_000_000} MB; run python3 scripts/build.py with Pillow installed (pip install -r requirements.txt) to shrink it before committing")
+
+
 def check_unreferenced():
     """Images and downloads that nothing on the site points to (likely leftovers)."""
     suffixes = {".html", ".css", ".js", ".json", ".xml", ".xsl", ".txt", ".webmanifest", ".md", ".py", ".yml"}
@@ -458,6 +466,7 @@ def main():
     check_json()
     check_llms()
     check_unreferenced()
+    check_big_images()
     for where, count in PLACEHOLDERS.items():
         warn(where, f"{count} placeholder value(s) starting with \"Update\" still present")
     check_html()

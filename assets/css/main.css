@@ -283,11 +283,11 @@ ul { list-style: none; }
 }
 
 .member-photo {
-  aspect-ratio: 1 / 1; background: var(--surface-2);
+  aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface-2);
   display: flex; align-items: center; justify-content: center;
   border-bottom: 1px solid var(--border);
 }
-.member-photo img { width: 100%; height: 100%; object-fit: cover; }
+.member-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
 .member-initials { font-size: 3rem; font-weight: 600; letter-spacing: .04em; color: var(--accent); opacity: .85; }
 
 .member-body { padding: 1.1rem 1.25rem 1.3rem; display: flex; flex-direction: column; gap: .3rem; flex: 1; }

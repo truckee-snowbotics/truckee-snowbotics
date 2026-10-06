@@ -8,7 +8,8 @@ skipped with a notice if it's missing.
                     gitignored) which the gallery grid loads instead of the full image.
 - images/sponsors/  width capped at 800px, same format (file names are referenced
                     from sponsors.json, so they never change).
-- images/team/      portraits, width capped at 800px, same format.
+- images/team/      JPG/PNG portraits -> .webp at up to 800px wide (original removed), and
+                    team.json / alumni.json are pointed at the new file; existing .webp capped.
 - images/site/      width capped at 1600px, same format (icons are already smaller
                     and are left alone).
 Images already within their cap are never re-encoded, so there's no quality loss on
@@ -23,6 +24,8 @@ IMAGES = ROOT / "images"
 GALLERY = IMAGES / "gallery"
 THUMBS = GALLERY / "thumbs"
 GALLERY_WIDTH = 1600
+TEAM = IMAGES / "team"
+TEAM_WIDTH = 800
 THUMB_WIDTH = 480
 THUMB_QUALITY = 70
 QUALITY = 82
@@ -117,7 +120,31 @@ def main():
             stale.unlink()
 
     cap_in_place(IMAGES / "sponsors", 800)
-    cap_in_place(IMAGES / "team", 800)
+    # Team portraits: convert phone-sized JPG/PNG to WebP, and re-point the data files at them.
+    if TEAM.exists():
+        for p in sorted(TEAM.iterdir()):
+            if p.suffix.lower() not in CONVERT_TO_WEBP:
+                continue
+            target = p.with_suffix(".webp")
+            if target.exists():
+                print(f"warning: {target.name} already exists; leaving {p.name} unconverted")
+                continue
+            im = load(p)
+            if im is None:
+                continue
+            before = kb(p)
+            save(resized(im, TEAM_WIDTH), target, "WEBP")
+            im.close()
+            p.unlink()
+            for name in ("team.json", "alumni.json"):
+                data = ROOT / "assets" / "data" / name
+                if data.exists():
+                    text = data.read_text()
+                    new = text.replace(f"/images/team/{p.name}", f"/images/team/{target.name}")
+                    if new != text:
+                        data.write_text(new)
+            print(f"optimized {p.relative_to(ROOT)} -> {target.name} ({before} -> {kb(target)})")
+    cap_in_place(TEAM, TEAM_WIDTH)
     cap_in_place(IMAGES / "site", 1600)
 
 
