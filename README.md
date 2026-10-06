@@ -6,7 +6,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages.
 
 ## Editing content
 
-- `team.json` — team roster (About page cards and humans.txt are generated from it)
+- `team.json` — team roster (About page cards and humans.txt are generated from it; see Team below)
 - `news.json` — Home page news (see News below)
 - `gallery-captions.json` — optional gallery captions (see Gallery below); `gallery.json` is generated
 - `season.json` — Season page: on/off switch, live stream schedule, robot (see Season below)
@@ -103,6 +103,28 @@ page stat, so a new season is a `season.json` edit. The footer year updates itse
 
 **Robot.** `robot` takes optional `name`, `description`, `photos` (`src` + `caption`),
 `specs` (`label` + `value`) and `links`. Only what you fill in is shown.
+
+### Team
+
+`assets/data/team.json` drives the About page's "Meet the team" cards (students first, then
+mentors) and the TEAM block in `humans.txt`. Only `name` and `role` are required; everything
+else is shown only when you fill it in:
+
+```json
+{
+  "name": "Bach Le", "role": "President - Engineering Lead",
+  "group": "students",
+  "photo": "/images/team/bach-le.webp",
+  "years": 3, "grade": "11th grade",
+  "bio": "One or two sentences.",
+  "interests": ["skiing", "CAD", "biking"]
+}
+```
+
+`group` is `students` (default) or `mentors`; `years` shows as "Third-year member". Without a
+`photo` the card shows the person's initials. Put portraits in `images/team/` (square-ish,
+shrunk to 800px automatically). Get permission before posting anyone's photo or details
+(see the Terms page).
 
 ### Gallery
 

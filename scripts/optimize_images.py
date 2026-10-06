@@ -8,6 +8,7 @@ skipped with a notice if it's missing.
                     gitignored) which the gallery grid loads instead of the full image.
 - images/sponsors/  width capped at 800px, same format (file names are referenced
                     from sponsors.json, so they never change).
+- images/team/      portraits, width capped at 800px, same format.
 - images/site/      width capped at 1600px, same format (icons are already smaller
                     and are left alone).
 Images already within their cap are never re-encoded, so there's no quality loss on
@@ -64,6 +65,8 @@ def main():
             im.convert("RGB").save(target, "JPEG", quality=85, optimize=True, progressive=True)
 
     def cap_in_place(folder, width):
+        if not folder.exists():
+            return
         for p in sorted(folder.iterdir()):
             if p.suffix.lower() not in RASTER:
                 continue
@@ -114,6 +117,7 @@ def main():
             stale.unlink()
 
     cap_in_place(IMAGES / "sponsors", 800)
+    cap_in_place(IMAGES / "team", 800)
     cap_in_place(IMAGES / "site", 1600)
 
 

@@ -260,33 +260,42 @@ ul { list-style: none; }
 }
 
 /* ── Team ────────────────────────────────────── */
+.team-group + .team-group { margin-top: 3.5rem; }
+.team-group-title {
+  font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.25rem; padding-bottom: .75rem;
+  border-bottom: 1px solid var(--border);
+}
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 1.25rem;
 }
 .member-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 1.25rem 1.4rem;
-  display: flex; align-items: center; gap: 1rem;
-  transition: border-color .15s;
+  border-radius: var(--r); overflow: hidden;
+  display: flex; flex-direction: column;
 }
-.member-card:hover { border-color: var(--border-h); }
 .member-card--empty { opacity: .55; }
 
-.member-avatar {
-  width: 48px; height: 48px; border-radius: 0; flex-shrink: 0;
-  background: var(--accent-soft); border: 1px solid var(--accent-line);
-  color: var(--accent); font-size: .85rem; font-weight: 600; letter-spacing: .02em;
+.member-photo {
+  aspect-ratio: 1 / 1; background: var(--surface-2);
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
+  border-bottom: 1px solid var(--border);
 }
-.member-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.member-avatar--empty { background: var(--surface-2); border-color: var(--border); color: var(--text-dim); }
+.member-photo img { width: 100%; height: 100%; object-fit: cover; }
+.member-initials { font-size: 3rem; font-weight: 600; letter-spacing: .04em; color: var(--accent); opacity: .85; }
 
-.member-info { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
-.member-name { font-size: .975rem; font-weight: 600; color: var(--heading); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.member-role { font-size: .85rem; color: var(--text-dim); line-height: 1.4; }
+.member-body { padding: 1.1rem 1.25rem 1.3rem; display: flex; flex-direction: column; gap: .3rem; flex: 1; }
+.member-name { font-size: 1.05rem; font-weight: 600; color: var(--heading); line-height: 1.3; }
+.member-role { font-size: .9rem; color: var(--accent); line-height: 1.4; }
+.member-meta { font-size: .8rem; color: var(--text-dim); }
+.member-bio { font-size: .9rem; color: var(--text-mid); line-height: 1.6; margin-top: .5rem; }
+.member-tags { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; padding-top: .75rem; }
+.member-tags li {
+  font-size: .75rem; color: var(--text-mid);
+  border: 1px solid var(--border-h); padding: .15rem .55rem;
+}
 
 /* ── Gallery ─────────────────────────────────── */
 .gallery-track {

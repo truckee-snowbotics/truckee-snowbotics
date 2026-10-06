@@ -45,12 +45,14 @@
     "id": "maura-hoff",
     "initials": "MH",
     "name": "Maura Hoff",
-    "role": "Mentor & Advisor"
+    "role": "Mentor & Advisor",
+    "group": "mentors"
   },
   {
     "id": "izzak-eberst",
     "initials": "IE",
     "name": "Izzak Eberst",
-    "role": "Faculty Advisor"
+    "role": "Faculty Advisor",
+    "group": "mentors"
   }
 ]

@@ -6,7 +6,10 @@ Writes:
   - the TEAM section of humans.txt (and its "Last update" month)
 
 Member fields: name, role (required); id, initials (initials default to the name's
-first letters); photo (optional /images/... path); empty (true = greyed-out placeholder).
+first letters); group ("students" by default, or "mentors"); photo (optional /images/...
+path); years (whole number, shown as "Third-year member"); grade ("10th grade"); bio (one
+or two sentences); interests (list of short phrases); empty (true = greyed-out
+placeholder). Everything except name and role is optional and only shown when filled in.
 """
 import datetime
 import html
@@ -31,30 +34,69 @@ def initials(member):
     return "".join(w[0] for w in member["name"].split()[:2]).upper()
 
 
+ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"]
+GROUPS = [("students", "Students"), ("mentors", "Mentors &amp; Advisors")]
+
+
+def meta(m):
+    parts = []
+    years = m.get("years")
+    if isinstance(years, int) and 1 <= years <= len(ORDINALS):
+        parts.append(f"{ORDINALS[years - 1]}-year member")
+    elif isinstance(years, int) and years > len(ORDINALS):
+        parts.append(f"{years}-year member")
+    if m.get("grade"):
+        parts.append(str(m["grade"]))
+    return " · ".join(parts)
+
+
 def card(m):
     empty = bool(m.get("empty"))
     classes = "member-card" + (" member-card--empty" if empty else "")
-    avatar_class = "member-avatar" + (" member-avatar--empty" if empty else "")
     if m.get("photo") and not empty:
-        avatar = f'<img src="{esc(m["photo"])}" alt="{esc(m["name"])}" loading="lazy" decoding="async" />'
+        photo = f'<img src="{esc(m["photo"])}" alt="{esc(m["name"])}" loading="lazy" decoding="async" />'
     else:
-        avatar = esc(initials(m))
-    return (
-        f'<div class="{classes}">\n'
-        f'  <div class="{avatar_class}">{avatar}</div>\n'
-        '  <div class="member-info">\n'
-        f'    <span class="member-name">{esc(m["name"])}</span>\n'
-        f'    <span class="member-role">{esc(m["role"])}</span>\n'
-        "  </div>\n"
-        "</div>"
-    )
+        photo = f'<span class="member-initials" aria-hidden="true">{esc(initials(m))}</span>'
+    lines = [
+        f'<article class="{classes}">',
+        f'  <div class="member-photo">{photo}</div>',
+        '  <div class="member-body">',
+        f'    <h4 class="member-name">{esc(m["name"])}</h4>',
+        f'    <p class="member-role">{esc(m["role"])}</p>',
+    ]
+    if meta(m):
+        lines.append(f'    <p class="member-meta">{esc(meta(m))}</p>')
+    if m.get("bio"):
+        lines.append(f'    <p class="member-bio">{esc(m["bio"])}</p>')
+    if m.get("interests"):
+        lines.append('    <ul class="member-tags">')
+        lines += [f"      <li>{esc(i)}</li>" for i in m["interests"]]
+        lines.append("    </ul>")
+    lines += ["  </div>", "</article>"]
+    return "\n".join(lines)
+
+
+def groups_html(members):
+    out = []
+    for key, title in GROUPS:
+        group = [m for m in members if m.get("group", "students") == key]
+        if not group:
+            continue
+        out.append(
+            f'<div class="team-group">\n'
+            f'  <h3 class="team-group-title">{title}</h3>\n'
+            '  <div class="team-grid">\n'
+            + "\n".join("    " + line if line.strip() else "" for line in "\n".join(card(m) for m in group).split("\n"))
+            + "\n  </div>\n</div>"
+        )
+    return "\n".join(out)
 
 
 def main():
     members = json.loads((ROOT / "assets" / "data" / "team.json").read_text())
     real = [m for m in members if not m.get("empty")]
 
-    body = "\n\n".join(card(m) for m in members)
+    body = groups_html(members)
     text = ABOUT.read_text()
 
     def sub(m):
