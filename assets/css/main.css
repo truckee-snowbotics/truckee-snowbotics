@@ -2,10 +2,10 @@
 
 /* ── Tokens ─────────────────────────────────── */
 :root {
-  --bg:          #1d272a;
-  --bg-alt:      #243034;
-  --surface:     #2a373b;
-  --surface-2:   #324247;
+  --bg:          #131b1d;
+  --bg-alt:      #2e3f44;
+  --surface:     #1e2a2d;
+  --surface-2:   #28383d;
   --bg-card:     var(--surface);
 
   --text:        #edf2f1;
@@ -13,10 +13,10 @@
   --text-dim:    #93a3a2;
   --heading:     #f8fbfa;
 
-  --accent:      #ff9d7a;
-  --accent-fill: #ff9d7a;
-  --accent-soft: rgba(255,157,122,.12);
-  --accent-line: rgba(255,157,122,.4);
+  --accent:      #5eb0f0;
+  --accent-fill: #5eb0f0;
+  --accent-soft: rgba(94,176,240,.14);
+  --accent-line: rgba(94,176,240,.42);
   --blue:        var(--accent);
   --blue-dark:   var(--accent);
   --blue-light:  var(--accent-soft);
@@ -88,7 +88,7 @@ ul { list-style: none; }
 /* ── Header ─────────────────────────────────── */
 .site-header {
   position: sticky; top: 0; z-index: 200;
-  background: rgba(29,39,42,.88);
+  background: rgba(19,27,29,.9);
   -webkit-backdrop-filter: saturate(1.4) blur(12px);
   backdrop-filter: saturate(1.4) blur(12px);
   border-bottom: 1px solid var(--border);
@@ -234,6 +234,13 @@ ul { list-style: none; }
 .section { padding: clamp(3.5rem, 8vw, 6rem) var(--gutter); }
 .section + .section { border-top: 1px solid var(--border); }
 .section--alt { background: var(--bg-alt); }
+/* Lighter bands invert the card colors so cards stay distinct, and brighten dim text */
+.section--alt, .sponsor-bar, .nonprofit-banner {
+  --surface:   #1a2427;
+  --surface-2: #222f33;
+  --text-dim:  #b0bebd;
+  --border:    rgba(255,255,255,.14);
+}
 .section-inner { max-width: var(--max); margin: 0 auto; }
 .section-inner--narrow > * { max-width: var(--max-narrow); }
 
@@ -329,7 +336,7 @@ ul { list-style: none; }
   position: fixed; right: 1.25rem; top: 1.25rem;
   width: 40px; height: 40px;
   border: 1px solid var(--border-h); border-radius: 0;
-  background: rgba(29,39,42,.92); color: var(--text);
+  background: rgba(19,27,29,.92); color: var(--text);
   font-size: 1.4rem; line-height: 1; cursor: pointer; z-index: 1002;
   transition: background-color .15s;
 }
@@ -591,7 +598,7 @@ a.sponsor-bar-logo:hover { border-color: var(--border-h); background: var(--surf
 @media (max-width: 760px) { .process-steps { grid-template-columns: 1fr; } }
 
 /* ── Footer ──────────────────────────────────── */
-.site-footer { border-top: 1px solid var(--border); background: var(--bg); color: var(--text-mid); }
+.site-footer { border-top: 1px solid var(--border); background: #0e1416; color: var(--text-mid); }
 .footer-inner {
   max-width: var(--max-outer); margin: 0 auto;
   padding: 3.5rem var(--gutter) 3rem;
