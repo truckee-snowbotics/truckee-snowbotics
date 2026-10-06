@@ -266,15 +266,12 @@ ul { list-style: none; }
   color: var(--accent); margin-bottom: 1.25rem; padding-bottom: .75rem;
   border-bottom: 1px solid var(--border);
 }
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
-  gap: 1.25rem;
-}
+.team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
 .member-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--r); overflow: hidden;
   display: flex; flex-direction: column;
+  flex: 0 1 260px; width: min(100%, 260px);
 }
 .member-card--empty { opacity: .55; }
 
@@ -811,5 +808,3 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .alumni-more[open] > summary::after { content: "▴"; }
 .alumni-more > summary:hover { border-color: var(--accent); }
 .alumni-more[open] > summary { margin-bottom: 2.5rem; }
-.alumni-year .team-grid { display: flex; flex-wrap: wrap; justify-content: center; }
-.alumni-year .member-card { flex: 0 1 260px; width: min(100%, 260px); }
