@@ -4,10 +4,10 @@
 
 | Workflow | When | What |
 |---|---|---|
-| `deploy.yml` | every push to `main`, **and daily at 6 AM Pacific** | Builds, checks and deploys. The daily run refreshes date-based content (news order and RSS, upcoming-event data, sitemap dates) without a push. |
+| `deploy.yml` | every push to `main`, **and daily around 6:15 AM Pacific** | Builds, checks and deploys. The daily run refreshes date-based content (news order and RSS, upcoming-event data, sitemap dates) without a push. |
 | `check.yml` | pull requests, non-main pushes, or "Run workflow" | The same release build and checks as the deploy, without deploying. On pull requests it also scores the built pages with Lighthouse (targets in `lighthouserc.json`; misses are warnings, change `warn` to `error` there to make them block) and links a public report. |
 | `gallery-photo.yml` | a "Submit a gallery photo" issue is opened | Adds the photo and caption on a branch and opens a pull request for review. |
-| `health.yml` | Mondays 8 AM Pacific, or "Run workflow" | Runs `scripts/health_check.py`: broken outside links, events within a week that have no stream link, `security.txt` expiring soon. Opens or updates **one** issue labeled `site-health`, and closes it when everything passes. In the first week of September it also opens a "Season rollover checklist" issue. |
+| `health.yml` | Mondays around 8:30 AM Pacific, or "Run workflow" | Runs `scripts/health_check.py`: broken outside links, events within a week that have no stream link, `security.txt` expiring soon. Opens or updates **one** issue labeled `site-health`, and closes it when everything passes. In the first week of September it also opens a "Season rollover checklist" issue. |
 
 Notes: scheduled workflows only run on the default branch (`main`) and GitHub pauses them
 after 60 days without any repo activity (a push or a manual run wakes them up). The health

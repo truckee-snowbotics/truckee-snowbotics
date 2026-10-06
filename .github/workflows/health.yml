@@ -8,7 +8,7 @@ name: Site health
 
 on:
   schedule:
-    - cron: '0 15 * * 1' # Mondays, 8 AM Pacific
+    - cron: '23 15 * * 1' # Mondays, about 8:30 AM Pacific
   workflow_dispatch:
 
 permissions:
