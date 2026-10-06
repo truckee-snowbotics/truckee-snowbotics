@@ -402,7 +402,20 @@ def check_json():
                 err(where, f"missing file \"{path}\"")
 
 
+def check_xml():
+    import xml.etree.ElementTree as ET
+    for name in ("sitemap.xml", "sitemap.xsl", "news.xml"):
+        f = ROOT / name
+        if not f.exists():
+            continue
+        try:
+            ET.parse(f)
+        except ET.ParseError as e:
+            err(name, f"not well-formed XML ({e})")
+
+
 def main():
+    check_xml()
     check_json()
     for where, count in PLACEHOLDERS.items():
         warn(where, f"{count} placeholder value(s) starting with \"Update\" still present")

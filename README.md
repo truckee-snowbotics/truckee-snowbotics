@@ -133,7 +133,7 @@ requests and non-main pushes. Any ERROR stops the deploy.
 | `build_pages.py` | Copies `partials/` (head-common, header, footer, scripts) into every page between `<!-- @partial name -->` markers. Edit the partial, run the build, commit the updated pages. Don't edit inside the markers. |
 | `optimize_images.py` | Gallery: JPG/PNG → WebP capped at 1600px, plus small thumbnails (`images/gallery/thumbs/`, generated, gitignored) used by the grid. Sponsors capped at 800px and `images/site/` at 1600px, same format. Needs Pillow (skipped if missing). |
 | `build_gallery.py` | Writes `gallery.json` from the folder + captions. |
-| `build_sitemap.py` | Writes `sitemap.xml` from the page folders; `lastmod` comes from git history. New pages are picked up automatically (set priority in `META` there). |
+| `build_sitemap.py` | Writes `sitemap.xml` from the page folders; `lastmod` comes from git history. New pages are picked up automatically (page order is `ORDER` in the script). `sitemap.xsl` makes the file display as a styled page in browsers; search engines read the plain XML. |
 | `apply_links.py` | `--release` only: writes `links.json` URLs into the HTML (see Links). Edits HTML in place, so don't commit its output. |
 | `minify_assets.py` | `--release` only: minifies `main.css`/`main.js` (whitespace and comments only). Edits files in place, so don't commit its output. |
 | `stamp_assets.py` | `--release` only: adds `?v=<commit>` to CSS/JS URLs so browsers refetch after a deploy. Edits HTML in place, so don't commit its output. |

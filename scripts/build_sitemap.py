@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Regenerate sitemap.xml from the page folders.
 
+sitemap.xsl styles the file when a person opens it in a browser; search engines read the
+plain XML. (changefreq/priority are left out: Google ignores them.)
+
+
 Every index.html (root and one folder deep) is listed, except pages marked noindex.
 <lastmod> is the latest git commit touching the page or the data/images it shows,
 so CI needs a full checkout (fetch-depth: 0).
@@ -15,18 +19,8 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "sitemap.xml"
 DOMAIN = (ROOT / "CNAME").read_text().strip() if (ROOT / "CNAME").exists() else "snowbotics.org"
 
-# folder -> (changefreq, priority); "" is the home page. Unlisted pages get DEFAULT.
-META = {
-    "": ("monthly", "1.0"),
-    "about": ("monthly", "0.8"),
-    "season": ("monthly", "0.8"),
-    "gallery": ("monthly", "0.7"),
-    "information": ("monthly", "0.7"),
-    "contact": ("yearly", "0.7"),
-    "sponsors": ("monthly", "0.6"),
-    "privacy": ("yearly", "0.3"),
-}
-DEFAULT = ("monthly", "0.5")
+# Order of the pages in the sitemap ("" is the home page); any other page follows alphabetically.
+ORDER = ["", "about", "season", "gallery", "information", "contact", "sponsors", "privacy"]
 
 # Content a page loads at runtime, so changes to it count as changes to the page.
 DEPENDENCIES = {
@@ -50,7 +44,7 @@ def git_date(paths):
 
 def main():
     found = {p.parent.name for p in ROOT.glob("*/index.html")} | {""}
-    folders = [f for f in META if f in found] + sorted(found - set(META))
+    folders = [f for f in ORDER if f in found] + sorted(found - set(ORDER))
     try:
         season_on = json.loads((ROOT / "assets" / "data" / "season.json").read_text()).get("enabled", True)
     except (OSError, ValueError):
@@ -64,18 +58,16 @@ def main():
             continue
         rel = (Path(folder) / "index.html").as_posix()
         lastmod = max(git_date([rel]), git_date(DEPENDENCIES[folder]) if folder in DEPENDENCIES else "")
-        freq, priority = META.get(folder, DEFAULT)
         url = f"https://{DOMAIN}/" + (f"{folder}/" if folder else "")
         entries.append(
             "  <url>\n"
             f"    <loc>{url}</loc>\n"
             f"    <lastmod>{lastmod}</lastmod>\n"
-            f"    <changefreq>{freq}</changefreq>\n"
-            f"    <priority>{priority}</priority>\n"
             "  </url>\n"
         )
     OUTPUT.write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(entries)
         + "</urlset>\n"
