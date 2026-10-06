@@ -26,5 +26,12 @@
     "banner": "/images/sponsors/gene-haas-foundation.avif",
     "website": "https://www.ghaasfoundation.org/",
     "tier": "platinum"
+  },
+  {
+    "id": "ace-hardware",
+    "name": "Ace Hardware",
+    "banner": "/images/sponsors/ace-hardware.svg",
+    "website": "https://www.acehardware.com/",
+    "tier": "silver"
   }
 ]
