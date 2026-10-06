@@ -350,6 +350,11 @@ def main():
     stat = (f'<div class="hstat">\n  <dt class="hstat-key">{esc(season)} season</dt>\n'
             f'  <dd class="hstat-val">{esc(game or "FTC")}</dd>\n</div>')
     hnew = fill_markers(htext, "seasonstat", stat, home)
+    # Home page hero button to the calendar (only while the Season page and its calendar are on)
+    cal = data.get("calendar") or {}
+    cta = ('<a href="/season/#calendar" class="btn-outline">Event calendar</a>'
+           if data.get("enabled", True) and cal.get("enabled", True) and cal.get("feed") else "")
+    hnew = fill_markers(hnew, "seasoncta", cta, home)
     if hnew != htext:
         home.write_text(hnew)
     if new != text:
