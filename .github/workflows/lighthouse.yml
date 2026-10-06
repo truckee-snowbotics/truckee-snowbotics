@@ -1,0 +1,33 @@
+# Scores the built site with Lighthouse (accessibility, SEO, best practices, performance)
+# on every pull request. Scores under the targets in lighthouserc.json are reported as
+# warnings and never block a merge; tighten "warn" to "error" there once the scores settle.
+# The summary links to a public report (temporary-public-storage, kept ~7 days).
+
+name: Lighthouse
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install build dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build site (release build, as deployed)
+        run: python3 scripts/build.py --release
+
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true

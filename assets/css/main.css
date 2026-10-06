@@ -778,3 +778,11 @@ a.sponsor-bar-logo:hover { opacity: .7; }
   .reveal { opacity: 1 !important; }
   html { scroll-behavior: auto; }
 }
+
+/* ── 404 page ── */
+.not-found { min-height: 60vh; display: flex; align-items: center; }
+.not-found .section-inner { text-align: center; }
+.not-found .hero-badge { margin: 0 auto 1.5rem; }
+.not-found h1 { font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 1rem; }
+.not-found p { color: var(--text-mid); max-width: 36ch; margin: 0 auto 2.5rem; }
+.not-found-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
