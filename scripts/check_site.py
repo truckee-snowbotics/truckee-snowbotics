@@ -19,6 +19,7 @@ WARNING (printed only):
   - missing meta description, not exactly one <h1>, skipped heading levels,
     target="_blank" without rel="noopener", #fragment links to a missing id
 """
+import datetime
 import json
 import re
 import sys
@@ -216,7 +217,7 @@ def check_html():
 
 # ── Data file schemas ─────────────────────────────────
 # Leaf types: "str" (non-empty), "int", "bool", "url" (http(s)://, mailto:, /path or #),
-# "weburl" (http(s):// only), ("enum", [...]). Containers: ("list", node) and
+# "weburl" (http(s):// only), "date" (YYYY-MM-DD), "time" (HH:MM), ("enum", [...]). Containers: ("list", node) and
 # ("obj", {field: (node, required)}). Unknown fields only warn (usually typos).
 def obj(**fields):
     return ("obj", fields)
@@ -233,7 +234,11 @@ def opt(node):
 SCHEMAS = {
     "team.json": ("list", obj(id=req("str"), initials=req("str"), name=req("str"), role=req("str"))),
     "news.json": ("list", obj(
-        order=opt("int"), date=req("str"), tag=req("str"), title=req("str"), text=req("str"))),
+        date=req("date"), endDate=opt("date"), displayDate=opt("str"),
+        title=req("str"), text=req("str"),
+        link=opt("url"), linkLabel=opt("str"), image=opt("str"), imageAlt=opt("str"),
+        featured=opt("bool"), expires=opt("date"), event=opt("bool"),
+        location=opt("str"), address=opt("str"), startTime=opt("time"), endTime=opt("time"))),
     "sponsors.json": ("list", obj(
         id=req("str"), name=req("str"), banner=req("str"), website=req("weburl"),
         tier=req(("enum", ["platinum", "gold", "silver", "bronze"])))),
@@ -273,6 +278,14 @@ def validate(node, value, path, where):
             else re.match(r"(https?://\S+|mailto:\S+|/\S*|#)$", value))
         if not ok:
             err(where, f"{path}: expected a {'web ' if kind == 'weburl' else ''}URL, got {value!r}")
+    elif kind == "date":
+        try:
+            datetime.date.fromisoformat(value)
+        except (TypeError, ValueError):
+            err(where, f"{path}: expected a date like 2026-06-07, got {value!r}")
+    elif kind == "time":
+        if not (isinstance(value, str) and re.fullmatch(r"([01]\d|2[0-3]):[0-5]\d", value)):
+            err(where, f"{path}: expected a time like 17:30, got {value!r}")
     elif kind == "enum":
         if value not in node[1]:
             err(where, f"{path}: \"{value}\" is not one of {', '.join(node[1])}")
@@ -302,6 +315,29 @@ def validate(node, value, path, where):
                 warn(where, f"{path}: unknown field \"{name}\" (typo?)")
 
 
+def check_news(items, where):
+    today = datetime.date.today()
+    dated = [i for i in items if isinstance(i, dict) and isinstance(i.get("date"), str)]
+
+    def parse(value):
+        try:
+            return datetime.date.fromisoformat(value)
+        except (TypeError, ValueError):
+            return None
+
+    for n, i in enumerate(dated):
+        start, end = parse(i["date"]), parse(i.get("endDate") or i["date"])
+        if start and end and end < start:
+            err(where, f"$[{n}]: endDate is before date")
+        if i.get("event") and end and end < today and not i.get("expires"):
+            warn(where, f"\"{i.get('title')}\" is a past event with no expires date; it will keep showing")
+        if i.get("image") and not i.get("imageAlt"):
+            pass  # decorative by default; the title sits right next to it
+    live = [i for i in dated if not i.get("expires") or (parse(i["expires"]) or today) >= today]
+    if dated and not live:
+        warn(where, "every news item has expired, so the news section will be hidden")
+
+
 def check_schema(name, data, where):
     schema = SCHEMAS.get(name)
     if not schema:
@@ -314,6 +350,8 @@ def check_schema(name, data, where):
             if i in seen:
                 err(where, f"duplicate id \"{i}\"")
             seen.add(i)
+    if name == "news.json" and isinstance(data, list):
+        check_news(data, where)
     if name == "seasons.json" and isinstance(data, list):
         if sum(1 for s in data if isinstance(s, dict) and s.get("current") is True) > 1:
             err(where, "more than one season has \"current\": true")

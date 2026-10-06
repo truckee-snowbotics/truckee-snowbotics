@@ -365,26 +365,29 @@ ul { list-style: none; }
 .news-grid { display: flex; flex-direction: column; }
 .news-card {
   display: grid; grid-template-columns: 220px minmax(0, 1fr);
-  column-gap: 2rem; row-gap: .35rem;
+  column-gap: 2rem; row-gap: 1rem;
   padding: 1.75rem 0;
   border-bottom: 1px solid var(--border);
 }
 .news-card:first-child { border-top: 1px solid var(--border); }
-.news-card-meta {
-  grid-row: 1 / span 2;
-  display: flex; flex-direction: column; align-items: flex-start; gap: .5rem;
-}
-.news-card-date { font-family: var(--mono); font-size: .78rem; color: var(--text-dim); }
-.news-card-tag {
-  font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--accent);
-  border: 1px solid var(--accent-line); border-radius: 0; padding: .15rem .55rem;
-}
+.news-card-date { font-size: .85rem; font-weight: 500; color: var(--text-dim); padding-top: .2rem; }
+.news-card-body { display: flex; flex-direction: column; gap: .35rem; min-width: 0; }
 .news-card-title { font-size: 1.15rem; font-weight: 600; color: var(--heading); line-height: 1.35; letter-spacing: -.01em; }
 .news-card-text { font-size: 1rem; color: var(--text-mid); line-height: 1.65; max-width: 70ch; }
+.news-card-link { width: fit-content; margin-top: .4rem; font-size: .9rem; font-weight: 600; color: var(--accent); }
+.news-card-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.news-card-media {
+  grid-column: 2; width: 100%; max-width: 420px; aspect-ratio: 16 / 9;
+  object-fit: cover; border: 1px solid var(--border);
+}
+.news-card--featured { border-left: 3px solid var(--accent); margin-left: -1.5rem; padding-left: calc(1.5rem - 3px); background: var(--bg-card); }
+.news-card--featured + .news-card { border-top: none; }
+.news-card--featured .news-card-title { font-size: 1.4rem; }
+.news-card--featured .news-card-date { color: var(--accent); }
 @media (max-width: 700px) {
-  .news-card { grid-template-columns: 1fr; }
-  .news-card-meta { grid-row: auto; flex-direction: row; align-items: center; gap: .75rem; }
+  .news-card { grid-template-columns: 1fr; row-gap: .5rem; }
+  .news-card-media { grid-column: 1; }
+  .news-card--featured { margin-left: 0; padding-left: 1rem; }
 }
 
 /* ── Donate / generic cards ──────────────────── */

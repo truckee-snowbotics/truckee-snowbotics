@@ -1,23 +1,24 @@
 [
   {
-    "order": 2,
-    "date": "March-June 2026",
-    "tag": "Season",
-    "title": "Post-Season Begins",
-    "text": "The season has ended, but we will continue to meet on Mondays after school for outreach, sponsors, and team building and learning."
-  },
-  {
-    "order": 1,
-    "date": "Sunday, June 7, 2026",
-    "tag": "Outreach",
+    "date": "2026-06-07",
     "title": "Truckee Maker Show",
-    "text": "Join us at the Truckee Maker Show at the Truckee Community Center from 11 AM to 5 PM."
+    "text": "Join us at the Truckee Maker Show at the Truckee Community Center from 11 AM to 5 PM.",
+    "event": true,
+    "location": "Truckee Community Center",
+    "startTime": "11:00",
+    "endTime": "17:00"
   },
   {
-    "order": 3,
-    "date": "Post-Season 2026",
-    "tag": "Team",
+    "date": "2026-06-01",
+    "displayDate": "Post-Season 2026",
     "title": "Recruiting New Members for 2026–27",
     "text": "Interested in robotics, engineering, or software? We're looking for motivated students to join the team for next season. No experience needed."
+  },
+  {
+    "date": "2026-03-01",
+    "endDate": "2026-06-30",
+    "displayDate": "March-June 2026",
+    "title": "Post-Season Begins",
+    "text": "The season has ended, but we will continue to meet on Mondays after school for outreach, sponsors, and team building and learning."
   }
 ]

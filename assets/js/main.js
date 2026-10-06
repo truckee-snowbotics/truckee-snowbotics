@@ -566,27 +566,22 @@ function getSponsors() {
     .catch(() => {});
 })();
 
-// ── News feed ────────────────────────────────────────
+// ── News ─────────────────────────────────────────────
+// The cards are rendered into the page at build time (scripts/build_news.py from
+// news.json). Here we only hide items whose "expires" date has passed since the
+// last deploy, and hide the whole section if nothing is left.
 (function () {
   const grid = document.getElementById('news-grid');
   if (!grid) return;
-  fetch('/assets/data/news.json')
-    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-    .then(items => {
-      // Sort by order ascending; items without an order sink to the bottom.
-      // Ties keep their order from news.json (Array.sort is stable).
-      items.sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity));
-      grid.innerHTML = items.map(item => `
-        <div class="news-card">
-          <div class="news-card-meta">
-            <span class="news-card-date">${escapeHTML(item.date || '')}</span>
-            <span class="news-card-tag">${escapeHTML(item.tag || '')}</span>
-          </div>
-          <h3 class="news-card-title">${escapeHTML(item.title || '')}</h3>
-          <p class="news-card-text">${escapeHTML(item.text || '')}</p>
-        </div>`).join('');
-    })
-    .catch(() => {});
+  const now = new Date();
+  const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+  grid.querySelectorAll('.news-card[data-expires]').forEach(card => {
+    if (card.dataset.expires < today) card.remove();
+  });
+  if (!grid.querySelector('.news-card')) {
+    const section = grid.closest('section');
+    if (section) section.classList.add('section-hidden');
+  }
 })();
 
 // ── Contact form ─────────────────────────────────────

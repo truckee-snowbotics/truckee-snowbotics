@@ -29,6 +29,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/site/apple-touch-icon.png" />
   <meta name="theme-color" content="#151b24" />
   <link rel="manifest" href="/site.webmanifest" />
+  <link rel="alternate" type="application/rss+xml" title="Truckee Snowbotics news" href="/news.xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
@@ -67,7 +68,6 @@
   }
   </script>
   <!-- Preload page data -->
-  <link rel="preload" href="/assets/data/news.json" as="fetch" crossorigin />
   <link rel="preload" href="/assets/data/sponsors.json" as="fetch" crossorigin />
   <link rel="preload" href="/assets/data/links.json" as="fetch" crossorigin />
 </head>
@@ -198,6 +198,29 @@
           <h2>News & Updates</h2>
         </div>
         <div class="news-grid" id="news-grid">
+          <!-- @news -->
+          <article class="news-card" id="news-2026-06-07-truckee-maker-show">
+            <time class="news-card-date" datetime="2026-06-07">Sunday, June 7, 2026</time>
+            <div class="news-card-body">
+              <h3 class="news-card-title">Truckee Maker Show</h3>
+              <p class="news-card-text">Join us at the Truckee Maker Show at the Truckee Community Center from 11 AM to 5 PM.</p>
+            </div>
+          </article>
+          <article class="news-card" id="news-2026-06-01-recruiting-new-members-for-2026-27">
+            <time class="news-card-date" datetime="2026-06-01">Post-Season 2026</time>
+            <div class="news-card-body">
+              <h3 class="news-card-title">Recruiting New Members for 2026–27</h3>
+              <p class="news-card-text">Interested in robotics, engineering, or software? We&#x27;re looking for motivated students to join the team for next season. No experience needed.</p>
+            </div>
+          </article>
+          <article class="news-card" id="news-2026-03-01-post-season-begins">
+            <time class="news-card-date" datetime="2026-03-01">March-June 2026</time>
+            <div class="news-card-body">
+              <h3 class="news-card-title">Post-Season Begins</h3>
+              <p class="news-card-text">The season has ended, but we will continue to meet on Mondays after school for outreach, sponsors, and team building and learning.</p>
+            </div>
+          </article>
+          <!-- @endnews -->
         </div>
       </div>
     </section>

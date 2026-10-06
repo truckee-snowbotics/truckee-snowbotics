@@ -7,10 +7,39 @@ Plain HTML/CSS/JS, hosted on GitHub Pages.
 ## Editing content
 
 - `team.json` — About page team cards
-- `news.json` — Home page news cards
+- `news.json` — Home page news (see News below)
 - `gallery-captions.json` — optional gallery captions (see Gallery below); `gallery.json` is generated
 - `sponsors.json` — Sponsor logos
 - `links.json` — every link on the site (socials, forms, link cards)
+
+### News
+
+`assets/data/news.json` is a list of items; the build renders them into the home page
+(real HTML, so search engines see them), writes `news.xml` (RSS) and, for upcoming
+events, Event structured data. Newest `date` first; no ordering field to maintain.
+
+```json
+{
+  "date": "2026-06-07",
+  "title": "Truckee Maker Show",
+  "text": "Join us at the Truckee Maker Show…",
+  "event": true, "location": "Truckee Community Center",
+  "startTime": "11:00", "endTime": "17:00"
+}
+```
+
+| Field | |
+|---|---|
+| `date`, `title`, `text` | required (`date` is `YYYY-MM-DD`) |
+| `endDate` | optional, for a span of days |
+| `displayDate` | optional text shown instead of the formatted date ("Post-Season 2026") |
+| `link`, `linkLabel` | optional "Read more →" link (URLs already in `links.json` are kept single-source) |
+| `image`, `imageAlt` | optional picture shown under the text |
+| `featured` | `true` pins the item to the top, highlighted |
+| `expires` | hidden after this date, including in visitors' browsers between deploys |
+| `event`, `location`, `address`, `startTime`, `endTime` | `event: true` publishes Event data while upcoming (times are Pacific) |
+
+The site check warns about past events without an `expires` date, and if every item has expired.
 
 ### Gallery
 
