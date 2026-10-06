@@ -102,7 +102,7 @@ page stat, so a new season is a `season.json` edit. The footer year updates itse
 }
 ```
 
-`exclude` hides events whose title contains any of those words (add `"Coaches Corner"` to drop workshops, for example); `limit` is how many events the list shows (the month view shows all of them). This list is separate from `stream.events`, which are the events *we* compete in and drive the live embed.
+`exclude` hides events whose title contains any of those words (add `"Coaches Corner"` to drop workshops, for example); `limit` is how many events the list shows before a "More events (N)" dropdown (default 10; the month view shows all of them). This list is separate from `stream.events`, which are the events *we* compete in and drive the live embed.
 
 **Robot.** `robot` takes optional `name`, `description`, `photos` (`src` + `caption`),
 `specs` (`label` + `value`) and `links`. Only what you fill in is shown.

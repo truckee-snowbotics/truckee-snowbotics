@@ -23,7 +23,7 @@
     "exclude": [
       "SoNV"
     ],
-    "limit": 12
+    "limit": 10
   },
   "robot": {
     "enabled": true,

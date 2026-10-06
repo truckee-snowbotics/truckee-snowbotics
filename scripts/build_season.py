@@ -194,21 +194,33 @@ def calendar_section(cal, today, alt):
               and not any(x in e["title"].lower() for x in exclude)]
     ids = link_ids()
     title = cal.get("title") or "Regional calendar"
-    if events:
-        rows = []
-        for e in events[: cal.get("limit", 12)]:
+    def rows(items):
+        out = []
+        for e in items:
             d = datetime.date.fromisoformat(e["start"][:10])
             where = cal_where(e["location"]) if e.get("location") else ""
-            rows.append(
-                '    <li class="cal-item">\n'
-                f'      <time class="cal-date" datetime="{e["start"][:10]}"><span class="cal-month">{d:%b}</span><span class="cal-day">{d.day}</span></time>\n'
-                '      <div class="cal-body">\n'
-                f'        <h3 class="cal-title">{esc(clean_title(e["title"]))}</h3>\n'
-                f'        <p class="cal-meta">{esc(cal_when(e))}</p>\n'
-                + (f'        <p class="cal-where">{where}</p>\n' if where else "")
-                + "      </div>\n    </li>"
+            out.append(
+                '<li class="cal-item">\n'
+                f'  <time class="cal-date" datetime="{e["start"][:10]}"><span class="cal-month">{d:%b}</span><span class="cal-day">{d.day}</span></time>\n'
+                '  <div class="cal-body">\n'
+                f'    <h3 class="cal-title">{esc(clean_title(e["title"]))}</h3>\n'
+                f'    <p class="cal-meta">{esc(cal_when(e))}</p>\n'
+                + (f'    <p class="cal-where">{where}</p>\n' if where else "")
+                + "  </div>\n</li>"
             )
-        listing = '    <ol class="cal-list">\n' + "\n".join("  " + line for r in rows for line in r.split("\n")) + "\n    </ol>\n"
+        return "\n".join(out)
+
+    def ol(items, extra=""):
+        body = "\n".join("  " + line for line in rows(items).split("\n"))
+        return f'<ol class="cal-list{extra}">\n{body}\n</ol>'
+
+    if events:
+        limit = cal.get("limit", 10)
+        shown, more = events[:limit], events[limit:]
+        listing = "\n".join("    " + line for line in ol(shown).split("\n")) + "\n"
+        if more:
+            inner = "\n".join("      " + line for line in ol(more, " cal-list--more").split("\n"))
+            listing += (f'    <details class="cal-more">\n      <summary>More events ({len(more)})</summary>\n{inner}\n    </details>\n')
     else:
         listing = '    <p class="cal-empty">No upcoming events are listed right now. Check the full calendar below.</p>\n'
     # Month grid: main.js draws it from this JSON on wide screens; the list above is what

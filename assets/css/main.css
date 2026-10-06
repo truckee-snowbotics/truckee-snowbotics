@@ -895,3 +895,17 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media (min-width: 701px) { .has-grid .cal-list-wrap { display: none; } }
 @media (max-width: 700px) { .mcal { display: none; } }
+
+/* "More events" dropdown under the list */
+.cal-more { margin-top: 1.5rem; }
+.cal-more > summary {
+  list-style: none; cursor: pointer; width: fit-content;
+  padding: .7rem 1.4rem; border: 1px solid var(--border-h); color: var(--text);
+  font-size: .9rem; font-weight: 500; display: flex; align-items: center; gap: .6rem;
+}
+.cal-more > summary::-webkit-details-marker { display: none; }
+.cal-more > summary::after { content: "▾"; color: var(--accent); }
+.cal-more[open] > summary::after { content: "▴"; }
+.cal-more > summary:hover { border-color: var(--accent); }
+.cal-more[open] > summary { margin-bottom: 1.25rem; }
+.cal-list--more { margin-top: 0; }
