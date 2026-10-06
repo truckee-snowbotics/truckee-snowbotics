@@ -545,6 +545,24 @@ function getSponsors() {
   });
 })();
 
+// ── Season page: interactive Google Calendar (loads on click) ──
+(function () {
+  document.querySelectorAll('.cal-embed').forEach(box => {
+    const load = () => {
+      const narrow = window.matchMedia('(max-width: 700px)').matches;
+      const frame = document.createElement('iframe');
+      frame.src = narrow ? box.dataset.agenda : box.dataset.month;
+      frame.title = 'FIRST Nevada FTC calendar';
+      frame.loading = 'lazy';
+      frame.className = 'cal-frame' + (narrow ? ' cal-frame--agenda' : '');
+      box.replaceChildren(frame);
+    };
+    const btn = box.querySelector('button');
+    if (btn) btn.addEventListener('click', load);
+    if (box.dataset.autoload === 'true') load();
+  });
+})();
+
 // ── Season page: live stream ──────────────────────────
 // Event cards are rendered at build time from /assets/data/season.json (with absolute
 // start/end timestamps). Here the browser decides which state to show: the event's

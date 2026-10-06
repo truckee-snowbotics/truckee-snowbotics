@@ -187,6 +187,15 @@ def cal_where(location):
     return f'<span class="cal-venue">{esc(venue)}</span>' + (f" · {esc(address)}" if address else "")
 
 
+def embed_urls(calendar_id):
+    """Google Calendar embed addresses (month grid for wide screens, agenda list for phones)."""
+    import base64
+    src = base64.urlsafe_b64encode(calendar_id.encode()).decode().rstrip("=")
+    base = ("https://calendar.google.com/calendar/embed?src=" + src +
+            "&ctz=America%2FLos_Angeles&wkst=1&showTitle=0&showPrint=0&showCalendars=0&showTz=0&bgcolor=%23ffffff")
+    return base, base + "&mode=AGENDA"
+
+
 def calendar_section(cal, today, alt):
     exclude = [x.lower() for x in cal.get("exclude", [])]
     events = [e for e in load_calendar()
@@ -194,6 +203,7 @@ def calendar_section(cal, today, alt):
               and not any(x in e["title"].lower() for x in exclude)]
     events = events[: cal.get("limit", 12)]
     ids = link_ids()
+    display = cal.get("display", "list")
     title = cal.get("title") or "Regional calendar"
     if events:
         rows = []
@@ -212,6 +222,20 @@ def calendar_section(cal, today, alt):
         listing = '    <ol class="cal-list">\n' + "\n".join("  " + line for r in rows for line in r.split("\n")) + "\n    </ol>\n"
     else:
         listing = '    <p class="cal-empty">No upcoming events are listed right now. Check the full calendar below.</p>\n'
+    embed = ""
+    if display in ("embed", "both") and cal.get("calendarId"):
+        month, agenda = embed_urls(cal["calendarId"])
+        auto = ' data-autoload="true"' if cal.get("autoload") else ""
+        embed = (f'    <div class="cal-embed" data-month="{esc(month)}" data-agenda="{esc(agenda)}"{auto}>\n'
+                 '      <div class="cal-embed-panel">\n'
+                 '        <p class="stream-panel-title">Interactive calendar</p>\n'
+                 '        <p class="stream-panel-text">Google Calendar loads only when you ask for it, and may set cookies.</p>\n'
+                 '        <button type="button" class="btn-outline">Show interactive calendar</button>\n'
+                 '      </div>\n    </div>\n')
+        if display == "both":
+            listing = '    <h3 class="cal-list-title">Next up</h3>\n' + listing
+        else:
+            listing = ""
     feed = "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics"
     links = [anchor("Add to Google Calendar →", "https://calendar.google.com/calendar/r?cid=ftc%40firstnevada.org", ids, "season-event-link"),
              anchor("iCal feed →", cal.get("feed") or feed, ids, "season-event-link"),
@@ -222,7 +246,7 @@ def calendar_section(cal, today, alt):
       <h2>{esc(title)}</h2>
       <p>Upcoming league meets, tournaments and workshops in our region, from the FIRST Nevada calendar. Updated daily.</p>
     </div>
-{listing}    <div class="cal-links">{" ".join(links)}</div>
+{embed}{listing}    <div class="cal-links">{" ".join(links)}</div>
   </div>
 </section>'''
 
