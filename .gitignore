@@ -44,5 +44,5 @@ rollover-checklist.md
 __pycache__/
 *.pyc
 
-# Local preview environment (./preview)
+# Local preview environment (./build)
 .venv/

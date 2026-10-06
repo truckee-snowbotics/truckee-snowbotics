@@ -19,13 +19,13 @@ Plain HTML/CSS/JS, hosted on GitHub Pages. Python scripts in `scripts/` build th
 
 Generated files (`gallery.json`, `sitemap.xml`, `news.xml`, the lists inside pages) are rewritten by the build; don't edit inside the `<!-- @... -->` markers.
 
-## Preview locally
+## Rebuild for testing
 
 ```sh
-./preview
+./build
 ```
 
-It builds the site, starts a local server and opens http://localhost:8000. Run it again to rebuild after editing a data file (`./preview 8080` uses another port; Ctrl+C stops it). The first run sets up its own Python environment in `.venv`.
+Rebuilds every generated part of the site and runs the checks; then refresh your preview (VS Code Live Preview, or any static server on the project folder). Run it after editing a data file. The first run sets up its own Python environment in `.venv`.
 
 ## Folders
 

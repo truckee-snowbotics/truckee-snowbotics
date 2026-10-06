@@ -1,6 +1,6 @@
 # Editing content
 
-Every page is generated from the data files in `assets/data/`. Edit a file, push to `main`, and the deploy rebuilds the site. To preview locally, run `python3 scripts/build.py` and then `python3 -m http.server`.
+Every page is generated from the data files in `assets/data/`. Edit a file, push to `main`, and the deploy rebuilds the site. To test locally, run `./build` and refresh your preview.
 
 ## News
 

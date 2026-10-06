@@ -1,8 +1,8 @@
 #!/bin/sh
-# Build the site and preview it locally:   ./preview        (or ./preview 8080 for another port)
+# Rebuild the site for local testing:   ./build
+# Run it after editing a data file (team, alumni, news, season, links...), then refresh your preview.
 # First run creates a private Python environment in .venv and installs the build tools.
 cd "$(dirname "$0")" || exit 1
-PORT="${1:-8000}"
 
 if [ ! -x .venv/bin/python ]; then
   echo "Setting up (first run only)..."
@@ -12,9 +12,4 @@ fi
 # macOS Python often can't find certificates; this lets the build fetch the FTC calendar.
 [ -f /etc/ssl/cert.pem ] && export SSL_CERT_FILE=/etc/ssl/cert.pem
 
-.venv/bin/python scripts/build.py || { echo "Build failed; fix the error above and run ./preview again."; exit 1; }
-
-echo
-echo "Preview: http://localhost:$PORT   (Ctrl+C to stop; run ./preview again to rebuild)"
-if command -v open >/dev/null 2>&1; then (sleep 1; open "http://localhost:$PORT") & fi
-exec .venv/bin/python -m http.server "$PORT"
+.venv/bin/python scripts/build.py "$@"
