@@ -1,30 +1,20 @@
 [
   {
-    "date": "2026-09-12",
-    "title": "BIOBUZZ Season Kickoff",
-    "text": "The 2026–27 FIRST Tech Challenge season is here. This year's game is BIOBUZZ presented by RTX, part of the FIRST CANOPY biodiversity season."
+    "date": "2026-10-10",
+    "title": "Scrimmage",
+    "text": "Our scrimmage for the 2026–27 BIOBUZZ season.",
+    "expires": "2026-10-11"
   },
   {
-    "date": "2026-06-07",
-    "title": "Truckee Maker Show",
-    "text": "Join us at the Truckee Maker Show at the Truckee Community Center from 11 AM to 5 PM.",
-    "event": true,
-    "location": "Truckee Community Center",
-    "startTime": "11:00",
-    "endTime": "17:00",
-    "expires": "2026-06-08"
+    "date": "2026-10-31",
+    "title": "First Game",
+    "text": "Our first game of the 2026–27 season.",
+    "expires": "2026-11-01"
   },
   {
-    "date": "2026-09-12",
-    "title": "Recruiting New Members for 2026–27",
-    "text": "Interested in robotics, engineering, or software? We're looking for motivated students to join the team this season. No experience needed."
-  },
-  {
-    "date": "2026-03-01",
-    "endDate": "2026-06-30",
-    "displayDate": "March-June 2026",
-    "title": "Post-Season Begins",
-    "text": "The season has ended, but we will continue to meet on Mondays after school for outreach, sponsors, and team building and learning.",
-    "expires": "2026-09-11"
+    "date": "2026-12-05",
+    "title": "Second Game",
+    "text": "Our second game of the 2026–27 season.",
+    "expires": "2026-12-06"
   }
 ]

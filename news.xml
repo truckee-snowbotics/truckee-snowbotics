@@ -5,21 +5,28 @@
     <link>https://snowbotics.org/</link>
     <description>News and updates from Truckee Snowbotics, FTC Team #32587.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Sep 2026 12:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 05 Dec 2026 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://snowbotics.org/news.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>BIOBUZZ Season Kickoff</title>
-      <link>https://snowbotics.org/#news-2026-09-12-biobuzz-season-kickoff</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-09-12-biobuzz-season-kickoff</guid>
-      <pubDate>Sat, 12 Sep 2026 12:00:00 +0000</pubDate>
-      <description>The 2026–27 FIRST Tech Challenge season is here. This year&#x27;s game is BIOBUZZ presented by RTX, part of the FIRST CANOPY biodiversity season.</description>
+      <title>Scrimmage</title>
+      <link>https://snowbotics.org/#news-2026-10-10-scrimmage</link>
+      <guid isPermaLink="true">https://snowbotics.org/#news-2026-10-10-scrimmage</guid>
+      <pubDate>Sat, 10 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Our scrimmage for the 2026–27 BIOBUZZ season.</description>
     </item>
     <item>
-      <title>Recruiting New Members for 2026–27</title>
-      <link>https://snowbotics.org/#news-2026-09-12-recruiting-new-members-for-2026-27</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-09-12-recruiting-new-members-for-2026-27</guid>
-      <pubDate>Sat, 12 Sep 2026 12:00:00 +0000</pubDate>
-      <description>Interested in robotics, engineering, or software? We&#x27;re looking for motivated students to join the team this season. No experience needed.</description>
+      <title>First Game</title>
+      <link>https://snowbotics.org/#news-2026-10-31-first-game</link>
+      <guid isPermaLink="true">https://snowbotics.org/#news-2026-10-31-first-game</guid>
+      <pubDate>Sat, 31 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Our first game of the 2026–27 season.</description>
+    </item>
+    <item>
+      <title>Second Game</title>
+      <link>https://snowbotics.org/#news-2026-12-05-second-game</link>
+      <guid isPermaLink="true">https://snowbotics.org/#news-2026-12-05-second-game</guid>
+      <pubDate>Sat, 05 Dec 2026 12:00:00 +0000</pubDate>
+      <description>Our second game of the 2026–27 season.</description>
     </item>
   </channel>
 </rss>

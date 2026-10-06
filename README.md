@@ -17,7 +17,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages.
 
 `assets/data/news.json` is a list of items; the build renders them into the home page
 (real HTML, so search engines see them), writes `news.xml` (RSS) and, for upcoming
-events, Event structured data. Newest `date` first; no ordering field to maintain.
+events, Event structured data. Featured items first, then upcoming items soonest-first, then past items newest-first (by `date`); no ordering field to maintain.
 
 ```json
 {

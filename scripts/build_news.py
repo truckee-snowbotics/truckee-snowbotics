@@ -8,7 +8,7 @@ Writes, on every build:
   - news.xml, an RSS feed.
 
 Item fields (all dates are ISO, YYYY-MM-DD):
-  date          required; sort key (newest first)
+  date          required; sort key: upcoming items soonest-first, then past items newest-first
   title, text   required
   endDate       optional; for a span of days
   displayDate   optional text shown instead of the formatted date ("Post-Season 2026")
@@ -66,7 +66,15 @@ def slug(item):
 
 def active_items(items):
     shown = [i for i in items if not i.get("expires") or day(i["expires"]) >= TODAY]
-    return sorted(shown, key=lambda i: (not i.get("featured"), -day(i["date"]).toordinal(), i["title"]))
+
+    def order(i):
+        d = day(i.get("endDate") or i["date"])
+        upcoming = d >= TODAY
+        # featured first; then upcoming items soonest-first; then past items newest-first
+        return (not i.get("featured"), not upcoming,
+                day(i["date"]).toordinal() if upcoming else -day(i["date"]).toordinal(), i["title"])
+
+    return sorted(shown, key=order)
 
 
 def norm(url):
