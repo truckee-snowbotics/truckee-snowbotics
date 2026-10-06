@@ -1,0 +1,365 @@
+#!/usr/bin/env python3
+"""Pre-deploy checks. Exits non-zero (failing the deploy) if any ERROR is found.
+
+ERROR (blocks deploy):
+  - invalid JSON in assets/data/*.json or site.webmanifest
+  - data files that don't match their schema (see SCHEMAS): wrong type, missing
+    required field, bad sponsor tier, duplicate id, more than one current season
+  - local /images/... or /assets/... paths in JSON data that don't exist
+  - HTML src/href/srcset (and og:image) pointing at a local file that doesn't exist
+    (exact-case match, since GitHub's Linux servers are case-sensitive)
+  - <img> without an alt attribute, duplicate ids, missing <title> or <html lang>
+  - links: a data-link-key / data-form-action with no matching links.json id, or a
+    link whose href is a URL from links.json but has no data-link-key (use the key
+    so the URL stays in one place); with --release, a keyed link whose href didn't
+    get its URL
+WARNING (printed only):
+  - unknown fields in data files (usually typos), "Update..." placeholder text left
+    in seasons.json
+  - missing meta description, not exactly one <h1>, skipped heading levels,
+    target="_blank" without rel="noopener", #fragment links to a missing id
+"""
+import json
+import re
+import sys
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import unquote, urlsplit
+
+ROOT = Path(__file__).resolve().parent.parent
+DOMAIN = (ROOT / "CNAME").read_text().strip() if (ROOT / "CNAME").exists() else "snowbotics.org"
+REF_ATTRS = {
+    ("a", "href"), ("link", "href"), ("script", "src"), ("img", "src"), ("source", "src"),
+    ("iframe", "src"), ("video", "src"), ("audio", "src"), ("embed", "src"),
+    ("video", "poster"), ("form", "action"),
+}
+SKIP_SCHEMES = ("http:", "https:", "mailto:", "tel:", "javascript:", "data:", "sms:")
+
+RELEASE = "--release" in sys.argv
+errors, warnings = [], []
+
+
+def load_links():
+    f = ROOT / "assets" / "data" / "links.json"
+    try:
+        return {i["id"]: (i.get("url") or "").strip() for i in json.loads(f.read_text()) if i.get("id")}
+    except (OSError, ValueError, KeyError):
+        return {}  # reported by check_json
+
+
+def norm_url(u):
+    return u.strip().lower().rstrip("/")
+
+
+LINKS = load_links()
+URL_TO_ID = {norm_url(u): i for i, u in LINKS.items() if u and u != "#"}
+
+
+def err(where, msg):
+    errors.append(f"{where}: {msg}")
+
+
+def warn(where, msg):
+    warnings.append(f"{where}: {msg}")
+
+
+def exists_exact(path: Path) -> bool:
+    """True if path exists with exactly this casing (works on case-insensitive disks)."""
+    try:
+        parts = path.resolve().relative_to(ROOT.resolve()).parts
+    except ValueError:
+        return False
+    cur = ROOT
+    for part in parts:
+        if not cur.is_dir() or part not in {c.name for c in cur.iterdir()}:
+            return False
+        cur = cur / part
+    return True
+
+
+def resolve_local(value, page_dir):
+    """Map a URL to a local path, or None if it's external / not checkable."""
+    value = value.strip()
+    if not value or value.startswith("#"):
+        return None
+    low = value.lower()
+    if low.startswith(("http://", "https://", "//")):
+        parts = urlsplit(value if not value.startswith("//") else "https:" + value)
+        if parts.netloc.lower().removeprefix("www.") != DOMAIN:
+            return None
+        value = parts.path or "/"
+    elif low.startswith(SKIP_SCHEMES):
+        return None
+    path = unquote(urlsplit(value).path)
+    if not path:
+        return None
+    base = ROOT / path.lstrip("/") if path.startswith("/") else page_dir / path
+    return base
+
+
+def target_ok(base: Path) -> bool:
+    if base.is_dir() or str(base).endswith("/"):
+        return exists_exact(base / "index.html")
+    return exists_exact(base) or exists_exact(base.with_name(base.name) / "index.html")
+
+
+class PageParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.refs, self.ids, self.headings = [], [], []
+        self.imgs_no_alt = 0
+        self.title = self.lang = self.description = None
+        self.in_title = False
+        self.blank_no_rel = 0
+        self.link_attrs = []  # (line, tag, attrs) for links/forms checked against links.json
+
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        line = self.getpos()[0]
+        if tag == "html":
+            self.lang = a.get("lang")
+        if tag == "title":
+            self.in_title = True
+            self.title = ""
+        if tag == "meta":
+            if a.get("name") == "description":
+                self.description = a.get("content")
+            if a.get("property") in ("og:image", "og:url") and a.get("content") and a["property"] == "og:image":
+                self.refs.append((line, a["content"]))
+            if a.get("name") == "twitter:image" and a.get("content"):
+                self.refs.append((line, a["content"]))
+        if tag in ("a", "form"):
+            self.link_attrs.append((line, tag, a))
+        if "id" in a:
+            self.ids.append((line, a["id"]))
+        if tag == "img" and "alt" not in a:
+            self.imgs_no_alt += 1
+            err(self.where, f"line {line}: <img> missing alt attribute")
+        if re.fullmatch(r"h[1-6]", tag):
+            self.headings.append((line, int(tag[1])))
+        if tag == "a" and a.get("target") == "_blank" and "noopener" not in (a.get("rel") or ""):
+            warn(self.where, f"line {line}: target=\"_blank\" link without rel=\"noopener\"")
+        for t, attr in REF_ATTRS:
+            if tag == t and a.get(attr):
+                self.refs.append((line, a[attr]))
+        for attr in ("srcset", "imagesrcset"):
+            if a.get(attr):
+                for candidate in a[attr].split(","):
+                    if candidate.strip():
+                        self.refs.append((line, candidate.strip().split()[0]))
+
+    def handle_endtag(self, tag):
+        if tag == "title":
+            self.in_title = False
+
+    def handle_data(self, data):
+        if self.in_title:
+            self.title += data
+
+
+def check_html():
+    pages = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html"))
+    parsed = {}
+    for page in pages:
+        p = PageParser()
+        p.where = str(page.relative_to(ROOT))
+        p.feed(page.read_text())
+        parsed[page.resolve()] = p
+    for page in pages:
+        p = parsed[page.resolve()]
+        where = p.where
+        if not p.lang:
+            err(where, "<html> missing lang attribute")
+        if not (p.title or "").strip():
+            err(where, "missing <title>")
+        if not p.description:
+            warn(where, "missing meta description")
+        seen = set()
+        for line, i in p.ids:
+            if i in seen:
+                err(where, f"line {line}: duplicate id \"{i}\"")
+            seen.add(i)
+        h1s = [h for h in p.headings if h[1] == 1]
+        if len(h1s) != 1:
+            warn(where, f"expected one <h1>, found {len(h1s)}")
+        prev = 0
+        for line, level in p.headings:
+            if prev and level > prev + 1:
+                warn(where, f"line {line}: heading jumps from h{prev} to h{level}")
+            prev = level
+        for line, tag, a in p.link_attrs:
+            key = a.get("data-link-key") or a.get("data-form-action")
+            attr = "action" if tag == "form" else "href"
+            if key:
+                if key not in LINKS:
+                    err(where, f"line {line}: \"{key}\" is not an id in links.json")
+                elif RELEASE and LINKS[key] not in ("", "#") and a.get(attr) != LINKS[key]:
+                    err(where, f"line {line}: {attr} for \"{key}\" wasn't filled from links.json")
+            elif a.get(attr) and norm_url(a[attr]) in URL_TO_ID:
+                err(where, f"line {line}: {attr} duplicates links.json entry \"{URL_TO_ID[norm_url(a[attr])]}\"; use data-link-key=\"{URL_TO_ID[norm_url(a[attr])]}\" instead")
+        for line, value in p.refs:
+            base = resolve_local(value, page.parent)
+            if base is None:
+                if value.startswith("#") and len(value) > 1 and value[1:] not in seen:
+                    warn(where, f"line {line}: #{value[1:]} not found on this page")
+                continue
+            if not target_ok(base):
+                err(where, f"line {line}: broken reference \"{value}\"")
+                continue
+            frag = urlsplit(value).fragment
+            if frag:
+                target = base / "index.html" if base.is_dir() else base
+                other = parsed.get(target.resolve())
+                if other and frag not in {i for _, i in other.ids}:
+                    warn(where, f"line {line}: \"{value}\" — no id \"{frag}\" on that page")
+
+
+# ── Data file schemas ─────────────────────────────────
+# Leaf types: "str" (non-empty), "int", "bool", "url" (http(s)://, mailto:, /path or #),
+# "weburl" (http(s):// only), ("enum", [...]). Containers: ("list", node) and
+# ("obj", {field: (node, required)}). Unknown fields only warn (usually typos).
+def obj(**fields):
+    return ("obj", fields)
+
+
+def req(node):
+    return (node, True)
+
+
+def opt(node):
+    return (node, False)
+
+
+SCHEMAS = {
+    "team.json": ("list", obj(id=req("str"), initials=req("str"), name=req("str"), role=req("str"))),
+    "news.json": ("list", obj(
+        order=opt("int"), date=req("str"), tag=req("str"), title=req("str"), text=req("str"))),
+    "sponsors.json": ("list", obj(
+        id=req("str"), name=req("str"), banner=req("str"), website=req("weburl"),
+        tier=req(("enum", ["platinum", "gold", "silver", "bronze"])))),
+    "links.json": ("list", obj(
+        id=req("str"), label=req("str"), url=req("url"), category=req("str"), listed=req("bool"))),
+    "gallery.json": ("list", "str"),
+    "gallery-captions.json": ("dict", "str"),
+    "seasons.json": ("list", obj(
+        year=req("str"), game=req("str"), current=req("bool"),
+        robot=req(obj(
+            name=req("str"), description=req("str"),
+            specs=req(("list", obj(label=req("str"), value=req("str")))))),
+        tournaments=req(("list", obj(
+            name=req("str"), date=req("str"), location=req("str"),
+            ranking=req("str"), record=req("str"), awards=req("str")))))),
+}
+PLACEHOLDERS = {}  # data file -> count of "Update..." values
+UNIQUE_IDS = {"team.json", "sponsors.json", "links.json"}
+
+
+def validate(node, value, path, where):
+    kind = node if isinstance(node, str) else node[0]
+    if kind == "str":
+        if not isinstance(value, str) or not value.strip():
+            err(where, f"{path}: expected non-empty text")
+        elif value.strip().startswith("Update"):
+            PLACEHOLDERS[where] = PLACEHOLDERS.get(where, 0) + 1
+    elif kind == "int":
+        if not isinstance(value, int) or isinstance(value, bool):
+            err(where, f"{path}: expected a whole number")
+    elif kind == "bool":
+        if not isinstance(value, bool):
+            err(where, f"{path}: expected true or false")
+    elif kind in ("url", "weburl"):
+        ok = isinstance(value, str) and (
+            re.match(r"https?://\S+$", value) if kind == "weburl"
+            else re.match(r"(https?://\S+|mailto:\S+|/\S*|#)$", value))
+        if not ok:
+            err(where, f"{path}: expected a {'web ' if kind == 'weburl' else ''}URL, got {value!r}")
+    elif kind == "enum":
+        if value not in node[1]:
+            err(where, f"{path}: \"{value}\" is not one of {', '.join(node[1])}")
+    elif kind == "list":
+        if not isinstance(value, list):
+            err(where, f"{path}: expected a list")
+            return
+        for i, item in enumerate(value):
+            validate(node[1], item, f"{path}[{i}]", where)
+    elif kind == "dict":
+        if not isinstance(value, dict):
+            err(where, f"{path}: expected an object")
+            return
+        for k, v in value.items():
+            validate(node[1], v, f"{path}[\"{k}\"]", where)
+    elif kind == "obj":
+        if not isinstance(value, dict):
+            err(where, f"{path}: expected an object")
+            return
+        for name, (child, required) in node[1].items():
+            if name in value:
+                validate(child, value[name], f"{path}.{name}", where)
+            elif required:
+                err(where, f"{path}: missing \"{name}\"")
+        for name in value:
+            if name not in node[1]:
+                warn(where, f"{path}: unknown field \"{name}\" (typo?)")
+
+
+def check_schema(name, data, where):
+    schema = SCHEMAS.get(name)
+    if not schema:
+        return
+    validate(schema, data, "$", where)
+    if name in UNIQUE_IDS and isinstance(data, list):
+        seen = set()
+        for item in data:
+            i = item.get("id") if isinstance(item, dict) else None
+            if i in seen:
+                err(where, f"duplicate id \"{i}\"")
+            seen.add(i)
+    if name == "seasons.json" and isinstance(data, list):
+        if sum(1 for s in data if isinstance(s, dict) and s.get("current") is True) > 1:
+            err(where, "more than one season has \"current\": true")
+
+
+def local_paths_in(node):
+    if isinstance(node, str):
+        if re.match(r"^/(images|assets)/", node):
+            yield node
+    elif isinstance(node, dict):
+        for v in node.values():
+            yield from local_paths_in(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from local_paths_in(v)
+
+
+def check_json():
+    files = sorted((ROOT / "assets" / "data").glob("*.json")) + [ROOT / "site.webmanifest"]
+    for f in files:
+        if not f.exists():
+            continue
+        where = str(f.relative_to(ROOT))
+        try:
+            data = json.loads(f.read_text())
+        except json.JSONDecodeError as e:
+            err(where, f"invalid JSON ({e})")
+            continue
+        check_schema(f.name, data, where)
+        for path in local_paths_in(data):
+            if not exists_exact(ROOT / path.lstrip("/")):
+                err(where, f"missing file \"{path}\"")
+
+
+def main():
+    check_json()
+    for where, count in PLACEHOLDERS.items():
+        warn(where, f"{count} placeholder value(s) starting with \"Update\" still present")
+    check_html()
+    for w in warnings:
+        print(f"WARNING {w}")
+    for e in errors:
+        print(f"ERROR   {e}")
+    print(f"\nSite check: {len(errors)} error(s), {len(warnings)} warning(s)")
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

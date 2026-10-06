@@ -1,0 +1,4 @@
+# Used by scripts/ at build time only (the site itself has no dependencies).
+pillow==12.3.0
+rcssmin==1.2.2
+rjsmin==1.2.5

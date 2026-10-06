@@ -2,31 +2,27 @@
 'use strict';
 
 // ╔══════════════════════════════════════════════════╗
-// ║  CONTACT EMAIL — change this one value to update ║
-// ║  the email address everywhere on the site.       ║
-// ╚══════════════════════════════════════════════════╝
-const CONTACT_EMAIL = 'contact@snowbotics.org';
-
-// ╔══════════════════════════════════════════════════╗
 // ║  CONTACT NOTICE BANNER                           ║
 // ╠══════════════════════════════════════════════════╣
 // ║  Set enabled: true to show the banner,           ║
 // ║  false to hide it site-wide instantly.           ║
+// ║  The address shown is the "noticeEmail" entry in ║
+// ║  /assets/data/links.json.                        ║
 // ╚══════════════════════════════════════════════════╝
 const CONTACT_NOTICE = {
   enabled: false,
-  email:   'truckeesnowbotics@gmail.com',
 };
 
 // ╔══════════════════════════════════════════════════╗
 // ║  SPONSORSHIP FORM NOTICE                         ║
 // ╠══════════════════════════════════════════════════╣
 // ║  Set enabled: true to show a hover popup on all  ║
-// ║  sponsorship form buttons. Edit message freely.  ║
+// ║  sponsorship form buttons. Edit message freely;  ║
+// ║  {email} becomes the "email" entry in links.json. ║
 // ╚══════════════════════════════════════════════════╝
 const SPONSORSHIP_FORM_NOTICE = {
   enabled: false,
-  message: 'The sponsorship form has an incorrect email. Please use contact@snowbotics.org instead.',
+  message: 'The sponsorship form has an incorrect email. Please use {email} instead.',
 };
 
 // ╔══════════════════════════════════════════════════╗
@@ -88,8 +84,16 @@ const SECTION_VISIBILITY = [
 // ║    Information page links grid and in the footer ║
 // ║  - url "#" → no destination yet; the element is  ║
 // ║    hidden until a real URL is set                ║
+// ║  - emails are entries too: "email" (public) and  ║
+// ║    "noticeEmail", as mailto: URLs                ║
+// ║  - at deploy, scripts/apply_links.py writes these║
+// ║    URLs into the HTML, so the HTML needs only    ║
+// ║    data-link-key (href stays "#")                ║
 // ╚══════════════════════════════════════════════════╝
 let linksPromise = null;
+const linkUrls = {};
+// Address from a mailto: entry in links.json (empty until links have loaded).
+const emailOf = id => (linkUrls[id] || '').replace(/^mailto:/i, '');
 function getLinks() {
   if (!linksPromise) {
     linksPromise = fetch('/assets/data/links.json')
@@ -101,7 +105,7 @@ function getLinks() {
 
 // ── Wire data-link-key / data-form-action elements ──
 getLinks().then(items => {
-  const urlById = {};
+  const urlById = linkUrls;
   items.forEach(item => {
     if (item.id) urlById[item.id] = (item.url || '').trim();
   });
@@ -113,6 +117,7 @@ getLinks().then(items => {
     // of rendering a dead button that opens a blank tab.
     if (!url || url === '#') { el.style.display = 'none'; return; }
     el.href = url;
+    if (/^mailto:/i.test(url) && el.textContent.includes('@')) el.textContent = emailOf(el.dataset.linkKey);
     // This runs after the eval-time external-links pass below, so external
     // URLs assigned here must get target/rel themselves.
     if (/^https?:/i.test(url)) {
@@ -127,36 +132,17 @@ getLinks().then(items => {
   });
 }).catch(() => { /* keep the fallback hrefs hard-coded in the HTML */ });
 
-// ── Apply CONTACT_EMAIL to all mailto links ───────
-(function applyContactEmail() {
-  // Update all mailto anchor href and visible email text
-  document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
-    el.href = 'mailto:' + CONTACT_EMAIL;
-    if (el.textContent.includes('@')) el.textContent = CONTACT_EMAIL;
-  });
-
-  // Update JSON-LD structured data email field if present
-  document.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
-    try {
-      const data = JSON.parse(script.textContent);
-      if (data.email !== undefined) {
-        data.email = CONTACT_EMAIL;
-        script.textContent = JSON.stringify(data, null, 2);
-      }
-    } catch (e) { /* malformed JSON-LD — skip */ }
-  });
-})();
-
 // ── Contact notice banner ─────────────────────────
-(function () {
+getLinks().then(() => {
   const banner = document.getElementById('notice-banner');
   if (!banner || !CONTACT_NOTICE.enabled) return;
+  const noticeEmail = emailOf('noticeEmail');
 
-  // Populate email link from config
+  // Populate email link from links.json
   const link = banner.querySelector('a[data-notice-email]');
   if (link) {
-    link.href = 'mailto:' + CONTACT_NOTICE.email;
-    link.textContent = CONTACT_NOTICE.email;
+    link.href = 'mailto:' + noticeEmail;
+    link.textContent = noticeEmail;
   }
 
   // Wire up close button
@@ -176,7 +162,7 @@ getLinks().then(items => {
     // Insert explanation below the button
     const notice = document.createElement('p');
     notice.style.cssText = 'margin-top:.75rem;font-size:.875rem;background:#3b1010;color:#fca5a5;border:1px solid #7f1d1d;border-radius:0;padding:.6rem .85rem;line-height:1.5;';
-    notice.innerHTML = '&#9888; Contact form submissions are currently unavailable. Please reach us directly at <a href="mailto:' + CONTACT_NOTICE.email + '" style="color:#fde68a;text-decoration:underline;font-weight:600;">' + CONTACT_NOTICE.email + '</a>.';
+    notice.innerHTML = '&#9888; Contact form submissions are currently unavailable. Please reach us directly at <a href="mailto:' + noticeEmail + '" style="color:#fde68a;text-decoration:underline;font-weight:600;">' + noticeEmail + '</a>.';
     sendBtn.insertAdjacentElement('afterend', notice);
 
     const form = sendBtn.closest('form');
@@ -184,10 +170,10 @@ getLinks().then(items => {
       form.addEventListener('submit', (e) => { e.preventDefault(); });
     }
   }
-})();
+}).catch(() => {});
 
 // ── Sponsorship form hover notice ────────────
-(function () {
+getLinks().then(() => {
   if (!SPONSORSHIP_FORM_NOTICE.enabled) return;
 
   const tooltip = document.createElement('div');
@@ -206,7 +192,7 @@ getLinks().then(items => {
     'display:none',
     'box-shadow:0 4px 16px rgba(0,0,0,.45)',
   ].join(';');
-  tooltip.textContent = SPONSORSHIP_FORM_NOTICE.message;
+  tooltip.textContent = SPONSORSHIP_FORM_NOTICE.message.replace('{email}', emailOf('email'));
   document.body.appendChild(tooltip);
 
   function show(btn) {
@@ -231,7 +217,7 @@ getLinks().then(items => {
     btn.addEventListener('focus',      () => show(btn));
     btn.addEventListener('blur',       hide);
   });
-})();
+}).catch(() => {});
 
 // ── Scroll reveal ─────────────────────────────
 (function () {
@@ -355,24 +341,40 @@ function escapeHTML(value) {
   const track = document.querySelector('.gallery-track');
   if (!track) return;
 
-  fetch('/assets/data/gallery.json')
-    .then(response => {
-      if (!response.ok) throw new Error('Gallery JSON not found');
-      return response.json();
-    })
-    .then(items => {
+  // Captions live in gallery-captions.json ({"file.webp": "Caption"}); images
+  // without one fall back to their filename.
+  const loadJSON = url => fetch(url).then(response => {
+    if (!response.ok) throw new Error(url + ' not found');
+    return response.json();
+  });
+
+  Promise.all([
+    loadJSON('/assets/data/gallery.json'),
+    loadJSON('/assets/data/gallery-captions.json').catch(() => ({}))
+  ])
+    .then(([items, captions]) => {
       if (!Array.isArray(items) || !items.length) throw new Error('Invalid gallery data');
 
-      const cards = items.map(item => {
-        const image = item.src && item.src.trim();
-        const src = item.src || '';
-        const caption = item.description && item.description.trim() ? item.description.trim() : 'No caption';
+      const captionFor = src => {
+        const file = src.split('/').pop();
+        const stem = file.replace(/\.[^.]+$/, '');
+        const custom = captions[file] || Object.keys(captions).filter(k => k.replace(/\.[^.]+$/, '') === stem).map(k => captions[k])[0];
+        return (custom && custom.trim()) || stem.replace(/[_\-\s]+/g, ' ').trim();
+      };
+
+      // The grid loads small thumbnails (made at deploy time by
+      // scripts/optimize_images.py); the modal and the fallback use the full image.
+      const thumbFor = src => src.replace('/images/gallery/', '/images/gallery/thumbs/').replace(/\.[^.\/]+$/, '.webp');
+
+      const cards = items.map(src => {
+        src = String(src || '').trim();
+        const caption = captionFor(src);
         const alt = caption || 'Gallery image';
 
         return `
           <div class="gallery-item" data-src="${escapeHTML(src)}" data-alt="${escapeHTML(alt)}" data-caption="${escapeHTML(caption)}">
             <div class="gallery-image">
-              ${image ? `<img src="${escapeHTML(src)}" alt="${escapeHTML(alt)}" loading="lazy" decoding="async" />` : `<span>${escapeHTML(caption)}</span>`}
+              ${src ? `<img src="${escapeHTML(thumbFor(src))}" alt="${escapeHTML(alt)}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=this.closest('.gallery-item').dataset.src" />` : `<span>${escapeHTML(caption)}</span>`}
             </div>
           </div>
         `;
@@ -613,7 +615,7 @@ function getSponsors() {
       btn.insertAdjacentElement('afterend', success);
     } catch {
       if (errorDiv) {
-        errorDiv.textContent = 'Something went wrong. Please email us directly at ' + CONTACT_EMAIL + '.';
+        errorDiv.textContent = 'Something went wrong. Please email us directly at ' + emailOf('email') + '.';
         errorDiv.classList.remove('hidden');
       }
       btn.disabled = false;

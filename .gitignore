@@ -31,3 +31,6 @@ _site/
 Gemfile
 Gemfile.lock
 _config.yml
+
+# Generated gallery thumbnails (scripts/optimize_images.py)
+images/gallery/thumbs/

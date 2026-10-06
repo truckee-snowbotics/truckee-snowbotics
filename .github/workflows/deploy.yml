@@ -1,6 +1,8 @@
 # .github/workflows/deploy.yml
 # Deploys static site to GitHub Pages on every push to `main`.
-# No build step — plain HTML/CSS/JS.
+# Build step (scripts/build.py): optimizes gallery images, regenerates gallery.json
+# and sitemap.xml, stamps CSS/JS for cache busting, and runs site checks. A failed
+# check stops the deploy.
 
 name: Deploy to GitHub Pages
 
@@ -27,9 +29,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so sitemap <lastmod> dates come from git
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: Install build dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build and check site
+        run: python3 scripts/build.py --release
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

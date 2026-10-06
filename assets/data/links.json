@@ -82,5 +82,19 @@
     "url": "https://formspree.io/f/mqewdqbb",
     "category": "Forms",
     "listed": false
+  },
+  {
+    "id": "email",
+    "label": "Contact Email",
+    "url": "mailto:contact@snowbotics.org",
+    "category": "Contact",
+    "listed": false
+  },
+  {
+    "id": "noticeEmail",
+    "label": "Contact notice email (shown when the contact notice banner is on)",
+    "url": "mailto:truckeesnowbotics@gmail.com",
+    "category": "Contact",
+    "listed": false
   }
 ]
