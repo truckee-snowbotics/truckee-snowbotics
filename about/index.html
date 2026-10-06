@@ -48,7 +48,6 @@
   }
   </script>
   <!-- Preload page data -->
-  <link rel="preload" href="/assets/data/team.json" as="fetch" crossorigin />
   <link rel="preload" href="/assets/data/links.json" as="fetch" crossorigin />
 </head>
 <body>
@@ -152,10 +151,9 @@
           <h2>Our Team</h2>
           <p>The students and mentors behind Truckee Snowbotics, FTC Team #32587.</p>
         </div>
-        <!-- Static fallback for no-JS visitors and crawlers; replaced at
-             runtime by /assets/data/team.json — keep the two in sync. -->
+        <!-- Generated from /assets/data/team.json by scripts/build_team.py -->
         <div class="team-grid">
-
+          <!-- @team -->
           <div class="member-card">
             <div class="member-avatar">BL</div>
             <div class="member-info">
@@ -227,7 +225,7 @@
               <span class="member-role">Faculty Advisor</span>
             </div>
           </div>
-
+          <!-- @endteam -->
         </div>
       </div>
     </section>

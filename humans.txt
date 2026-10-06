@@ -1,11 +1,12 @@
 /* TEAM */
-  President: Eden Sacks
-  Software & Electrical Lead: Jack West
-  Hardware & Logistics Lead: Bach Le
+  President - Engineering Lead: Bach Le
+  Co-President - Software Lead: Jack West
   Strategy & Control: Eduardo Sosa
   Design & Outreach: Jonathan Bohnet
   Driver & Community: Corbin Hoff
-  Faculty Advisor: Maura Hoff
+  Team Member: Noah Pilon
+  Team Member: Rayce Rignes
+  Mentor & Advisor: Maura Hoff
   Faculty Advisor: Izzak Eberst
   Location: Truckee, California, USA
 
@@ -14,7 +15,7 @@
   Hack Club (fiscal sponsor) — hackclub.com
 
 /* SITE */
-  Last update: 2026/06
+  Last update: 2026/10
   Language: English
   Technology: HTML, CSS, JavaScript
   Hosted on: GitHub Pages

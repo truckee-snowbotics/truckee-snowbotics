@@ -232,7 +232,9 @@ def opt(node):
 
 
 SCHEMAS = {
-    "team.json": ("list", obj(id=req("str"), initials=req("str"), name=req("str"), role=req("str"))),
+    "team.json": ("list", obj(
+        id=opt("str"), initials=opt("str"), name=req("str"), role=req("str"),
+        photo=opt("str"), empty=opt("bool"))),
     "news.json": ("list", obj(
         date=req("date"), endDate=opt("date"), displayDate=opt("str"),
         title=req("str"), text=req("str"),

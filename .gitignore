@@ -34,3 +34,8 @@ _config.yml
 
 # Generated gallery thumbnails (scripts/optimize_images.py)
 images/gallery/thumbs/
+
+# Weekly health check output (scripts/health_check.py)
+health-report.md
+health-findings
+rollover-checklist.md

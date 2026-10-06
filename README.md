@@ -6,7 +6,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages.
 
 ## Editing content
 
-- `team.json` — About page team cards
+- `team.json` — team roster (About page cards and humans.txt are generated from it)
 - `news.json` — Home page news (see News below)
 - `gallery-captions.json` — optional gallery captions (see Gallery below); `gallery.json` is generated
 - `season.json` — Season page: on/off switch, live stream schedule, robot (see Season below)
@@ -121,6 +121,22 @@ one use their filename.
 - `partials/` — shared header/footer/head chunks
 - `scripts/` — build and check scripts
 
+### Automation (GitHub Actions)
+
+| Workflow | When | What |
+|---|---|---|
+| `deploy.yml` | every push to `main`, **and daily at 6 AM Pacific** | Builds, checks and deploys. The daily run refreshes date-based content (news order and RSS, upcoming-event data, sitemap dates) without a push. |
+| `check.yml` | pull requests, non-main pushes | Same build and checks, no deploy. |
+| `health.yml` | Mondays 8 AM Pacific, or "Run workflow" | Runs `scripts/health_check.py`: broken outside links, events within a week that have no stream link, `security.txt` expiring soon. Opens or updates **one** issue labeled `site-health`, and closes it when everything passes. In the first week of September it also opens a "Season rollover checklist" issue. |
+
+Notes: scheduled workflows only run on the default branch (`main`) and GitHub pauses them
+after 60 days without any repo activity (a push or a manual run wakes them up). The health
+workflow needs Issues enabled on the repo. Sites that refuse automated requests (403/429)
+are listed as "couldn't verify" and never open an issue by themselves.
+
+The **team roster** lives only in `team.json`: `build_team.py` writes the About page cards
+and the TEAM section of `humans.txt` from it. Optional fields: `photo` and `empty`.
+
 ### Build and checks
 
 `python3 scripts/build.py` runs every step below. The deploy workflow runs it with
@@ -129,6 +145,7 @@ requests and non-main pushes. Any ERROR stops the deploy.
 
 | Script | What it does |
 |---|---|
+| `build_team.py` | Writes the About page team cards and the `humans.txt` team list from `team.json`. |
 | `build_season.py` | Renders the Season page from `season.json` (and the on/off switch). |
 | `build_pages.py` | Copies `partials/` (head-common, header, footer, scripts) into every page between `<!-- @partial name -->` markers. Edit the partial, run the build, commit the updated pages. Don't edit inside the markers. |
 | `optimize_images.py` | Gallery: JPG/PNG → WebP capped at 1600px, plus small thumbnails (`images/gallery/thumbs/`, generated, gitignored) used by the grid. Sponsors capped at 800px and `images/site/` at 1600px, same format. Needs Pillow (skipped if missing). |

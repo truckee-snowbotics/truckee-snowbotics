@@ -1,0 +1,53 @@
+# Weekly site health check. Opens (or updates) one GitHub issue when something needs
+# attention, and closes it when everything passes again. Also opens a season-rollover
+# checklist issue during the first week of September.
+#
+# Run it by hand any time from the Actions tab ("Run workflow").
+
+name: Site health
+
+on:
+  schedule:
+    - cron: '0 15 * * 1' # Mondays, 8 AM Pacific
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run checks
+        run: python3 scripts/health_check.py
+
+      - name: Open, update, or close the health issue
+        run: |
+          gh label create site-health --color BFD4F2 --description "Automated weekly site health report" --force
+          existing=$(gh issue list --label site-health --state open --json number --jq '.[0].number // empty')
+          if [ "$(cat health-findings)" = "1" ]; then
+            if [ -n "$existing" ]; then
+              gh issue edit "$existing" --body-file health-report.md
+            else
+              gh issue create --title "Site health: problems found" --label site-health --body-file health-report.md
+            fi
+          elif [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "All checks pass now."
+          fi
+
+      - name: Season rollover checklist
+        run: |
+          if [ -f rollover-checklist.md ]; then
+            title=$(head -n 1 rollover-checklist.md)
+            tail -n +2 rollover-checklist.md > rollover-body.md
+            found=$(gh issue list --state all --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+            if [ -z "$found" ]; then
+              gh label create season --color C2E0C6 --description "Season rollover" --force
+              gh issue create --title "$title" --label season --body-file rollover-body.md
+            fi
+          fi
