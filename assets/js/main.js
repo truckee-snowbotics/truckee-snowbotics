@@ -568,12 +568,12 @@ function getSponsors() {
 
   // One entry per day an event covers.
   const byDay = {};
-  events.forEach(e => {
+  events.forEach((e, i) => {
     const s = e.start.slice(0, 10), end = e.end.slice(0, 10);
     const t = new Date(s + 'T00:00:00Z'), last = new Date(end + 'T00:00:00Z');
     for (let n = 0; t <= last && n < 60; n++, t.setUTCDate(t.getUTCDate() + 1)) {
       const k = t.toISOString().slice(0, 10);
-      (byDay[k] = byDay[k] || []).push({ e, first: k === s });
+      (byDay[k] = byDay[k] || []).push({ e, i, first: k === s });
     }
   });
 
@@ -583,6 +583,8 @@ function getSponsors() {
   const first = { y: now.getFullYear(), m: now.getMonth() };
   const maxIndex = (+lastEnd.slice(0, 4) - first.y) * 12 + (+lastEnd.slice(5, 7) - 1 - first.m);
   let offset = 0; // months from the current month
+  mount.innerHTML = '<div class="mcal-view"></div><div class="mcal-pop" id="mcal-pop" role="tooltip" hidden></div>';
+  const view = mount.firstChild, pop = mount.lastChild;
 
   function render() {
     const y = first.y + Math.floor((first.m + offset) / 12);
@@ -600,15 +602,14 @@ function getSponsors() {
         const items = (byDay[k] || []).map(x => {
           const time = !x.e.allDay && x.first ? '<span class="mcal-time">' + clock(x.e.start.slice(11)) + '</span> ' : '';
           const kind = isCompetition(x.e.title) ? 'mcal-ev--comp' : 'mcal-ev--misc';
-          const tip = x.e.where ? ' title="' + escapeHTML(x.e.title + ' — ' + x.e.where) + '"' : '';
-          return '<li class="mcal-ev ' + kind + '"' + tip + '>' + time + escapeHTML(x.e.title) + '</li>';
+          return '<li class="mcal-ev ' + kind + '" tabindex="0" data-i="' + x.i + '">' + time + escapeHTML(x.e.title) + '</li>';
         }).join('');
         const cls = 'mcal-cell' + (inMonth ? '' : ' mcal-cell--out') + (k === todayKey ? ' mcal-cell--today' : '');
         body += '<td class="' + cls + '"><span class="mcal-num">' + day.getUTCDate() + '</span>' + (items ? '<ul class="mcal-evs">' + items + '</ul>' : '') + '</td>';
       }
       body += '</tr>';
     }
-    mount.innerHTML =
+    view.innerHTML =
       '<div class="mcal-bar">' +
         '<h3 class="mcal-title" aria-live="polite">' + MONTHS[m] + ' ' + y + '</h3>' +
         '<div class="mcal-nav">' +
@@ -622,6 +623,47 @@ function getSponsors() {
       '<tbody>' + body + '</tbody></table>';
   }
 
+  // Hover / keyboard-focus / tap card with an event's details.
+  let current = null;
+  function hidePop() {
+    pop.hidden = true;
+    if (current) current.removeAttribute('aria-describedby');
+    current = null;
+  }
+  function showPop(chip) {
+    const e = events[+chip.dataset.i];
+    if (!e) return;
+    if (current && current !== chip) current.removeAttribute('aria-describedby');
+    current = chip;
+    chip.setAttribute('aria-describedby', 'mcal-pop');
+    pop.className = 'mcal-pop ' + (chip.classList.contains('mcal-ev--comp') ? 'mcal-pop--comp' : 'mcal-pop--misc');
+    pop.innerHTML =
+      '<p class="mcal-pop-title">' + escapeHTML(e.title) + '</p>' +
+      '<p class="mcal-pop-when">' + escapeHTML(e.when) + '</p>' +
+      (e.venue ? '<p class="mcal-pop-where"><strong>' + escapeHTML(e.venue) + '</strong>' +
+        (e.address ? '<br>' + escapeHTML(e.address) : '') + '</p>' : '');
+    pop.hidden = false;
+    // Place under the chip (above it near the bottom), kept inside the calendar's width.
+    const box = mount.getBoundingClientRect(), r = chip.getBoundingClientRect();
+    const w = pop.offsetWidth, h = pop.offsetHeight;
+    let left = r.left - box.left;
+    left = Math.max(0, Math.min(left, box.width - w));
+    let top = r.bottom - box.top + 6;
+    if (r.bottom + h + 12 > window.innerHeight && r.top - box.top - h - 6 >= 0) top = r.top - box.top - h - 6;
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+  }
+  const chipOf = t => (t.closest ? t.closest('.mcal-ev') : null);
+  mount.addEventListener('mouseover', e => { const c = chipOf(e.target); if (c) showPop(c); });
+  mount.addEventListener('mouseout', e => { if (chipOf(e.target) && !chipOf(e.relatedTarget || document.body)) hidePop(); });
+  mount.addEventListener('focusin', e => { const c = chipOf(e.target); if (c) showPop(c); });
+  mount.addEventListener('focusout', e => { if (chipOf(e.target)) hidePop(); });
+  mount.addEventListener('click', e => {
+    const c = chipOf(e.target);
+    if (c) { if (current === c && !pop.hidden) hidePop(); else showPop(c); return; }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hidePop(); });
+
   mount.addEventListener('click', e => {
     const btn = e.target.closest('button');
     if (!btn || btn.disabled) return;
@@ -629,6 +671,7 @@ function getSponsors() {
     else if (btn.classList.contains('mcal-next')) offset = Math.min(maxIndex, offset + 1);
     else if (btn.classList.contains('mcal-today')) offset = 0;
     else return;
+    hidePop();
     render();
     const again = mount.querySelector('.' + btn.className.split(' ').filter(c => c !== 'mcal-btn')[0]);
     if (again && !again.disabled) again.focus();

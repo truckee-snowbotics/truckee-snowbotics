@@ -177,14 +177,30 @@ def cal_when(e):
     return f"{start:%a} {clock(start)} – {end:%a} {clock(end)} PT"
 
 
-def cal_where(location):
+def split_where(location):
+    """'Venue, 1 Main St, City, NV 89000, USA' -> ('Venue', '1 Main St, City, NV 89000')."""
     parts = [p.strip() for p in location.split(",") if p.strip()]
     if parts and parts[-1] in ("USA", "US"):
         parts.pop()
-    if not parts:
+    return (parts[0], ", ".join(parts[1:])) if parts else ("", "")
+
+
+def cal_where(location):
+    venue, address = split_where(location)
+    if not venue:
         return ""
-    venue, address = parts[0], ", ".join(parts[1:])
     return f'<span class="cal-venue">{esc(venue)}</span>' + (f" · {esc(address)}" if address else "")
+
+
+def cal_full_when(e):
+    """Date and time line for the month view's hover card."""
+    if e.get("allDay"):
+        a, b = datetime.date.fromisoformat(e["start"]), datetime.date.fromisoformat(e["end"])
+        return f"{a:%A, %B} {a.day} · All day" if a == b else f"{a:%A, %B} {a.day} – {b:%A, %B} {b.day} · All day"
+    start, end = datetime.datetime.fromisoformat(e["start"]), datetime.datetime.fromisoformat(e["end"])
+    if end <= start:
+        return f"{start:%A, %B} {start.day} · {clock(start)} PT"
+    return when_text(start, end)
 
 
 def calendar_section(cal, today, alt):
@@ -227,9 +243,12 @@ def calendar_section(cal, today, alt):
     # phones, search engines and visitors without JavaScript see.
     grid = ""
     if events:
-        payload = [{"title": clean_title(e["title"]), "start": e["start"], "end": e["end"], "allDay": bool(e.get("allDay")),
-                    "where": ", ".join(p.strip() for p in e.get("location", "").split(",") if p.strip() and p.strip() not in ("USA", "US"))}
-                   for e in events]
+        payload = []
+        for e in events:
+            venue, address = split_where(e.get("location", ""))
+            payload.append({"title": clean_title(e["title"]), "start": e["start"], "end": e["end"],
+                            "allDay": bool(e.get("allDay")), "when": cal_full_when(e),
+                            "venue": venue, "address": address})
         data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
         grid = ('    <div class="mcal" id="mcal" hidden></div>\n'
                 f'    <script type="application/json" id="cal-data">{data}</script>\n')

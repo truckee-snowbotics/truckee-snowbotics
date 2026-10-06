@@ -867,7 +867,7 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .cal-links { display: flex; flex-wrap: wrap; gap: .6rem 1.75rem; margin-top: 1.5rem; }
 
 /* Month grid (drawn by main.js; hidden on phones and without JS, where the list shows) */
-.mcal { margin-bottom: 1rem; }
+.mcal { position: relative; margin-bottom: 1rem; }
 .mcal-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
 .mcal-title { font-size: 1.35rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; }
 .mcal-nav { display: flex; gap: .5rem; }
@@ -909,3 +909,16 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .cal-more > summary:hover { border-color: var(--accent); }
 .cal-more[open] > summary { margin-bottom: 1.25rem; }
 .cal-list--more { margin-top: 0; }
+.mcal-ev { cursor: pointer; }
+.mcal-ev:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.mcal-pop {
+  position: absolute; z-index: 5; width: min(300px, 100%); pointer-events: none;
+  background: var(--surface-2); border: 1px solid var(--border-h); border-left-width: 3px;
+  padding: .85rem 1rem; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+.mcal-pop--comp { border-left-color: var(--accent); }
+.mcal-pop--misc { border-left-color: var(--text-dim); }
+.mcal-pop-title { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.35; }
+.mcal-pop-when { font-size: .85rem; color: var(--text-mid); margin-top: .35rem; }
+.mcal-pop-where { font-size: .85rem; color: var(--text-mid); margin-top: .6rem; line-height: 1.5; }
+.mcal-pop-where strong { color: var(--text); font-weight: 500; }
