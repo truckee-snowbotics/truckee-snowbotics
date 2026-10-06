@@ -1,0 +1,71 @@
+# Turns a "Submit a gallery photo" issue into a pull request that adds the photo.
+# Nothing goes live until someone merges the pull request.
+#
+# One-time repo setting: Settings > Actions > General > Workflow permissions >
+# tick "Allow GitHub Actions to create and approve pull requests".
+# Note: pull requests opened by this workflow don't start check.yml by themselves;
+# the deploy build runs the same checks when the PR is merged.
+
+name: Gallery photo submission
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  add-photo:
+    if: contains(github.event.issue.labels.*.name, 'gallery-photo')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: pip install -r requirements.txt
+
+      - name: Add the photo
+        id: add
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set +e
+          out=$(python3 scripts/add_gallery_photo.py 2>err.txt)
+          code=$?
+          echo "ok=$([ $code -eq 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "file=$out" >> "$GITHUB_OUTPUT"
+          { echo "error<<EOF"; cat err.txt; echo "EOF"; } >> "$GITHUB_OUTPUT"
+
+      - name: Open pull request
+        if: steps.add.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          branch="gallery-photo-$NUMBER"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add images/gallery assets/data/gallery-captions.json
+          git commit -m "Add gallery photo from #$NUMBER"
+          git push origin "$branch"
+          url=$(gh pr create --base main --head "$branch" \
+            --title "Add gallery photo (#$NUMBER)" \
+            --body "Submitted in #$NUMBER. Check the photo and caption, and that nobody in it shouldn't be posted, then merge. Merging closes the submission.
+
+          Closes #$NUMBER")
+          gh issue comment "$NUMBER" --body "Thanks! A team member will review this: $url"
+
+      - name: Report a problem
+        if: steps.add.outputs.ok != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          ERROR: ${{ steps.add.outputs.error }}
+        run: |
+          gh issue comment "$NUMBER" --body "Sorry, this photo couldn't be added automatically: $ERROR
+          Edit the submission or open a new one."

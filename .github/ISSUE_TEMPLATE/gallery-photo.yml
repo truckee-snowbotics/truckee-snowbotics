@@ -1,0 +1,28 @@
+name: Submit a gallery photo
+description: Suggest a photo for the website gallery. A team member reviews it before it goes live.
+title: "Gallery photo: "
+labels: ["gallery-photo"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Drag a **JPG or PNG** photo (under 10 MB) into the box below. Nothing goes on the site until a team member approves it.
+  - type: textarea
+    id: photo
+    attributes:
+      label: Photo
+      description: Drag and drop the photo here. One photo per submission.
+    validations:
+      required: true
+  - type: input
+    id: caption
+    attributes:
+      label: Caption
+      description: Optional. One short line, for example "Driver practice before the scrimmage".
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Permission
+      options:
+        - label: Everyone recognizable in this photo (or their parent/guardian) is okay with it being posted on the team website.
+          required: true

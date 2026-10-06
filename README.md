@@ -131,6 +131,7 @@ one use their filename.
 |---|---|---|
 | `deploy.yml` | every push to `main`, **and daily at 6 AM Pacific** | Builds, checks and deploys. The daily run refreshes date-based content (news order and RSS, upcoming-event data, sitemap dates) without a push. |
 | `check.yml` | pull requests, non-main pushes | Same build and checks, no deploy. |
+| `gallery-photo.yml` | a "Submit a gallery photo" issue is opened | Adds the photo and caption on a branch and opens a pull request for review. |
 | `health.yml` | Mondays 8 AM Pacific, or "Run workflow" | Runs `scripts/health_check.py`: broken outside links, events within a week that have no stream link, `security.txt` expiring soon. Opens or updates **one** issue labeled `site-health`, and closes it when everything passes. In the first week of September it also opens a "Season rollover checklist" issue. |
 
 Notes: scheduled workflows only run on the default branch (`main`) and GitHub pauses them
@@ -159,6 +160,8 @@ requests and non-main pushes. Any ERROR stops the deploy.
 | `minify_assets.py` | `--release` only: minifies `main.css`/`main.js` (whitespace and comments only). Edits files in place, so don't commit its output. |
 | `stamp_assets.py` | `--release` only: adds `?v=<commit>` to CSS/JS URLs so browsers refetch after a deploy. Edits HTML in place, so don't commit its output. |
 | `check_site.py` | Fails on invalid JSON, data files that don't match their schema (`SCHEMAS` in the script: required fields, types, sponsor tiers, duplicate ids), missing files in data/HTML references (case-sensitive), `<img>` without alt, duplicate ids, missing title/lang, links that bypass `links.json`. Warns on heading problems and more. |
+
+Teammates can also use **Issues > New issue > Submit a gallery photo**: `gallery-photo.yml` turns the submission into a pull request (`scripts/add_gallery_photo.py` checks it's a real JPG/PNG under 10 MB, converts it to WebP and adds the caption). Merge the PR to publish it, or close it to reject. One-time setting: Settings > Actions > General > tick "Allow GitHub Actions to create and approve pull requests".
 
 On GitHub you can upload a photo to `images/gallery/` and push; CI handles the rest.
 The committed `gallery.json`/`sitemap.xml` are only used for local preview.
