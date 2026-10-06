@@ -11,6 +11,7 @@ Edit the file in partials/, run this script (build.py does), and commit the upda
 pages. Pages stay complete HTML, so they preview locally without a build.
 Partials: head-common (icons, fonts, stylesheet), header, footer, scripts.
 """
+import json
 import re
 import sys
 from pathlib import Path
@@ -27,8 +28,20 @@ def indented(text, indent):
     return "\n".join(indent + line if line.strip() else "" for line in text.rstrip("\n").split("\n"))
 
 
+def season_enabled():
+    try:
+        return json.loads((ROOT / "assets" / "data" / "season.json").read_text()).get("enabled", True)
+    except (OSError, ValueError):
+        return True
+
+
 def main():
     partials = {p.stem: p.read_text() for p in PARTIALS.glob("*.html")}
+    if not season_enabled():  # season.json "enabled": false removes the Season links
+        partials = {
+            name: "\n".join(l for l in text.split("\n") if 'href="/season/"' not in l)
+            for name, text in partials.items()
+        }
     pages = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html"))
     changed, problems = 0, 0
     for page in pages:

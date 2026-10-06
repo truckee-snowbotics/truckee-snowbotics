@@ -43,12 +43,7 @@ const SPONSORSHIP_FORM_NOTICE = {
 // ║  { selector: '#news', hide: true }  ← silent     ║
 // ╚══════════════════════════════════════════════════╝
 const SECTION_VISIBILITY = [
-  {
-    page: '/season/',
-    selector: '#main-content',
-    hide: true,
-    message: 'This page is under construction — check back soon for robot specs and competition results.',
-  },
+  // The Season page is switched on/off with "enabled" in /assets/data/season.json.
 ];
 
 // ── Apply section visibility rules ────────────────
@@ -626,107 +621,123 @@ function getSponsors() {
   });
 })();
 
-// ── Season page ───────────────────────────────────────
+// ── Season page: live stream ──────────────────────────
+// Event cards are rendered at build time from /assets/data/season.json (with absolute
+// start/end timestamps). Here the browser decides which state to show: the event's
+// stream while it's on air (from 30 minutes before the start to 1 hour after the end),
+// otherwise the next event, otherwise a "nothing scheduled" note.
 (function () {
-  // Only run on the season page
-  if (!document.getElementById('results-table-body')) return;
+  const stage = document.getElementById('stream-stage');
+  if (!stage) return;
 
-  fetch('/assets/data/seasons.json')
-    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-    .then(seasons => {
-      if (!Array.isArray(seasons) || !seasons.length) return;
+  const PRE_MS = 30 * 60 * 1000;
+  const POST_MS = 60 * 60 * 1000;
+  const autoplay = (stage.closest('#watch') || {}).dataset?.autoplay !== 'false';
 
-      const current = seasons.find(s => s.current) || seasons[0];
+  const events = Array.from(document.querySelectorAll('.season-event')).map(el => ({
+    el,
+    name: el.dataset.name || 'Event',
+    start: new Date(el.dataset.start).getTime(),
+    end: new Date(el.dataset.end).getTime(),
+    stream: el.dataset.stream || '',
+    channel: el.dataset.youtubeChannel || '',
+    info: el.dataset.info || '',
+    results: el.dataset.results || ''
+  })).sort((a, b) => a.start - b.start);
 
-      // Hide static SEO anchor now that real content is loading
-      const seoAnchor = document.getElementById('season-intro-seo');
-      if (seoAnchor) seoAnchor.style.display = 'none';
+  // Turn a YouTube or Twitch link into an embeddable player URL (or '' if unsupported).
+  function embedUrl(event) {
+    const yt = 'https://www.youtube-nocookie.com/embed/';
+    const ytParams = '?autoplay=' + (autoplay ? 1 : 0) + '&mute=1&playsinline=1&rel=0';
+    if (event.channel) {
+      return yt + 'live_stream' + ytParams + '&channel=' + encodeURIComponent(event.channel);
+    }
+    let url;
+    try { url = new URL(event.stream); } catch (e) { return ''; }
+    const host = url.hostname.replace(/^www\./, '');
+    if (host === 'youtu.be') {
+      return yt + encodeURIComponent(url.pathname.slice(1)) + ytParams;
+    }
+    if (host === 'youtube.com' || host === 'm.youtube.com') {
+      const id = url.searchParams.get('v') || (url.pathname.match(/^\/(?:live|embed)\/([\w-]+)/) || [])[1];
+      return id ? yt + encodeURIComponent(id) + ytParams : '';
+    }
+    if (host === 'twitch.tv') {
+      const channel = url.pathname.split('/').filter(Boolean)[0];
+      return channel
+        ? 'https://player.twitch.tv/?channel=' + encodeURIComponent(channel) +
+          '&parent=' + encodeURIComponent(location.hostname) +
+          '&autoplay=' + (autoplay ? 'true' : 'false') + '&muted=true'
+        : '';
+    }
+    return '';
+  }
 
-      // Reveal the data-driven sections (hidden with inline display:none
-      // in the HTML so they never flash empty before data arrives)
-      ['season-hero', 'robot', 'results', 'archive'].forEach(id => {
-        const section = document.getElementById(id);
-        if (section) section.style.display = '';
-      });
+  function relative(ms) {
+    const mins = Math.round(ms / 60000);
+    if (mins < 60) return mins + ' minute' + (mins === 1 ? '' : 's');
+    const hours = Math.round(mins / 60);
+    if (hours < 48) return hours + ' hour' + (hours === 1 ? '' : 's');
+    const days = Math.round(hours / 24);
+    return days + ' days';
+  }
 
-      // Hero
-      const badge = document.getElementById('season-badge');
-      const gameName = document.getElementById('season-game-name');
-      const robotNameLabel = document.getElementById('season-robot-name-label');
-      if (badge) badge.textContent = current.year + ' Season';
-      if (gameName) gameName.textContent = current.game || current.year + ' Season';
-      if (robotNameLabel && current.robot) robotNameLabel.textContent = current.robot.name || '';
+  function linkButtons(event) {
+    const out = [];
+    if (event.stream) out.push(['Open stream', event.stream]);
+    if (event.info) out.push(['Event page', event.info]);
+    if (event.results) out.push(['Live results', event.results]);
+    return out.map(([label, href]) =>
+      '<a class="btn-outline" href="' + escapeHTML(href) + '" target="_blank" rel="noopener noreferrer">' + escapeHTML(label) + '</a>'
+    ).join('');
+  }
 
-      // Robot section
-      const robotHeading = document.getElementById('robot-name-heading');
-      const robotDesc = document.getElementById('robot-description');
-      const robotSpecs = document.getElementById('robot-specs-grid');
-      if (current.robot) {
-        if (robotHeading) robotHeading.textContent = current.robot.name || 'Robot';
-        if (robotDesc) robotDesc.textContent = current.robot.description || '';
-        if (robotSpecs && Array.isArray(current.robot.specs)) {
-          robotSpecs.innerHTML = current.robot.specs.map(spec => `
-            <div class="info-card">
-              <span class="info-card-title">${escapeHTML(spec.label)}</span>
-              <p class="info-card-body">${escapeHTML(spec.value)}</p>
-            </div>`).join('');
-        }
-      }
+  function panel(title, text, extra) {
+    stage.className = 'stream-stage';
+    stage.innerHTML =
+      '<div class="stream-panel">' +
+      '<p class="stream-panel-title">' + escapeHTML(title) + '</p>' +
+      '<p class="stream-panel-text">' + text + '</p>' +
+      (extra ? '<div class="stream-panel-actions">' + extra + '</div>' : '') +
+      '</div>';
+  }
 
-      // Results table
-      const resultsLabel = document.getElementById('results-season-label');
-      const tbody = document.getElementById('results-table-body');
-      if (resultsLabel) resultsLabel.textContent = current.year + ' Season';
-      if (tbody && Array.isArray(current.tournaments) && current.tournaments.length) {
-        tbody.innerHTML = current.tournaments.map(t => `
-          <tr>
-            <td>${escapeHTML(t.name || '—')}</td>
-            <td>${escapeHTML(t.date || '—')}</td>
-            <td>${escapeHTML(t.location || '—')}</td>
-            <td>${escapeHTML(t.ranking || '—')}</td>
-            <td>${escapeHTML(t.record || '—')}</td>
-            <td>${escapeHTML(t.awards || '—')}</td>
-          </tr>`).join('');
-      } else if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;">No results available yet.</td></tr>';
-      }
-
-      // Archive (all non-current seasons)
-      const archiveList = document.getElementById('season-archive-list');
-      const past = seasons.filter(s => !s.current);
-      if (archiveList && past.length) {
-        archiveList.innerHTML = past.map(s => `
-          <div class="season-archive-item">
-            <div class="season-archive-header">
-              <span class="season-badge">${escapeHTML(s.year)} Season</span>
-              <span class="season-archive-game">${escapeHTML(s.game || '')}</span>
-            </div>
-            ${s.robot ? `<p class="season-archive-robot"><strong>Robot:</strong> ${escapeHTML(s.robot.name || '—')}</p>` : ''}
-            ${Array.isArray(s.tournaments) && s.tournaments.length ? `
-            <div class="results-table-wrapper">
-              <table class="results-table">
-                <thead><tr><th>Event</th><th>Date</th><th>Location</th><th>Ranking</th><th>Record</th><th>Awards</th></tr></thead>
-                <tbody>${s.tournaments.map(t => `
-                  <tr>
-                    <td>${escapeHTML(t.name || '—')}</td>
-                    <td>${escapeHTML(t.date || '—')}</td>
-                    <td>${escapeHTML(t.location || '—')}</td>
-                    <td>${escapeHTML(t.ranking || '—')}</td>
-                    <td>${escapeHTML(t.record || '—')}</td>
-                    <td>${escapeHTML(t.awards || '—')}</td>
-                  </tr>`).join('')}
-                </tbody>
-              </table>
-            </div>` : ''}
-          </div>`).join('');
-      } else if (archiveList) {
-        archiveList.innerHTML = '<p style="color:var(--text-dim);font-size:.9rem;">Past seasons will appear here as they are added to seasons.json.</p>';
-      }
-    })
-    .catch(() => {
-      const results = document.getElementById('results');
-      if (results) results.style.display = '';
-      const tbody = document.getElementById('results-table-body');
-      if (tbody) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;">Could not load season data.</td></tr>';
+  let shown = null;
+  function update() {
+    const now = Date.now();
+    events.forEach(e => {
+      e.el.classList.toggle('is-past', now > e.end + POST_MS);
+      e.el.classList.toggle('is-live', now >= e.start - PRE_MS && now <= e.end + POST_MS);
     });
+    const live = events.find(e => now >= e.start - PRE_MS && now <= e.end + POST_MS);
+    const next = events.find(e => e.start - PRE_MS > now);
+    const key = live ? 'live:' + live.start : next ? 'next:' + next.start : 'none';
+    // Re-render only when the state changes, so a playing stream is never reloaded.
+    if (key === shown && !(next && !live)) return;
+    shown = key;
+
+    if (live) {
+      const src = embedUrl(live);
+      if (src) {
+        stage.className = 'stream-stage is-live';
+        stage.innerHTML =
+          '<iframe src="' + escapeHTML(src) + '" title="' + escapeHTML(live.name) + ' live stream" ' +
+          'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen ' +
+          'referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+        return;
+      }
+      panel('Live now: ' + live.name, 'We\'re competing right now. The stream link isn\'t available on this page yet.', linkButtons(live));
+      return;
+    }
+    if (next) {
+      panel('Next up: ' + next.name,
+        'Starts in about ' + relative(next.start - now) + '. The stream will appear here when the event goes on air.',
+        linkButtons(next));
+      return;
+    }
+    panel('No events scheduled', 'There\'s nothing on air right now. Check back before our next competition.', '');
+  }
+
+  update();
+  setInterval(update, 60 * 1000);
 })();

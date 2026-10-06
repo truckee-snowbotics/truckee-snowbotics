@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "season": "2025–26",
+  "game": "DECODE",
+  "stream": {
+    "enabled": true,
+    "autoplay": true,
+    "events": []
+  },
+  "robot": {
+    "enabled": true,
+    "photos": [
+      { "src": "/images/gallery/25_26_robot.webp", "caption": "Our 2025–26 competition robot" },
+      { "src": "/images/gallery/early_robotv1.webp", "caption": "Early prototype" },
+      { "src": "/images/gallery/development.webp", "caption": "Building and testing" }
+    ],
+    "specs": [
+      { "label": "Programming language", "value": "Java" },
+      { "label": "Control system", "value": "REV Control Hub" }
+    ],
+    "links": [
+      { "label": "Our code on GitHub", "url": "https://github.com/truckee-snowbotics" }
+    ]
+  }
+}

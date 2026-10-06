@@ -15,7 +15,7 @@ ERROR (blocks deploy):
     get its URL
 WARNING (printed only):
   - unknown fields in data files (usually typos), "Update..." placeholder text left
-    in seasons.json
+    in data files
   - missing meta description, not exactly one <h1>, skipped heading levels,
     target="_blank" without rel="noopener", #fragment links to a missing id
 """
@@ -217,7 +217,7 @@ def check_html():
 
 # ── Data file schemas ─────────────────────────────────
 # Leaf types: "str" (non-empty), "int", "bool", "url" (http(s)://, mailto:, /path or #),
-# "weburl" (http(s):// only), "date" (YYYY-MM-DD), "time" (HH:MM), ("enum", [...]). Containers: ("list", node) and
+# "weburl" (http(s):// only), "date" (YYYY-MM-DD), "datetime" (YYYY-MM-DDTHH:MM), "time" (HH:MM), ("enum", [...]). Containers: ("list", node) and
 # ("obj", {field: (node, required)}). Unknown fields only warn (usually typos).
 def obj(**fields):
     return ("obj", fields)
@@ -246,14 +246,19 @@ SCHEMAS = {
         id=req("str"), label=req("str"), url=req("url"), category=req("str"), listed=req("bool"))),
     "gallery.json": ("list", "str"),
     "gallery-captions.json": ("dict", "str"),
-    "seasons.json": ("list", obj(
-        year=req("str"), game=req("str"), current=req("bool"),
-        robot=req(obj(
-            name=req("str"), description=req("str"),
-            specs=req(("list", obj(label=req("str"), value=req("str")))))),
-        tournaments=req(("list", obj(
-            name=req("str"), date=req("str"), location=req("str"),
-            ranking=req("str"), record=req("str"), awards=req("str")))))),
+    "season.json": obj(
+        enabled=opt("bool"), season=req("str"), game=opt("str"),
+        stream=opt(obj(
+            enabled=opt("bool"), autoplay=opt("bool"),
+            events=req(("list", obj(
+                name=req("str"), start=req("datetime"), end=req("datetime"),
+                location=opt("str"), stream=opt("weburl"), youtubeChannelId=opt("str"),
+                info=opt("weburl"), results=opt("weburl")))))),
+        robot=opt(obj(
+            enabled=opt("bool"), name=opt("str"), description=opt("str"),
+            photos=opt(("list", obj(src=req("str"), caption=opt("str")))),
+            specs=opt(("list", obj(label=req("str"), value=req("str")))),
+            links=opt(("list", obj(label=req("str"), url=req("url"))))))),
 }
 PLACEHOLDERS = {}  # data file -> count of "Update..." values
 UNIQUE_IDS = {"team.json", "sponsors.json", "links.json"}
@@ -283,6 +288,11 @@ def validate(node, value, path, where):
             datetime.date.fromisoformat(value)
         except (TypeError, ValueError):
             err(where, f"{path}: expected a date like 2026-06-07, got {value!r}")
+    elif kind == "datetime":
+        try:
+            datetime.datetime.fromisoformat(value)
+        except (TypeError, ValueError):
+            err(where, f"{path}: expected a date and time like 2026-02-14T09:00, got {value!r}")
     elif kind == "time":
         if not (isinstance(value, str) and re.fullmatch(r"([01]\d|2[0-3]):[0-5]\d", value)):
             err(where, f"{path}: expected a time like 17:30, got {value!r}")
@@ -352,9 +362,15 @@ def check_schema(name, data, where):
             seen.add(i)
     if name == "news.json" and isinstance(data, list):
         check_news(data, where)
-    if name == "seasons.json" and isinstance(data, list):
-        if sum(1 for s in data if isinstance(s, dict) and s.get("current") is True) > 1:
-            err(where, "more than one season has \"current\": true")
+    if name == "season.json" and isinstance(data, dict):
+        for n, e in enumerate((data.get("stream") or {}).get("events", [])):
+            try:
+                if datetime.datetime.fromisoformat(e["end"]) < datetime.datetime.fromisoformat(e["start"]):
+                    err(where, f"stream.events[{n}]: end is before start")
+            except (KeyError, TypeError, ValueError):
+                pass  # reported by the schema
+            if not e.get("stream") and not e.get("youtubeChannelId"):
+                warn(where, f"stream.events[{n}] (\"{e.get('name')}\") has no stream link yet")
 
 
 def local_paths_in(node):

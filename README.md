@@ -9,6 +9,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages.
 - `team.json` — About page team cards
 - `news.json` — Home page news (see News below)
 - `gallery-captions.json` — optional gallery captions (see Gallery below); `gallery.json` is generated
+- `season.json` — Season page: on/off switch, live stream schedule, robot (see Season below)
 - `sponsors.json` — Sponsor logos
 - `links.json` — every link on the site (socials, forms, link cards)
 
@@ -41,6 +42,64 @@ events, Event structured data. Newest `date` first; no ordering field to maintai
 
 The site check warns about past events without an `expires` date, and if every item has expired.
 
+#### Date text
+
+The text shown next to each item is built automatically from `date` and `endDate`:
+
+| `date` / `endDate` | Shown as |
+|---|---|
+| `2026-06-07` | Sunday, June 7, 2026 |
+| `2026-10-20` / `2026-10-22` | October 20–22, 2026 |
+| `2026-03-01` / `2026-06-30` | March 1 – June 30, 2026 |
+| `2026-12-28` / `2027-01-03` | December 28, 2026 – January 3, 2027 |
+
+`displayDate` is an optional override for timing that isn't a real date ("Fall 2026").
+`date` still decides the sort order, so it needs a sensible value even when you
+override the text. **Leave `displayDate` out whenever the real date is known**, so the
+exact date shows and you have one less thing to keep in sync.
+
+Two current items still use `displayDate` because their dates are placeholders I made up
+to get the sort order right: "Recruiting New Members" (`2026-06-01`, shown as "Post-Season
+2026") and "Post-Season Begins" (`2026-03-01` to `2026-06-30`, shown as "March-June 2026").
+When their real dates are known, set `date` / `endDate` and delete `displayDate`.
+
+### Season page
+
+`assets/data/season.json` drives the whole page; the build renders it into `season/index.html`.
+
+**Turn the page off:** set `"enabled": false`. The page then shows only "This page isn't
+available right now", is marked noindex, and the Season links disappear from the header,
+footer and sitemap. (Set it back to `true` to bring everything back.) `stream.enabled` and
+`robot.enabled` switch off just one of the two sections.
+
+**Live stream.** Add each event we compete in to `stream.events`. Times are Pacific:
+
+```json
+{
+  "name": "Northern Nevada Qualifier",
+  "start": "2026-12-06T09:00",
+  "end": "2026-12-06T18:00",
+  "location": "Reno, NV",
+  "stream": "https://www.youtube.com/watch?v=VIDEO_ID",
+  "info": "https://ftc-events.firstinspires.org/…",
+  "results": "https://ftcscores.com/…"
+}
+```
+
+- `stream` can be a YouTube video/live link (`youtube.com/watch?v=…`, `youtu.be/…`,
+  `youtube.com/live/…`) or a Twitch channel (`twitch.tv/NAME`). For a YouTube channel that
+  goes live repeatedly, use `"youtubeChannelId": "UC…"` instead.
+- From 30 minutes before the start until 1 hour after the end, the page embeds the stream
+  and starts it automatically. Browsers only allow autoplay when the video is **muted**
+  (visitors click to unmute); that can't be changed. Set `"autoplay": false` to stop autoplay.
+- Outside an event window it shows the next event with a countdown, or "No events scheduled".
+- Embeds use YouTube's no-cookie player. The privacy page says the stream autoplays and
+  that YouTube/Twitch may set cookies; update it if you change providers.
+- Events that ended more than 90 days ago drop off the schedule.
+
+**Robot.** `robot` takes optional `name`, `description`, `photos` (`src` + `caption`),
+`specs` (`label` + `value`) and `links`. Only what you fill in is shown.
+
 ### Gallery
 
 Drop images into `images/gallery/`, optionally add a caption to
@@ -70,6 +129,7 @@ requests and non-main pushes. Any ERROR stops the deploy.
 
 | Script | What it does |
 |---|---|
+| `build_season.py` | Renders the Season page from `season.json` (and the on/off switch). |
 | `build_pages.py` | Copies `partials/` (head-common, header, footer, scripts) into every page between `<!-- @partial name -->` markers. Edit the partial, run the build, commit the updated pages. Don't edit inside the markers. |
 | `optimize_images.py` | Gallery: JPG/PNG → WebP capped at 1600px, plus small thumbnails (`images/gallery/thumbs/`, generated, gitignored) used by the grid. Sponsors capped at 800px and `images/site/` at 1600px, same format. Needs Pillow (skipped if missing). |
 | `build_gallery.py` | Writes `gallery.json` from the folder + captions. |

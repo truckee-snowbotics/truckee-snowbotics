@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Truckee Snowbotics" />
-  <meta name="description" content="2025–26 season results, robot specifications, and competition history for Truckee Snowbotics FTC Team #32587 from Truckee, CA." />
+  <meta name="description" content="Watch Truckee Snowbotics FTC Team #32587 compete live and see the robot we built for the 2025–26 season." />
   <title>Season · Truckee Snowbotics</title>
   <link rel="canonical" href="https://snowbotics.org/season/" />
+  <!-- @seasonmeta -->
+  <!-- @endseasonmeta -->
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Truckee Snowbotics" />
   <meta property="og:url" content="https://snowbotics.org/season/" />
   <meta property="og:title" content="Season · Truckee Snowbotics" />
-  <meta property="og:description" content="2025–26 season results, robot specifications, and competition history for Truckee Snowbotics FTC Team #32587 from Truckee, CA." />
+  <meta property="og:description" content="Watch Truckee Snowbotics FTC Team #32587 compete live and see the robot we built for the 2025–26 season." />
   <meta property="og:image" content="https://snowbotics.org/images/site/og-image.png" />
   <meta property="og:image:width" content="512" />
   <meta property="og:image:height" content="512" />
@@ -22,7 +24,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Season · Truckee Snowbotics" />
-  <meta name="twitter:description" content="2025–26 season results, robot specifications, and competition history for Truckee Snowbotics FTC Team #32587 from Truckee, CA." />
+  <meta name="twitter:description" content="Watch Truckee Snowbotics FTC Team #32587 compete live and see the robot we built for the 2025–26 season." />
   <!-- @partial head-common -->
   <link rel="icon" type="image/svg+xml" href="/images/site/favicon.svg" />
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -48,7 +50,6 @@
   }
   </script>
   <!-- Preload page data -->
-  <link rel="preload" href="/assets/data/seasons.json" as="fetch" crossorigin />
   <link rel="preload" href="/assets/data/links.json" as="fetch" crossorigin />
 </head>
 <body>
@@ -121,86 +122,52 @@
   <!-- @endpartial header -->
 
   <main id="main-content">
-    <!-- Under-construction strip is injected here by SECTION_VISIBILITY in main.js -->
-
-    <!-- ── SEO ANCHOR (visible to crawlers, hidden visually when JS loads season data) -->
-    <section class="section" id="season-intro-seo" aria-hidden="true">
-      <div class="section-inner">
-        <div class="section-header">
-          <h1>2025–26 Season — Truckee Snowbotics FTC Team #32587</h1>
-          <p>Competition results, robot specifications, and season history for Truckee Snowbotics, a FIRST Tech Challenge robotics team from Tahoe-Truckee High School in Truckee, CA, competing in the Northern Nevada FTC region.</p>
-        </div>
-      </div>
+    <!-- @season -->
+    <section class="page-hero">
+      <p class="eyebrow">2025–26 season · DECODE</p>
+      <h1>Season 2025–26</h1>
+      <p>Watch our events live and see the robot we built.</p>
     </section>
 
-    <!-- ── SEASON HERO ────────────────────────── -->
-    <section class="section section--alt" id="season-hero" style="display:none;">
+    <section class="section" id="watch" data-autoplay="true">
       <div class="section-inner">
-        <div class="season-intro">
-          <div class="season-intro-text">
-            <span class="season-badge" id="season-badge">2025–26 Season</span>
-            <h1 id="season-game-name">Loading…</h1>
-            <p id="season-robot-name-label" class="season-robot-label">Loading…</p>
-          </div>
-          <div class="season-intro-actions">
-            <a href="#robot" class="btn-primary">Robot</a>
-            <a href="#results" class="btn-outline">Results</a>
+        <div class="section-header">
+          <h2>Watch live</h2>
+          <p>When one of our events is on air, the broadcast appears here automatically.</p>
+        </div>
+        <div class="stream-stage" id="stream-stage">
+          <div class="stream-panel">
+            <p class="stream-panel-title">Live stream</p>
+            <p class="stream-panel-text">Event streams show up here while we compete. The schedule is below.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── ROBOT ──────────────────────────────── -->
-    <section class="section" id="robot" style="display:none;">
+    <section class="section section--alt" id="robot">
       <div class="section-inner">
         <div class="section-header">
-          <h2 id="robot-name-heading">Robot</h2>
-          <p id="robot-description">Loading robot information…</p>
+          <h2>Our robot</h2>
         </div>
-        <div class="info-grid" id="robot-specs-grid"></div>
-      </div>
-    </section>
-
-    <!-- ── COMPETITION RESULTS ────────────────── -->
-    <section class="section section--alt" id="results" style="display:none;">
-      <div class="section-inner">
-        <div class="section-header">
-          <h2>Competition Results</h2>
-          <p id="results-season-label">2025–26 Season</p>
-        </div>
-        <div class="results-table-wrapper">
-          <table class="results-table">
-            <thead>
-              <tr>
-                <th>Event</th>
-                <th>Date</th>
-                <th>Location</th>
-                <th>Ranking</th>
-                <th>Record</th>
-                <th>Awards</th>
-              </tr>
-            </thead>
-            <tbody id="results-table-body">
-              <tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;">Loading results…</td></tr>
-            </tbody>
-          </table>
+        <div class="robot-layout">
+          <div class="robot-photos">
+            <figure class="robot-photo robot-photo--lead"><img src="/images/gallery/25_26_robot.webp" alt="Our 2025–26 competition robot" loading="lazy" decoding="async" /><figcaption>Our 2025–26 competition robot</figcaption></figure>
+            <figure class="robot-photo"><img src="/images/gallery/early_robotv1.webp" alt="Early prototype" loading="lazy" decoding="async" /><figcaption>Early prototype</figcaption></figure>
+            <figure class="robot-photo"><img src="/images/gallery/development.webp" alt="Building and testing" loading="lazy" decoding="async" /><figcaption>Building and testing</figcaption></figure>
+          </div>
+          <div class="robot-side">
+            <dl class="spec-list">
+              <div><dt>Programming language</dt><dd>Java</dd></div>
+              <div><dt>Control system</dt><dd>REV Control Hub</dd></div>
+            </dl>
+            <div class="robot-links">
+              <a class="btn-outline" href="#" data-link-key="github" target="_blank" rel="noopener">Our code on GitHub →</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-
-    <!-- ── SEASON ARCHIVE ─────────────────────── -->
-    <section class="section" id="archive" style="display:none;">
-      <div class="section-inner">
-        <div class="section-header">
-          <h2>Season Archive</h2>
-          <p>Previous seasons and their results.</p>
-        </div>
-        <div id="season-archive-list" class="season-archive-list">
-          <p style="color:var(--text-dim);font-size:.9rem;">Past seasons will appear here as they are added to seasons.json.</p>
-        </div>
-      </div>
-    </section>
-
+    <!-- @endseason -->
   </main>
 
   <!-- ── SPONSOR BAR ───────────────────────────── -->

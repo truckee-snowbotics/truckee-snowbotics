@@ -6,6 +6,7 @@ Every index.html (root and one folder deep) is listed, except pages marked noind
 so CI needs a full checkout (fetch-depth: 0).
 """
 import datetime
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -31,7 +32,7 @@ DEFAULT = ("monthly", "0.5")
 DEPENDENCIES = {
     "": ["assets/data/news.json", "assets/data/sponsors.json"],
     "about": ["assets/data/team.json"],
-    "season": ["assets/data/seasons.json"],
+    "season": ["assets/data/season.json"],
     "gallery": ["images/gallery", "assets/data/gallery-captions.json"],
     "sponsors": ["assets/data/sponsors.json", "images/sponsors"],
     "information": ["assets/data/links.json"],
@@ -50,8 +51,14 @@ def git_date(paths):
 def main():
     found = {p.parent.name for p in ROOT.glob("*/index.html")} | {""}
     folders = [f for f in META if f in found] + sorted(found - set(META))
+    try:
+        season_on = json.loads((ROOT / "assets" / "data" / "season.json").read_text()).get("enabled", True)
+    except (OSError, ValueError):
+        season_on = True
     entries = []
     for folder in folders:
+        if folder == "season" and not season_on:
+            continue
         page = ROOT / folder / "index.html"
         if re.search(r'<meta[^>]+name="robots"[^>]+noindex', page.read_text(), re.I):
             continue
