@@ -7,6 +7,7 @@
     "group": "students",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -17,6 +18,7 @@
     "group": "students",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -27,6 +29,7 @@
     "group": "students",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -37,6 +40,7 @@
     "group": "students",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -47,6 +51,7 @@
     "group": "students",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -57,6 +62,7 @@
     "group": "students",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -67,6 +73,7 @@
     "group": "students",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -77,6 +84,7 @@
     "group": "mentors",
     "photo": "",
     "grade": "",
+    "years": "",
     "bio": ""
   },
   {
@@ -87,6 +95,18 @@
     "group": "mentors",
     "photo": "",
     "grade": "",
+    "years": "",
+    "bio": ""
+  },
+  {
+    "id": "eden-sacks",
+    "initials": "ES",
+    "name": "Eden Sacks",
+    "role": "",
+    "group": "alumni",
+    "photo": "",
+    "grade": "",
+    "years": "2026",
     "bio": ""
   }
 ]

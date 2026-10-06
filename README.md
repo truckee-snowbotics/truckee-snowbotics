@@ -115,12 +115,12 @@ else is shown only when you fill it in:
   "name": "Bach Le", "role": "President - Engineering Lead",
   "group": "students",
   "photo": "/images/team/bach-le.webp",
-  "grade": "11th grade",
+  "grade": "11th grade", "years": "",
   "bio": "One or two sentences."
 }
 ```
 
-`group` is `students` (default) or `mentors`. Without a
+`group` is `students` (default), `mentors` or `alumni` (shown last, under "Alumni", and left out of `humans.txt`). `years` is text shown as written (`"2026"`, `"2024–2026"`) next to the grade; `role` can be blank. Without a
 `photo` the card shows the person's initials. Put portraits in `images/team/` (square-ish,
 shrunk to 800px automatically). Get permission before posting anyone's photo or details
 (see the Terms page).

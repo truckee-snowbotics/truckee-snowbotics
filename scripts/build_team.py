@@ -6,9 +6,10 @@ Writes:
   - the TEAM section of humans.txt (and its "Last update" month)
 
 Member fields: name, role (required); id, initials (initials default to the name's
-first letters); group ("students" by default, or "mentors"); photo (optional /images/...
-path); grade ("10th grade"); bio (one or two sentences); empty (true = greyed-out
-placeholder). Everything except name and role is optional and only shown when filled in.
+first letters); group ("students" by default, "mentors" or "alumni"); photo (optional /images/...
+path); grade ("10th grade"); years (text shown as written, e.g. "2026" or "2024–2026");
+bio (one or two sentences); empty (true = greyed-out placeholder). A blank role is
+allowed (the line is skipped). Alumni are left out of humans.txt. Everything except name and role is optional and only shown when filled in.
 """
 import datetime
 import html
@@ -33,7 +34,7 @@ def initials(member):
     return "".join(w[0] for w in member["name"].split()[:2]).upper()
 
 
-GROUPS = [("students", "Students"), ("mentors", "Mentors &amp; Advisors")]
+GROUPS = [("students", "Students"), ("mentors", "Mentors &amp; Advisors"), ("alumni", "Alumni")]
 
 
 def card(m):
@@ -48,10 +49,12 @@ def card(m):
         f'  <div class="member-photo">{photo}</div>',
         '  <div class="member-body">',
         f'    <h4 class="member-name">{esc(m["name"])}</h4>',
-        f'    <p class="member-role">{esc(m["role"])}</p>',
     ]
-    if m.get("grade"):
-        lines.append(f'    <p class="member-meta">{esc(m["grade"])}</p>')
+    if m.get("role"):
+        lines.append(f'    <p class="member-role">{esc(m["role"])}</p>')
+    detail = " · ".join(str(m[k]) for k in ("years", "grade") if m.get(k))
+    if detail:
+        lines.append(f'    <p class="member-meta">{esc(detail)}</p>')
     if m.get("bio"):
         lines.append(f'    <p class="member-bio">{esc(m["bio"])}</p>')
     lines += ["  </div>", "</article>"]
@@ -76,7 +79,7 @@ def groups_html(members):
 
 def main():
     members = json.loads((ROOT / "assets" / "data" / "team.json").read_text())
-    real = [m for m in members if not m.get("empty")]
+    real = [m for m in members if not m.get("empty") and m.get("group") != "alumni"]
 
     body = groups_html(members)
     text = ABOUT.read_text()
