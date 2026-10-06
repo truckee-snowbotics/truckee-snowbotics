@@ -37,7 +37,7 @@ jobs:
           fetch-depth: 0 # full history so sitemap <lastmod> dates come from git
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Install build dependencies
         run: pip install -r requirements.txt
