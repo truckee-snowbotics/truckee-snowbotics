@@ -5,28 +5,14 @@
     <link>https://snowbotics.org/</link>
     <description>News and updates from Truckee Snowbotics, FTC Team #32587.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 05 Dec 2026 12:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://snowbotics.org/news.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Scrimmage</title>
-      <link>https://snowbotics.org/#news-2026-10-10-scrimmage</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-10-10-scrimmage</guid>
+      <title>Build Day</title>
+      <link>https://snowbotics.org/#news-2026-10-10-build-day</link>
+      <guid isPermaLink="true">https://snowbotics.org/#news-2026-10-10-build-day</guid>
       <pubDate>Sat, 10 Oct 2026 12:00:00 +0000</pubDate>
-      <description>Our scrimmage for the 2026–27 BIOBUZZ season.</description>
-    </item>
-    <item>
-      <title>First Game</title>
-      <link>https://snowbotics.org/#news-2026-10-31-first-game</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-10-31-first-game</guid>
-      <pubDate>Sat, 31 Oct 2026 12:00:00 +0000</pubDate>
-      <description>Our first game of the 2026–27 season.</description>
-    </item>
-    <item>
-      <title>Second Game</title>
-      <link>https://snowbotics.org/#news-2026-12-05-second-game</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-12-05-second-game</guid>
-      <pubDate>Sat, 05 Dec 2026 12:00:00 +0000</pubDate>
-      <description>Our second game of the 2026–27 season.</description>
+      <description>Join us for a team build day on the 2026–27 BIOBUZZ robot.</description>
     </item>
   </channel>
 </rss>

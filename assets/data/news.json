@@ -1,20 +1,8 @@
 [
   {
     "date": "2026-10-10",
-    "title": "Scrimmage",
-    "text": "Our scrimmage for the 2026–27 BIOBUZZ season.",
+    "title": "Build Day",
+    "text": "Join us for a team build day on the 2026–27 BIOBUZZ robot.",
     "expires": "2026-10-11"
-  },
-  {
-    "date": "2026-10-31",
-    "title": "First Game",
-    "text": "Our first game of the 2026–27 season.",
-    "expires": "2026-11-01"
-  },
-  {
-    "date": "2026-12-05",
-    "title": "Second Game",
-    "text": "Our second game of the 2026–27 season.",
-    "expires": "2026-12-06"
   }
 ]
