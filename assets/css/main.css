@@ -291,11 +291,6 @@ ul { list-style: none; }
 .member-role { font-size: .9rem; color: var(--accent); line-height: 1.4; }
 .member-meta { font-size: .8rem; color: var(--text-dim); }
 .member-bio { font-size: .9rem; color: var(--text-mid); line-height: 1.6; margin-top: .5rem; }
-.member-tags { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; padding-top: .75rem; }
-.member-tags li {
-  font-size: .75rem; color: var(--text-mid);
-  border: 1px solid var(--border-h); padding: .15rem .55rem;
-}
 
 /* ── Gallery ─────────────────────────────────── */
 .gallery-track {

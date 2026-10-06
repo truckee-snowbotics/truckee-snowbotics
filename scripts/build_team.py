@@ -7,8 +7,7 @@ Writes:
 
 Member fields: name, role (required); id, initials (initials default to the name's
 first letters); group ("students" by default, or "mentors"); photo (optional /images/...
-path); years (whole number, shown as "Third-year member"); grade ("10th grade"); bio (one
-or two sentences); interests (list of short phrases); empty (true = greyed-out
+path); grade ("10th grade"); bio (one or two sentences); empty (true = greyed-out
 placeholder). Everything except name and role is optional and only shown when filled in.
 """
 import datetime
@@ -34,20 +33,7 @@ def initials(member):
     return "".join(w[0] for w in member["name"].split()[:2]).upper()
 
 
-ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"]
 GROUPS = [("students", "Students"), ("mentors", "Mentors &amp; Advisors")]
-
-
-def meta(m):
-    parts = []
-    years = m.get("years")
-    if isinstance(years, int) and 1 <= years <= len(ORDINALS):
-        parts.append(f"{ORDINALS[years - 1]}-year member")
-    elif isinstance(years, int) and years > len(ORDINALS):
-        parts.append(f"{years}-year member")
-    if m.get("grade"):
-        parts.append(str(m["grade"]))
-    return " · ".join(parts)
 
 
 def card(m):
@@ -64,14 +50,10 @@ def card(m):
         f'    <h4 class="member-name">{esc(m["name"])}</h4>',
         f'    <p class="member-role">{esc(m["role"])}</p>',
     ]
-    if meta(m):
-        lines.append(f'    <p class="member-meta">{esc(meta(m))}</p>')
+    if m.get("grade"):
+        lines.append(f'    <p class="member-meta">{esc(m["grade"])}</p>')
     if m.get("bio"):
         lines.append(f'    <p class="member-bio">{esc(m["bio"])}</p>')
-    if m.get("interests"):
-        lines.append('    <ul class="member-tags">')
-        lines += [f"      <li>{esc(i)}</li>" for i in m["interests"]]
-        lines.append("    </ul>")
     lines += ["  </div>", "</article>"]
     return "\n".join(lines)
 

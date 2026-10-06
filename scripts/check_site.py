@@ -235,8 +235,7 @@ SCHEMAS = {
     "team.json": ("list", obj(
         id=opt("str"), initials=opt("str"), name=req("str"), role=req("str"),
         photo=opt("str"), empty=opt("bool"),
-        group=opt(("enum", ["students", "mentors"])), years=opt("int"), grade=opt("str"),
-        bio=opt("str"), interests=opt(("list", "str")))),
+        group=opt(("enum", ["students", "mentors"])), grade=opt("str"), bio=opt("str"))),
     "news.json": ("list", obj(
         date=req("date"), endDate=opt("date"), displayDate=opt("str"),
         title=req("str"), text=req("str"),
