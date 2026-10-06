@@ -791,3 +791,23 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .not-found h1 { font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 1rem; }
 .not-found p { color: var(--text-mid); max-width: 36ch; margin: 0 auto 2.5rem; }
 .not-found-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── Alumni ── */
+.alumni-year { margin-top: 2.5rem; }
+.section-header + .alumni-year { margin-top: 0; }
+.alumni-year-title {
+  display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem;
+  font-size: 1.1rem; font-weight: 600; letter-spacing: .08em; color: var(--accent);
+}
+.alumni-year-title::before, .alumni-year-title::after { content: ""; flex: 1; height: 1px; background: var(--border-h); }
+.alumni-more { margin-top: 2.5rem; }
+.alumni-more > summary {
+  list-style: none; cursor: pointer; width: fit-content; margin: 0 auto;
+  padding: .7rem 1.4rem; border: 1px solid var(--border-h); color: var(--text);
+  font-size: .9rem; font-weight: 500; display: flex; align-items: center; gap: .6rem;
+}
+.alumni-more > summary::-webkit-details-marker { display: none; }
+.alumni-more > summary::after { content: "▾"; color: var(--accent); }
+.alumni-more[open] > summary::after { content: "▴"; }
+.alumni-more > summary:hover { border-color: var(--accent); }
+.alumni-more[open] > summary { margin-bottom: 2.5rem; }

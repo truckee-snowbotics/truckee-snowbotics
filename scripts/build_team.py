@@ -3,15 +3,13 @@
 
 Writes:
   - the student and mentor cards on the About page, between <!-- @team --> and <!-- @endteam -->
-  - the whole Alumni section (heading and cards; nothing if there are no alumni), between
-    <!-- @alumni --> and <!-- @endalumni -->
   - the TEAM section of humans.txt (and its "Last update" month)
 
 Member fields: name, role (required); id, initials (initials default to the name's
-first letters); group ("students" by default, "mentors" or "alumni"); photo (optional /images/...
-path); grade ("10th grade"); years (text shown as written, e.g. "2026" or "2024–2026");
-bio (one or two sentences); empty (true = greyed-out placeholder). A blank role is
-allowed (the line is skipped). Alumni are left out of humans.txt. Everything except name and role is optional and only shown when filled in.
+first letters); group ("students" by default, or "mentors"); photo (optional /images/...
+path); grade ("10th grade"); bio (one or two sentences); empty (true = greyed-out
+placeholder). A blank role is allowed (the line is skipped). Everything except name and
+role is optional and only shown when filled in. Alumni live in alumni.json (build_alumni.py).
 """
 import datetime
 import html
@@ -56,9 +54,8 @@ def card(m, level=4):
     ]
     if m.get("role"):
         lines.append(f'    <p class="member-role">{esc(m["role"])}</p>')
-    detail = " · ".join(str(m[k]) for k in ("years", "grade") if m.get(k))
-    if detail:
-        lines.append(f'    <p class="member-meta">{esc(detail)}</p>')
+    if m.get("grade"):
+        lines.append(f'    <p class="member-meta">{esc(m["grade"])}</p>')
     if m.get("bio"):
         lines.append(f'    <p class="member-bio">{esc(m["bio"])}</p>')
     lines += ["  </div>", "</article>"]
@@ -85,22 +82,6 @@ def groups_html(members):
     return "\n".join(out)
 
 
-def alumni_html(alumni):
-    if not alumni:
-        return ""
-    return (
-        '<section class="section section--alt" id="alumni">\n'
-        '  <div class="section-inner">\n'
-        '    <div class="section-header">\n'
-        "      <h2>Alumni</h2>\n"
-        "      <p>Past members who helped build Truckee Snowbotics.</p>\n"
-        "    </div>\n"
-        '    <div class="team-grid">\n'
-        + indent("\n".join(card(m, 3) for m in alumni), "      ")
-        + "\n    </div>\n  </div>\n</section>"
-    )
-
-
 def fill(text, name, body):
     def sub(m):
         ind = m["indent"]
@@ -114,12 +95,10 @@ def fill(text, name, body):
 
 def main():
     members = json.loads((ROOT / "assets" / "data" / "team.json").read_text())
-    alumni = [m for m in members if m.get("group") == "alumni"]
-    current = [m for m in members if m.get("group") != "alumni"]
-    real = [m for m in current if not m.get("empty")]
+    real = [m for m in members if not m.get("empty")]
 
     text = ABOUT.read_text()
-    new = fill(fill(text, "team", groups_html(current)), "alumni", alumni_html(alumni))
+    new = fill(text, "team", groups_html(members))
     if new != text:
         ABOUT.write_text(new)
 

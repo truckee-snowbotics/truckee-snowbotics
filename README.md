@@ -7,6 +7,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages.
 ## Editing content
 
 - `team.json` — team roster (About page cards and humans.txt are generated from it; see Team below)
+- `alumni.json` — past members, grouped by year on the About page (see Alumni below)
 - `news.json` — Home page news (see News below)
 - `gallery-captions.json` — optional gallery captions (see Gallery below); `gallery.json` is generated
 - `season.json` — Season page: on/off switch, live stream schedule, robot (see Season below)
@@ -115,15 +116,27 @@ else is shown only when you fill it in:
   "name": "Bach Le", "role": "President - Engineering Lead",
   "group": "students",
   "photo": "/images/team/bach-le.webp",
-  "grade": "11th grade", "years": "",
+  "grade": "11th grade",
   "bio": "One or two sentences."
 }
 ```
 
-`group` is `students` (default), `mentors` or `alumni` (shown in their own Alumni section after the team, hidden if empty, and left out of `humans.txt`). `years` is text shown as written (`"2026"`, `"2024–2026"`) next to the grade; `role` can be blank. Without a
+`group` is `students` (default) or `mentors`; `role` can be blank. Without a
 `photo` the card shows the person's initials. Put portraits in `images/team/` (square-ish,
 shrunk to 800px automatically). Get permission before posting anyone's photo or details
 (see the Terms page).
+
+### Alumni
+
+`assets/data/alumni.json` fills the Alumni section of the About page (`build_alumni.py`):
+
+```json
+{ "name": "Eden Sacks", "year": 2026, "role": "", "bio": "", "photo": "" }
+```
+
+`name` and `year` are required; `role`, `bio` and `photo` can be blank and only show when filled in.
+People are grouped under a centered year heading, newest year first. The newest 4 years show;
+older years go inside an "Earlier alumni" dropdown. The section disappears if the file is empty.
 
 ### Gallery
 
