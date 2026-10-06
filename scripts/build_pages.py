@@ -11,6 +11,7 @@ Edit the file in partials/, run this script (build.py does), and commit the upda
 pages. Pages stay complete HTML, so they preview locally without a build.
 Partials: head-common (icons, fonts, stylesheet), header, footer, scripts.
 """
+import datetime
 import json
 import re
 import sys
@@ -37,6 +38,8 @@ def season_enabled():
 
 def main():
     partials = {p.stem: p.read_text() for p in PARTIALS.glob("*.html")}
+    # {{year}} in a partial becomes the current year (the daily deploy keeps it fresh)
+    partials = {name: text.replace("{{year}}", str(datetime.date.today().year)) for name, text in partials.items()}
     if not season_enabled():  # season.json "enabled": false removes the Season links
         partials = {
             name: "\n".join(l for l in text.split("\n") if 'href="/season/"' not in l)

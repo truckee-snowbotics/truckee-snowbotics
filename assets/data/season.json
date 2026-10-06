@@ -2,6 +2,15 @@
   "enabled": true,
   "season": "2026–27",
   "game": "BIOBUZZ",
+  "gameTitle": "BIOBUZZ presented by RTX",
+  "gameSummary": "a pollination-themed challenge in which alliances collect POLLEN and NECTAR and use them at the HIVE, FLOWERS, and GARDENS",
+  "kickoff": "2026-09-12",
+  "qualifiersStart": "late October",
+  "championship": {
+    "name": "FIRST Championship",
+    "start": "2027-04-28",
+    "end": "2027-05-01"
+  },
   "stream": {
     "enabled": true,
     "autoplay": true,

@@ -236,6 +236,7 @@ ul { list-style: none; }
 .section-inner--narrow > * { max-width: var(--max-narrow); }
 
 .section-header { margin-bottom: 2.5rem; max-width: 70ch; }
+.section-header h1,
 .section-header h2 {
   font-size: clamp(1.6rem, 3.2vw, 2.15rem); font-weight: 650;
   color: var(--heading); letter-spacing: -.03em; line-height: 1.15; text-wrap: balance;

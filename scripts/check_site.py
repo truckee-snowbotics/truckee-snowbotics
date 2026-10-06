@@ -250,6 +250,8 @@ SCHEMAS = {
     "gallery-captions.json": ("dict", "str"),
     "season.json": obj(
         enabled=opt("bool"), season=req("str"), game=opt("str"),
+        gameTitle=opt("str"), gameSummary=opt("str"), kickoff=opt("date"), qualifiersStart=opt("str"),
+        championship=opt(obj(name=req("str"), start=req("date"), end=req("date"))),
         stream=opt(obj(
             enabled=opt("bool"), autoplay=opt("bool"),
             events=req(("list", obj(

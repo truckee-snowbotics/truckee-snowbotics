@@ -178,6 +178,49 @@ def page_content(data, today):
     return "\n\n".join(blocks)
 
 
+def long_date(d):
+    return f"{d:%B} {d.day}, {d.year}"
+
+
+def date_range(a, b):
+    if a == b:
+        return long_date(a)
+    if (a.year, a.month) == (b.year, b.month):
+        return f"{a:%B} {a.day}–{b.day}, {a.year}"
+    if a.year == b.year:
+        return f"{a:%B} {a.day} – {b:%B} {b.day}, {b.year}"
+    return f"{long_date(a)} – {long_date(b)}"
+
+
+def info_text(data):
+    """Season sentences for the Information page, from season.json."""
+    challenge = ""
+    if data.get("gameTitle"):
+        challenge = f" This season's game is {data['gameTitle']}"
+        challenge += f", {data['gameSummary']}." if data.get("gameSummary") else "."
+    season = ""
+    kickoff = data.get("kickoff")
+    if kickoff:
+        season = f"The {data.get('season', '')} season kicked off on {long_date(datetime.date.fromisoformat(kickoff))}. "
+    season += "Teams compete at league meets and qualifying tournaments"
+    if data.get("qualifiersStart"):
+        season += f" starting in {data['qualifiersStart']}"
+    champ = data.get("championship")
+    if champ:
+        rng = date_range(datetime.date.fromisoformat(champ["start"]), datetime.date.fromisoformat(champ["end"]))
+        season += f", advance to regional championships, and top teams qualify for the {champ['name']} ({rng})."
+    else:
+        season += ", then advance to regional championships."
+    return challenge, season
+
+
+def fill_inline(text, name, value):
+    rx = re.compile(rf"(<!-- @{name} -->)(.*?)(<!-- @end{name} -->)", re.S)
+    if not rx.search(text):
+        raise SystemExit(f"error: missing <!-- @{name} --> ... <!-- @end{name} -->")
+    return rx.sub(lambda m: m.group(1) + html.escape(value, quote=False) + m.group(3), text)
+
+
 def fill(text, start_marker, end_marker, body):
     rx = re.compile(rf"^(?P<i>[ \t]*){re.escape(start_marker)}\n.*?^[ \t]*{re.escape(end_marker)}", re.S | re.M)
 
@@ -205,6 +248,14 @@ def main():
     if not data.get("enabled", True):
         meta.append('<meta name="robots" content="noindex" />')
     new = fill(new, "<!-- @seasonmeta -->", "<!-- @endseasonmeta -->", "\n".join(meta))
+    # Information page: this season's game and dates
+    info = ROOT / "information" / "index.html"
+    itext = info.read_text()
+    challenge, season_sentence = info_text(data)
+    inew = fill_inline(itext, "seasonchallenge", challenge)
+    inew = fill_inline(inew, "seasonsummary", season_sentence)
+    if inew != itext:
+        info.write_text(inew)
     # Home page hero stat for the current season
     home = ROOT / "index.html"
     htext = home.read_text()
