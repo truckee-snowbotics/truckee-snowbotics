@@ -29,16 +29,8 @@
     "enabled": true,
     "photos": [
       {
-        "src": "/images/gallery/25_26_robot.webp",
-        "caption": "Our 2025–26 DECODE competition robot"
-      },
-      {
-        "src": "/images/gallery/early_robotv1.webp",
-        "caption": "Early prototype"
-      },
-      {
-        "src": "/images/gallery/development.webp",
-        "caption": "Building and testing"
+        "src": "/images/gallery/01-2026-development-3.webp",
+        "caption": "Hello"
       }
     ],
     "specs": [

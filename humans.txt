@@ -1,11 +1,16 @@
 /* TEAM */
-  President - Engineering Lead: Bach Le
-  Co-President - Software Lead: Jack West
+  President - Chief Engineer: Bach Le
+  Chief Software Engineer: Jack West
   Strategy & Control: Eduardo Sosa
-  Design & Outreach: Jonathan Bohnet
+  Engineer: Jonathan Bohnet
   Driver & Community: Corbin Hoff
-  Team Member: Noah Pilon
+  Software Engineer: Noah Pilon
   Team Member: Rayce Rignes
+  Team Member: Dylan Jarratt
+  Team Member: Eva Lewis
+  Team Member: Marcelo Keely
+  Team Member: Clark Rosen
+  Team Member: Ellis West
   Mentor & Advisor: Maura Hoff
   Faculty Advisor: Izzak Eberst
   Location: Truckee, California, USA

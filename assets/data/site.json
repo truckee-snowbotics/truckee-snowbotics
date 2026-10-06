@@ -1,0 +1,10 @@
+{
+  "heroPhoto": {
+    "src": "/images/site/home.webp",
+    "alt": "Truckee Snowbotics team at a competition"
+  },
+  "aboutPhoto": {
+    "src": "/images/site/about.webp",
+    "alt": "The Snowbotics team"
+  }
+}

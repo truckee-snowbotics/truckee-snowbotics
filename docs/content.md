@@ -183,6 +183,19 @@ at runtime. The repo's HTML therefore shows `href="#"`, not the live URL. The si
 check fails the deploy if a link hard-codes a URL that's in `links.json`, or uses a
 `data-link-key` that doesn't exist.
 
+## Home and About photos
+
+`assets/data/site.json` sets the two big photos that aren't part of the gallery:
+
+```json
+{
+  "heroPhoto":  { "src": "/images/site/home.avif",            "alt": "Truckee Snowbotics team at a competition" },
+  "aboutPhoto": { "src": "/images/gallery/2025-team-photo.webp", "alt": "The Snowbotics team" }
+}
+```
+
+`src` is any image in the project (put new ones in `images/site/`); `alt` is a short description for screen readers and is required. Both are shown in landscape 4:3 boxes and cropped to fit, so use landscape photos with the subject near the middle. Phone-sized photos are shrunk to 1600px by the build (`./build`). Run `./build` after changing the file; a missing file fails the site check.
+
 ## Other settings
 
 Site-wide switches live at the top of `assets/js/main.js`: `CONTACT_NOTICE` (red banner + disables the contact form) and `SPONSORSHIP_FORM_NOTICE` (hover warning on sponsorship form buttons). The Season page is switched with `enabled` in `season.json`.

@@ -2,7 +2,7 @@
   {
     "id": "bach-le",
     "name": "Bach Le",
-    "role": "President - Engineering Lead",
+    "role": "President - Chief Engineer",
     "group": "students",
     "photo": "",
     "grade": "12th Grade",
@@ -11,7 +11,7 @@
   {
     "id": "jack-west",
     "name": "Jack West",
-    "role": "Co-President - Software Lead",
+    "role": "Chief Software Engineer",
     "group": "students",
     "photo": "/images/team/jack-portrait.webp",
     "grade": "11th Grade",
@@ -29,7 +29,7 @@
   {
     "id": "jonathan-bohnet",
     "name": "Jonathan Bohnet",
-    "role": "Design & Outreach",
+    "role": "Engineer",
     "group": "students",
     "photo": "/images/team/johnny-portrait.webp",
     "grade": "11th Grade",
@@ -47,7 +47,7 @@
   {
     "id": "noah-pilon",
     "name": "Noah Pilon",
-    "role": "Team Member",
+    "role": "Software Engineer",
     "group": "students",
     "photo": "/images/team/noah-portrait.webp",
     "grade": "12th Grade",
@@ -59,6 +59,51 @@
     "role": "Team Member",
     "group": "students",
     "photo": "/images/team/rayce-portrait.webp",
+    "grade": "9th Grade",
+    "bio": ""
+  },
+  {
+    "id": "dylan-jarratt",
+    "name": "Dylan Jarratt",
+    "role": "Team Member",
+    "group": "students",
+    "photo": "",
+    "grade": "9th Grade",
+    "bio": ""
+  },
+  {
+    "id": "eva-lewis",
+    "name": "Eva Lewis",
+    "role": "Team Member",
+    "group": "students",
+    "photo": "",
+    "grade": "9th Grade",
+    "bio": ""
+  },
+  {
+    "id": "marcelo-keely",
+    "name": "Marcelo Keely",
+    "role": "Team Member",
+    "group": "students",
+    "photo": "",
+    "grade": "9th Grade",
+    "bio": ""
+  },
+  {
+    "id": "clark-rosen",
+    "name": "Clark Rosen",
+    "role": "Team Member",
+    "group": "students",
+    "photo": "",
+    "grade": "9th Grade",
+    "bio": ""
+  },
+  {
+    "id": "ellis-west",
+    "name": "Ellis West",
+    "role": "Team Member",
+    "group": "students",
+    "photo": "",
     "grade": "9th Grade",
     "bio": ""
   },
