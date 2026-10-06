@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-STEPS = ["build_pages.py", "build_news.py", "build_season.py", "build_meta.py", "build_team.py", "build_alumni.py", "optimize_images.py", "build_gallery.py", "build_sitemap.py"]
+STEPS = ["build_pages.py", "build_news.py", "build_calendar.py", "build_season.py", "build_meta.py", "build_team.py", "build_alumni.py", "optimize_images.py", "build_gallery.py", "build_sitemap.py"]
 
 
 def main():

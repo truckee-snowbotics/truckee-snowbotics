@@ -26,7 +26,7 @@ ORDER = ["", "about", "season", "gallery", "information", "contact", "sponsors",
 DEPENDENCIES = {
     "": ["assets/data/news.json", "assets/data/sponsors.json"],
     "about": ["assets/data/team.json", "assets/data/alumni.json"],
-    "season": ["assets/data/season.json"],
+    "season": ["assets/data/season.json", "assets/data/calendar.json"],
     "gallery": ["images/gallery", "assets/data/gallery-captions.json"],
     "sponsors": ["assets/data/sponsors.json", "images/sponsors"],
     "information": ["assets/data/links.json"],

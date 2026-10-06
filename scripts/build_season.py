@@ -114,13 +114,13 @@ def stream_section(stream, today):
 </section>'''
 
 
-def robot_section(robot):
+def robot_section(robot, alt=True):
     photos = robot.get("photos", [])
     specs = robot.get("specs", [])
     links = robot.get("links", [])
     ids = link_ids()
     title = robot.get("name") or "Our robot"
-    parts = ['<section class="section section--alt" id="robot">', '  <div class="section-inner">',
+    parts = [f'<section class="section{" section--alt" if alt else ""}" id="robot">', '  <div class="section-inner">',
              '    <div class="section-header">', f'      <h2>{esc(title)}</h2>']
     if robot.get("description"):
         parts.append(f'      <p>{esc(robot["description"])}</p>')
@@ -150,6 +150,83 @@ def robot_section(robot):
     return "\n".join(parts)
 
 
+def load_calendar():
+    try:
+        return json.loads((ROOT / "assets" / "data" / "calendar.json").read_text()).get("events", [])
+    except (OSError, ValueError):
+        return []
+
+
+def clean_title(title):
+    """'FTC - NoNV - League Meet # 1N' / 'FTC League Meet # 1N - NoNV' -> 'League Meet # 1N'."""
+    t = re.sub(r"\s*-\s*(?:NoNV|SoNV|NV)\b", "", title)
+    t = re.sub(r"^FTC\s*-?\s*", "", t).strip(" -")
+    return t or title
+
+
+def cal_when(e):
+    """Time line under an event's title."""
+    if e.get("allDay"):
+        a, b = datetime.date.fromisoformat(e["start"]), datetime.date.fromisoformat(e["end"])
+        return "All day" if a == b else f"All day · through {b:%a}, {b:%b} {b.day}"
+    start, end = datetime.datetime.fromisoformat(e["start"]), datetime.datetime.fromisoformat(e["end"])
+    if end <= start:
+        return f"{start:%A} · {clock(start)} PT"
+    if start.date() == end.date():
+        return f"{start:%A} · {clock(start)} – {clock(end)} PT"
+    return f"{start:%a} {clock(start)} – {end:%a} {clock(end)} PT"
+
+
+def cal_where(location):
+    parts = [p.strip() for p in location.split(",") if p.strip()]
+    if parts and parts[-1] in ("USA", "US"):
+        parts.pop()
+    if not parts:
+        return ""
+    venue, address = parts[0], ", ".join(parts[1:])
+    return f'<span class="cal-venue">{esc(venue)}</span>' + (f" · {esc(address)}" if address else "")
+
+
+def calendar_section(cal, today, alt):
+    exclude = [x.lower() for x in cal.get("exclude", [])]
+    events = [e for e in load_calendar()
+              if datetime.date.fromisoformat(e["end"][:10]) >= today
+              and not any(x in e["title"].lower() for x in exclude)]
+    events = events[: cal.get("limit", 12)]
+    ids = link_ids()
+    title = cal.get("title") or "Regional calendar"
+    if events:
+        rows = []
+        for e in events:
+            d = datetime.date.fromisoformat(e["start"][:10])
+            where = cal_where(e["location"]) if e.get("location") else ""
+            rows.append(
+                '    <li class="cal-item">\n'
+                f'      <time class="cal-date" datetime="{e["start"][:10]}"><span class="cal-month">{d:%b}</span><span class="cal-day">{d.day}</span></time>\n'
+                '      <div class="cal-body">\n'
+                f'        <h3 class="cal-title">{esc(clean_title(e["title"]))}</h3>\n'
+                f'        <p class="cal-meta">{esc(cal_when(e))}</p>\n'
+                + (f'        <p class="cal-where">{where}</p>\n' if where else "")
+                + "      </div>\n    </li>"
+            )
+        listing = '    <ol class="cal-list">\n' + "\n".join("  " + line for r in rows for line in r.split("\n")) + "\n    </ol>\n"
+    else:
+        listing = '    <p class="cal-empty">No upcoming events are listed right now. Check the full calendar below.</p>\n'
+    feed = "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics"
+    links = [anchor("Add to Google Calendar →", "https://calendar.google.com/calendar/r?cid=ftc%40firstnevada.org", ids, "season-event-link"),
+             anchor("iCal feed →", cal.get("feed") or feed, ids, "season-event-link"),
+             anchor("Full FIRST Nevada calendar →", "https://firstnevada.org/all-events/#calendar", ids, "season-event-link")]
+    return f'''<section class="section{" section--alt" if alt else ""}" id="calendar">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>{esc(title)}</h2>
+      <p>Upcoming league meets, tournaments and workshops in our region, from the FIRST Nevada calendar. Updated daily.</p>
+    </div>
+{listing}    <div class="cal-links">{" ".join(links)}</div>
+  </div>
+</section>'''
+
+
 def page_content(data, today):
     if not data.get("enabled", True):
         return '''<section class="section" id="season-off">
@@ -168,10 +245,15 @@ def page_content(data, today):
   <p>Watch our events live and see the robot we built.</p>
 </section>'''
     blocks = [hero]
+    alt = False  # sections alternate plain / tinted background, starting plain
     if data.get("stream", {}).get("enabled", True):
         blocks.append(stream_section(data.get("stream", {}), today))
+        alt = not alt
+    if data.get("calendar", {}).get("enabled", True) and data.get("calendar", {}).get("feed"):
+        blocks.append(calendar_section(data["calendar"], today, alt))
+        alt = not alt
     if data.get("robot", {}).get("enabled", True) and data.get("robot"):
-        blocks.append(robot_section(data["robot"]))
+        blocks.append(robot_section(data["robot"], alt))
     return "\n\n".join(blocks)
 
 

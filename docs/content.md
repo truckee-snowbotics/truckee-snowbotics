@@ -90,6 +90,20 @@ page stat, so a new season is a `season.json` edit. The footer year updates itse
   that YouTube/Twitch may set cookies; update it if you change providers.
 - Events that ended more than 90 days ago drop off the schedule.
 
+**Regional calendar.** Below the stream, the page lists upcoming Northern Nevada FTC events from FIRST Nevada's public calendar. The build (`build_calendar.py`) fetches the feed into `assets/data/calendar.json`, and the daily deploy keeps it fresh; if the feed is down the last good copy is used. Configure it under `calendar` in `season.json`:
+
+```json
+"calendar": {
+  "enabled": true,
+  "title": "Northern Nevada FTC calendar",
+  "feed": "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics",
+  "exclude": ["SoNV"],
+  "limit": 12
+}
+```
+
+`exclude` hides events whose title contains any of those words (add `"Coaches Corner"` to drop workshops, for example); `limit` is how many to show. This list is separate from `stream.events`, which are the events *we* compete in and drive the live embed.
+
 **Robot.** `robot` takes optional `name`, `description`, `photos` (`src` + `caption`),
 `specs` (`label` + `value`) and `links`. Only what you fill in is shown.
 

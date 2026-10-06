@@ -16,6 +16,15 @@
     "autoplay": true,
     "events": []
   },
+  "calendar": {
+    "enabled": true,
+    "title": "Northern Nevada FTC calendar",
+    "feed": "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics",
+    "exclude": [
+      "SoNV"
+    ],
+    "limit": 12
+  },
   "robot": {
     "enabled": true,
     "photos": [

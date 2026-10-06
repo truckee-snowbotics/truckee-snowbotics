@@ -251,6 +251,8 @@ SCHEMAS = {
         id=req("str"), label=req("str"), url=req("url"), category=req("str"), listed=req("bool"))),
     "gallery.json": ("list", "str"),
     "gallery-captions.json": ("dict", "str"),
+    "calendar.json": obj(events=req(("list", obj(
+        title=req("str"), start=req("str"), end=req("str"), allDay=req("bool"), location=opt("str"))))),
     "season.json": obj(
         enabled=opt("bool"), season=req("str"), game=opt("str"),
         gameTitle=opt("str"), gameSummary=opt("str"), kickoff=opt("date"), qualifiersStart=opt("str"),
@@ -261,6 +263,9 @@ SCHEMAS = {
                 name=req("str"), start=req("datetime"), end=req("datetime"),
                 location=opt("str"), stream=opt("weburl"), youtubeChannelId=opt("str"),
                 info=opt("weburl"), results=opt("weburl")))))),
+        calendar=opt(obj(
+            enabled=opt("bool"), title=opt("str"), feed=opt("weburl"),
+            exclude=opt(("list", "str")), limit=opt("int"))),
         robot=opt(obj(
             enabled=opt("bool"), name=opt("str"), description=opt("str"),
             photos=opt(("list", obj(src=req("str"), caption=opt("str")))),

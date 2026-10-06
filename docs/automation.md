@@ -26,6 +26,7 @@ requests and non-main pushes. Any ERROR stops the deploy.
 | `build_meta.py` | Writes each page's canonical URL, Open Graph/Twitter tags and breadcrumb data between `<!-- @meta -->` and `<!-- @breadcrumb -->` markers, from the page's own `<title>` and description (the only place a page's name and summary are written). For a new page, write its title and description and copy the marker pairs from another page. |
 | `build_team.py` | Writes the About page team cards and the `humans.txt` team list from `team.json`. |
 | `build_alumni.py` | Renders the Alumni section of the About page from `alumni.json`. |
+| `build_calendar.py` | Fetches the FIRST Nevada FTC iCal feed into `assets/data/calendar.json` for the Season page calendar. A failed fetch keeps the last copy and only warns. |
 | `build_season.py` | Renders the Season page from `season.json` (and the on/off switch). |
 | `build_pages.py` | Copies `partials/` (head-common, header, footer, scripts) into every page between `<!-- @partial name -->` markers. Edit the partial, run the build, commit the updated pages. Don't edit inside the markers. |
 | `optimize_images.py` | Gallery: JPG/PNG → WebP capped at 1600px, plus small thumbnails (`images/gallery/thumbs/`, generated, gitignored) used by the grid. Sponsors capped at 800px and `images/site/` at 1600px, same format. Needs Pillow (skipped if missing). |

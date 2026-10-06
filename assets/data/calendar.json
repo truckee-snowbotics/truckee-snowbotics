@@ -1,0 +1,156 @@
+{
+  "events": [
+    {
+      "title": "FTC FIRST-aid Clinic - NoNV",
+      "start": "2026-10-10T09:00",
+      "end": "2026-10-10T12:00",
+      "allDay": false,
+      "location": "Excel Christian School, 850 Baring Blvd, Sparks, NV 89434, USA"
+    },
+    {
+      "title": "FTC FIRST-aid Clinic - SoNV",
+      "start": "2026-10-10T09:00",
+      "end": "2026-10-10T12:00",
+      "allDay": false,
+      "location": "Desert Oasis High School, 6600 W Erie Ave, Las Vegas, NV 89141, USA"
+    },
+    {
+      "title": "FTC Tinker & Play Scrimmage - NoNV",
+      "start": "2026-10-10T13:00",
+      "end": "2026-10-10T17:00",
+      "allDay": false,
+      "location": "Excel Christian School, 850 Baring Blvd, Sparks, NV 89434, USA"
+    },
+    {
+      "title": "FTC Tinker & Play Scrimmage - SoNV",
+      "start": "2026-10-10T13:00",
+      "end": "2026-10-10T17:00",
+      "allDay": false,
+      "location": "Desert Oasis High School, 6600 W Erie Ave, Las Vegas, NV 89141, USA"
+    },
+    {
+      "title": "FTC Coaches Corner - NV",
+      "start": "2026-10-20T19:00",
+      "end": "2026-10-20T20:00",
+      "allDay": false
+    },
+    {
+      "title": "FIRST Nevada Robotics Conference",
+      "start": "2026-10-24T09:00",
+      "end": "2026-10-24T15:00",
+      "allDay": false,
+      "location": "Southeast Career Technical Academy, 5710 S Mountain Vista St, Las Vegas, NV 89120, USA"
+    },
+    {
+      "title": "FTC League Meet # 1S - SoNV",
+      "start": "2026-10-31T08:30",
+      "end": "2026-10-31T12:30",
+      "allDay": false,
+      "location": "Word of Life Christian Center, 3520 N Buffalo Dr, Las Vegas, NV 89129, USA"
+    },
+    {
+      "title": "FTC League Meet # 1N - NoNV",
+      "start": "2026-10-31T13:30",
+      "end": "2026-10-31T17:30",
+      "allDay": false,
+      "location": "George Whittell High School, 240 Warrior Way, Zephyr Cove, NV 89448, USA"
+    },
+    {
+      "title": "FTC League Meet # 2S - SoNV",
+      "start": "2026-10-31T13:30",
+      "end": "2026-10-31T17:30",
+      "allDay": false,
+      "location": "Word of Life Christian Center, 3520 N Buffalo Dr, Las Vegas, NV 89129, USA"
+    },
+    {
+      "title": "FTC League Meet # 3S - SoNV",
+      "start": "2026-12-05T08:30",
+      "end": "2026-12-05T12:30",
+      "allDay": false,
+      "location": "Southeast Career Technical Academy, 5710 S Mountain Vista St, Las Vegas, NV 89120, USA"
+    },
+    {
+      "title": "FTC League Meet # 2N - NoNV",
+      "start": "2026-12-05T13:30",
+      "end": "2026-12-05T17:30",
+      "allDay": false,
+      "location": "Excel Christian School, 850 Baring Blvd, Sparks, NV 89434, USA"
+    },
+    {
+      "title": "FTC League Meet # 4S - SoNV",
+      "start": "2026-12-05T13:30",
+      "end": "2026-12-05T17:30",
+      "allDay": false,
+      "location": "Southeast Career Technical Academy, 5710 S Mountain Vista St, Las Vegas, NV 89120, USA"
+    },
+    {
+      "title": "FTC League Meet # 5S - SoNV",
+      "start": "2027-01-09T08:30",
+      "end": "2027-01-09T12:30",
+      "allDay": false,
+      "location": "Helen C. Cannon Junior High School, 5850 Euclid St, Las Vegas, NV 89120, USA"
+    },
+    {
+      "title": "FTC League Meet # 3N - NoNV",
+      "start": "2027-01-09T13:30",
+      "end": "2027-01-09T17:30",
+      "allDay": false,
+      "location": "Boys & Girls Clubs of Mason Valley, 124 N Main St, Yerington, NV 89447, USA"
+    },
+    {
+      "title": "FTC League Meet # 6S - SoNV",
+      "start": "2027-01-09T13:30",
+      "end": "2027-01-09T17:30",
+      "allDay": false,
+      "location": "Helen C. Cannon Junior High School, 5850 Euclid St, Las Vegas, NV 89120, USA"
+    },
+    {
+      "title": "FTC Coaches Corner - NV",
+      "start": "2027-01-12T19:00",
+      "end": "2027-01-12T20:00",
+      "allDay": false
+    },
+    {
+      "title": "FTC League Tournament (Day 1) - NoNV",
+      "start": "2027-01-22T16:00",
+      "end": "2027-01-22T19:50",
+      "allDay": false,
+      "location": "Galena High School, 3600 Butch Cassidy Dr, Reno, NV 89511, USA"
+    },
+    {
+      "title": "FTC League Tournament (Day 1) - SoNV",
+      "start": "2027-01-22T16:00",
+      "end": "2027-01-22T19:50",
+      "allDay": false,
+      "location": "Desert Oasis High School, 6600 W Erie Ave, Las Vegas, NV 89141, USA"
+    },
+    {
+      "title": "FTC League Tournament (Day 2) - NoNV",
+      "start": "2027-01-23T07:30",
+      "end": "2027-01-23T17:00",
+      "allDay": false,
+      "location": "Galena High School, 3600 Butch Cassidy Dr, Reno, NV 89511, USA"
+    },
+    {
+      "title": "FTC League Tournament (Day 2) - SoNV",
+      "start": "2027-01-23T07:30",
+      "end": "2027-01-23T17:00",
+      "allDay": false,
+      "location": "Desert Oasis High School, 6600 W Erie Ave, Las Vegas, NV 89141, USA"
+    },
+    {
+      "title": "FTC State Championship (Day 1) - NV",
+      "start": "2027-02-19T16:00",
+      "end": "2027-02-19T20:00",
+      "allDay": false,
+      "location": "The Meadows School, 8601 Scholar Ln, Las Vegas, NV 89128, USA"
+    },
+    {
+      "title": "FTC State Championship (Day 2) - NV",
+      "start": "2027-02-20T07:30",
+      "end": "2027-02-20T17:00",
+      "allDay": false,
+      "location": "The Meadows School, 8601 Scholar Ln, Las Vegas, NV 89128, USA"
+    }
+  ]
+}

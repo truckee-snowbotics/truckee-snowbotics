@@ -117,5 +117,26 @@
     "url": "mailto:contact@snowbotics.org?subject=Photo%20takedown%20request&body=Page%20or%20photo%20link%3A%0A%0AWhat%20you%27d%20like%20removed%3A%0A%0AYour%20name%20(optional)%3A",
     "category": "Forms",
     "listed": false
+  },
+  {
+    "id": "firstNevadaCalendar",
+    "label": "FIRST Nevada calendar",
+    "url": "https://firstnevada.org/all-events/#calendar",
+    "category": "Resources",
+    "listed": false
+  },
+  {
+    "id": "ftcCalendarGoogle",
+    "label": "Add the FTC calendar to Google Calendar",
+    "url": "https://calendar.google.com/calendar/r?cid=ftc%40firstnevada.org",
+    "category": "Resources",
+    "listed": false
+  },
+  {
+    "id": "ftcCalendarFeed",
+    "label": "FTC calendar iCal feed",
+    "url": "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics",
+    "category": "Resources",
+    "listed": false
   }
 ]
