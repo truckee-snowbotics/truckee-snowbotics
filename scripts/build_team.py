@@ -2,7 +2,9 @@
 """Build the team lists from assets/data/team.json (the one place the roster lives).
 
 Writes:
-  - the member cards on the About page, between <!-- @team --> and <!-- @endteam -->
+  - the student and mentor cards on the About page, between <!-- @team --> and <!-- @endteam -->
+  - the whole Alumni section (heading and cards; nothing if there are no alumni), between
+    <!-- @alumni --> and <!-- @endalumni -->
   - the TEAM section of humans.txt (and its "Last update" month)
 
 Member fields: name, role (required); id, initials (initials default to the name's
@@ -21,7 +23,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ABOUT = ROOT / "about" / "index.html"
 HUMANS = ROOT / "humans.txt"
-MARKER = re.compile(r"^(?P<indent>[ \t]*)<!-- @team -->\n.*?^[ \t]*<!-- @endteam -->", re.S | re.M)
+def marker(name):
+    return re.compile(rf"^(?P<indent>[ \t]*)<!-- @{name} -->\n.*?^[ \t]*<!-- @end{name} -->", re.S | re.M)
+
 
 
 def esc(value):
@@ -34,10 +38,10 @@ def initials(member):
     return "".join(w[0] for w in member["name"].split()[:2]).upper()
 
 
-GROUPS = [("students", "Students"), ("mentors", "Mentors &amp; Advisors"), ("alumni", "Alumni")]
+GROUPS = [("students", "Students"), ("mentors", "Mentors &amp; Advisors")]
 
 
-def card(m):
+def card(m, level=4):
     empty = bool(m.get("empty"))
     classes = "member-card" + (" member-card--empty" if empty else "")
     if m.get("photo") and not empty:
@@ -48,7 +52,7 @@ def card(m):
         f'<article class="{classes}">',
         f'  <div class="member-photo">{photo}</div>',
         '  <div class="member-body">',
-        f'    <h4 class="member-name">{esc(m["name"])}</h4>',
+        f'    <h{level} class="member-name">{esc(m["name"])}</h{level}>',
     ]
     if m.get("role"):
         lines.append(f'    <p class="member-role">{esc(m["role"])}</p>')
@@ -61,6 +65,10 @@ def card(m):
     return "\n".join(lines)
 
 
+def indent(text, ind):
+    return "\n".join(ind + line if line.strip() else "" for line in text.split("\n"))
+
+
 def groups_html(members):
     out = []
     for key, title in GROUPS:
@@ -71,27 +79,47 @@ def groups_html(members):
             f'<div class="team-group">\n'
             f'  <h3 class="team-group-title">{title}</h3>\n'
             '  <div class="team-grid">\n'
-            + "\n".join("    " + line if line.strip() else "" for line in "\n".join(card(m) for m in group).split("\n"))
+            + indent("\n".join(card(m) for m in group), "    ")
             + "\n  </div>\n</div>"
         )
     return "\n".join(out)
 
 
-def main():
-    members = json.loads((ROOT / "assets" / "data" / "team.json").read_text())
-    real = [m for m in members if not m.get("empty") and m.get("group") != "alumni"]
+def alumni_html(alumni):
+    if not alumni:
+        return ""
+    return (
+        '<section class="section section--alt" id="alumni">\n'
+        '  <div class="section-inner">\n'
+        '    <div class="section-header">\n'
+        "      <h2>Alumni</h2>\n"
+        "      <p>Past members who helped build Truckee Snowbotics.</p>\n"
+        "    </div>\n"
+        '    <div class="team-grid">\n'
+        + indent("\n".join(card(m, 3) for m in alumni), "      ")
+        + "\n    </div>\n  </div>\n</section>"
+    )
 
-    body = groups_html(members)
-    text = ABOUT.read_text()
 
+def fill(text, name, body):
     def sub(m):
         ind = m["indent"]
-        inner = "\n".join(ind + line if line.strip() else "" for line in body.split("\n"))
-        return f"{ind}<!-- @team -->\n{inner}\n{ind}<!-- @endteam -->"
+        inner = indent(body, ind) + "\n" if body else ""
+        return f"{ind}<!-- @{name} -->\n{inner}{ind}<!-- @end{name} -->"
 
-    new = MARKER.sub(sub, text)
-    if new == text and "<!-- @team -->" not in text:
-        raise SystemExit("error: about/index.html is missing <!-- @team --> ... <!-- @endteam -->")
+    if f"<!-- @{name} -->" not in text:
+        raise SystemExit(f"error: about/index.html is missing <!-- @{name} --> ... <!-- @end{name} -->")
+    return marker(name).sub(sub, text)
+
+
+def main():
+    members = json.loads((ROOT / "assets" / "data" / "team.json").read_text())
+    alumni = [m for m in members if m.get("group") == "alumni"]
+    current = [m for m in members if m.get("group") != "alumni"]
+    real = [m for m in current if not m.get("empty")]
+
+    text = ABOUT.read_text()
+    new = fill(fill(text, "team", groups_html(current)), "alumni", alumni_html(alumni))
     if new != text:
         ABOUT.write_text(new)
 

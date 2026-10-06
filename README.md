@@ -120,7 +120,7 @@ else is shown only when you fill it in:
 }
 ```
 
-`group` is `students` (default), `mentors` or `alumni` (shown last, under "Alumni", and left out of `humans.txt`). `years` is text shown as written (`"2026"`, `"2024–2026"`) next to the grade; `role` can be blank. Without a
+`group` is `students` (default), `mentors` or `alumni` (shown in their own Alumni section after the team, hidden if empty, and left out of `humans.txt`). `years` is text shown as written (`"2026"`, `"2024–2026"`) next to the grade; `role` can be blank. Without a
 `photo` the card shows the person's initials. Put portraits in `images/team/` (square-ish,
 shrunk to 800px automatically). Get permission before posting anyone's photo or details
 (see the Terms page).
