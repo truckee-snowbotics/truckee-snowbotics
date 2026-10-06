@@ -372,7 +372,7 @@ function escapeHTML(value) {
         const alt = caption || 'Gallery image';
 
         return `
-          <div class="gallery-item" data-src="${escapeHTML(src)}" data-alt="${escapeHTML(alt)}" data-caption="${escapeHTML(caption)}">
+          <div class="gallery-item" role="button" tabindex="0" aria-label="${escapeHTML('View photo: ' + caption)}" data-src="${escapeHTML(src)}" data-alt="${escapeHTML(alt)}" data-caption="${escapeHTML(caption)}">
             <div class="gallery-image">
               ${src ? `<img src="${escapeHTML(thumbFor(src))}" alt="${escapeHTML(alt)}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=this.closest('.gallery-item').dataset.src" />` : `<span>${escapeHTML(caption)}</span>`}
             </div>
@@ -418,6 +418,13 @@ function escapeHTML(value) {
       track.addEventListener('click', (event) => {
         const item = event.target.closest('.gallery-item');
         if (!item) return;
+        openModal(item);
+      });
+      track.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const item = event.target.closest('.gallery-item');
+        if (!item) return;
+        event.preventDefault();
         openModal(item);
       });
     }
@@ -542,7 +549,7 @@ function getSponsors() {
       }
 
       const footerNav = document.querySelector('.footer-nav');
-      if (footerNav) {
+      if (footerNav && !footerLinks) {
         const sep = document.createElement('span');
         sep.className = 'footer-nav-sep';
         footerNav.appendChild(sep);
