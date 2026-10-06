@@ -1,5 +1,10 @@
-# Runs the same build and site checks as the deploy, without deploying.
-# Catches broken links, bad JSON, and missing images before a PR is merged.
+# Runs the same release build and site checks as the deploy, without deploying, and (on pull
+# requests and manual runs) scores the built pages with Lighthouse. Catches broken links, bad
+# JSON and missing images before a PR is merged.
+#
+# Lighthouse targets are in lighthouserc.json. Scores below them are reported as warnings and
+# never block a merge; change "warn" to "error" there to make them block. The run summary links
+# to a public report (kept about a week).
 
 name: Check site
 
@@ -7,6 +12,7 @@ on:
   pull_request:
   push:
     branches-ignore: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,13 +20,26 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          cache: pip
+
       - name: Install build dependencies
         run: pip install -r requirements.txt
 
-      - name: Build and check site
-        run: python3 scripts/build.py
+      - name: Build and check site (release build, as deployed)
+        run: python3 scripts/build.py --release
+
+      - name: Lighthouse
+        if: github.event_name != 'push'
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true

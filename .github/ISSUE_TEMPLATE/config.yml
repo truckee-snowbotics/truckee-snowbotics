@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Request a photo takedown
+    url: https://snowbotics.org/terms/#takedown
+    about: Photos of people are handled by email, not public issues. The page explains how.
+  - name: Contact the team
+    url: https://snowbotics.org/contact/
+    about: Questions, sponsorship, or joining the team.

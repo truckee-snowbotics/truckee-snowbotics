@@ -30,6 +30,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -38,6 +39,11 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          cache: pip
 
       - name: Install build dependencies
         run: pip install -r requirements.txt

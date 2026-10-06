@@ -39,3 +39,7 @@ images/gallery/thumbs/
 health-report.md
 health-findings
 rollover-checklist.md
+
+# Python bytecode
+__pycache__/
+*.pyc
