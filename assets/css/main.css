@@ -922,3 +922,6 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .mcal-pop-when { font-size: .85rem; color: var(--text-mid); margin-top: .35rem; }
 .mcal-pop-where { font-size: .85rem; color: var(--text-mid); margin-top: .6rem; line-height: 1.5; }
 .mcal-pop-where strong { color: var(--text); font-weight: 500; }
+
+/* Row of buttons under a section's content */
+.btn-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }

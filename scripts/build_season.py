@@ -342,6 +342,14 @@ def fill_inline(text, name, value):
     return rx.sub(lambda m: m.group(1) + html.escape(value, quote=False) + m.group(3), text)
 
 
+def cta_html(data, css, label):
+    """Button to the Season page's calendar; empty when the Season page or its calendar is off."""
+    cal = data.get("calendar") or {}
+    if data.get("enabled", True) and cal.get("enabled", True) and cal.get("feed"):
+        return f'<a href="/season/#calendar" class="{css}">{esc(label)}</a>'
+    return ""
+
+
 def main():
     data = json.loads((ROOT / "assets" / "data" / "season.json").read_text())
     today = datetime.date.today()
@@ -361,6 +369,8 @@ def main():
     challenge, season_sentence = info_text(data)
     inew = fill_inline(itext, "seasonchallenge", challenge)
     inew = fill_inline(inew, "seasonsummary", season_sentence)
+    # Information page: button to our calendar (only while the Season page and its calendar are on)
+    inew = fill_markers(inew, "calendarbtn", cta_html(data, "btn-primary", "Our event calendar →"), info)
     if inew != itext:
         info.write_text(inew)
     # Home page hero stat for the current season
@@ -370,10 +380,7 @@ def main():
             f'  <dd class="hstat-val">{esc(game or "FTC")}</dd>\n</div>')
     hnew = fill_markers(htext, "seasonstat", stat, home)
     # Home page hero button to the calendar (only while the Season page and its calendar are on)
-    cal = data.get("calendar") or {}
-    cta = ('<a href="/season/#calendar" class="btn-outline">Event calendar</a>'
-           if data.get("enabled", True) and cal.get("enabled", True) and cal.get("feed") else "")
-    hnew = fill_markers(hnew, "seasoncta", cta, home)
+    hnew = fill_markers(hnew, "seasoncta", cta_html(data, "btn-outline", "Event calendar"), home)
     if hnew != htext:
         home.write_text(hnew)
     if new != text:
