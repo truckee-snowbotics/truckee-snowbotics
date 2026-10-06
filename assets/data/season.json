@@ -23,10 +23,7 @@
     "exclude": [
       "SoNV"
     ],
-    "limit": 12,
-    "display": "both",
-    "calendarId": "ftc@firstnevada.org",
-    "autoload": false
+    "limit": 12
   },
   "robot": {
     "enabled": true,

@@ -151,14 +151,9 @@
           <h2>Northern Nevada FTC calendar</h2>
           <p>Upcoming league meets, tournaments and workshops in our region, from the FIRST Nevada calendar. Updated daily.</p>
         </div>
-        <div class="cal-embed" data-month="https://calendar.google.com/calendar/embed?src=ZnRjQGZpcnN0bmV2YWRhLm9yZw&amp;ctz=America%2FLos_Angeles&amp;wkst=1&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;bgcolor=%23ffffff" data-agenda="https://calendar.google.com/calendar/embed?src=ZnRjQGZpcnN0bmV2YWRhLm9yZw&amp;ctz=America%2FLos_Angeles&amp;wkst=1&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;bgcolor=%23ffffff&amp;mode=AGENDA">
-          <div class="cal-embed-panel">
-            <p class="stream-panel-title">Interactive calendar</p>
-            <p class="stream-panel-text">Google Calendar loads only when you ask for it, and may set cookies.</p>
-            <button type="button" class="btn-outline">Show interactive calendar</button>
-          </div>
-        </div>
-        <h3 class="cal-list-title">Next up</h3>
+        <div class="mcal" id="mcal" hidden></div>
+        <script type="application/json" id="cal-data">[{"title": "FIRST-aid Clinic", "start": "2026-10-10T09:00", "end": "2026-10-10T12:00", "allDay": false, "where": "Excel Christian School, 850 Baring Blvd, Sparks, NV 89434"}, {"title": "Tinker & Play Scrimmage", "start": "2026-10-10T13:00", "end": "2026-10-10T17:00", "allDay": false, "where": "Excel Christian School, 850 Baring Blvd, Sparks, NV 89434"}, {"title": "Coaches Corner", "start": "2026-10-20T19:00", "end": "2026-10-20T20:00", "allDay": false, "where": ""}, {"title": "FIRST Nevada Robotics Conference", "start": "2026-10-24T09:00", "end": "2026-10-24T15:00", "allDay": false, "where": "Southeast Career Technical Academy, 5710 S Mountain Vista St, Las Vegas, NV 89120"}, {"title": "League Meet # 1N", "start": "2026-10-31T13:30", "end": "2026-10-31T17:30", "allDay": false, "where": "George Whittell High School, 240 Warrior Way, Zephyr Cove, NV 89448"}, {"title": "League Meet # 2N", "start": "2026-12-05T13:30", "end": "2026-12-05T17:30", "allDay": false, "where": "Excel Christian School, 850 Baring Blvd, Sparks, NV 89434"}, {"title": "League Meet # 3N", "start": "2027-01-09T13:30", "end": "2027-01-09T17:30", "allDay": false, "where": "Boys & Girls Clubs of Mason Valley, 124 N Main St, Yerington, NV 89447"}, {"title": "Coaches Corner", "start": "2027-01-12T19:00", "end": "2027-01-12T20:00", "allDay": false, "where": ""}, {"title": "League Tournament (Day 1)", "start": "2027-01-22T16:00", "end": "2027-01-22T19:50", "allDay": false, "where": "Galena High School, 3600 Butch Cassidy Dr, Reno, NV 89511"}, {"title": "League Tournament (Day 2)", "start": "2027-01-23T07:30", "end": "2027-01-23T17:00", "allDay": false, "where": "Galena High School, 3600 Butch Cassidy Dr, Reno, NV 89511"}, {"title": "State Championship (Day 1)", "start": "2027-02-19T16:00", "end": "2027-02-19T20:00", "allDay": false, "where": "The Meadows School, 8601 Scholar Ln, Las Vegas, NV 89128"}, {"title": "State Championship (Day 2)", "start": "2027-02-20T07:30", "end": "2027-02-20T17:00", "allDay": false, "where": "The Meadows School, 8601 Scholar Ln, Las Vegas, NV 89128"}]</script>
+        <div class="cal-list-wrap">
         <ol class="cal-list">
           <li class="cal-item">
             <time class="cal-date" datetime="2026-10-10"><span class="cal-month">Oct</span><span class="cal-day">10</span></time>
@@ -255,6 +250,7 @@
             </div>
           </li>
         </ol>
+        </div>
         <div class="cal-links"><a class="season-event-link" href="#" data-link-key="ftcCalendarGoogle" target="_blank" rel="noopener">Add to Google Calendar →</a> <a class="season-event-link" href="#" data-link-key="ftcCalendarFeed" target="_blank" rel="noopener">iCal feed →</a> <a class="season-event-link" href="#" data-link-key="firstNevadaCalendar" target="_blank" rel="noopener">Full FIRST Nevada calendar →</a></div>
       </div>
     </section>

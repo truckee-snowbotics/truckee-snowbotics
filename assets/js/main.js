@@ -545,22 +545,98 @@ function getSponsors() {
   });
 })();
 
-// ── Season page: interactive Google Calendar (loads on click) ──
+// ── Season page: month-grid calendar ───────────────────
+// Draws a Google-Calendar-style month view from the JSON in #cal-data. Without JavaScript (and
+// on phones, where CSS hides the grid) the plain event list below it is what visitors see.
 (function () {
-  document.querySelectorAll('.cal-embed').forEach(box => {
-    const load = () => {
-      const narrow = window.matchMedia('(max-width: 700px)').matches;
-      const frame = document.createElement('iframe');
-      frame.src = narrow ? box.dataset.agenda : box.dataset.month;
-      frame.title = 'FIRST Nevada FTC calendar';
-      frame.loading = 'lazy';
-      frame.className = 'cal-frame' + (narrow ? ' cal-frame--agenda' : '');
-      box.replaceChildren(frame);
-    };
-    const btn = box.querySelector('button');
-    if (btn) btn.addEventListener('click', load);
-    if (box.dataset.autoload === 'true') load();
+  const mount = document.getElementById('mcal');
+  const dataEl = document.getElementById('cal-data');
+  if (!mount || !dataEl) return;
+  let events;
+  try { events = JSON.parse(dataEl.textContent); } catch (e) { return; }
+  if (!Array.isArray(events) || !events.length) return;
+
+  const pad = n => String(n).padStart(2, '0');
+  const key = (y, m, d) => y + '-' + pad(m + 1) + '-' + pad(d);
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const clock = t => {
+    const h = +t.slice(0, 2), m = t.slice(3, 5);
+    return (h % 12 || 12) + (m === '00' ? '' : ':' + m) + (h < 12 ? 'am' : 'pm');
+  };
+  const isCompetition = title => /meet|tournament|championship|scrimmage|kickoff/i.test(title);
+
+  // One entry per day an event covers.
+  const byDay = {};
+  events.forEach(e => {
+    const s = e.start.slice(0, 10), end = e.end.slice(0, 10);
+    const t = new Date(s + 'T00:00:00Z'), last = new Date(end + 'T00:00:00Z');
+    for (let n = 0; t <= last && n < 60; n++, t.setUTCDate(t.getUTCDate() + 1)) {
+      const k = t.toISOString().slice(0, 10);
+      (byDay[k] = byDay[k] || []).push({ e, first: k === s });
+    }
   });
+
+  const now = new Date();
+  const todayKey = key(now.getFullYear(), now.getMonth(), now.getDate());
+  const lastEnd = events.reduce((m, e) => (e.end > m ? e.end : m), todayKey).slice(0, 7);
+  const first = { y: now.getFullYear(), m: now.getMonth() };
+  const maxIndex = (+lastEnd.slice(0, 4) - first.y) * 12 + (+lastEnd.slice(5, 7) - 1 - first.m);
+  let offset = 0; // months from the current month
+
+  function render() {
+    const y = first.y + Math.floor((first.m + offset) / 12);
+    const m = (first.m + offset) % 12;
+    const firstDay = new Date(Date.UTC(y, m, 1)).getUTCDay();
+    const days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+    const weeks = Math.ceil((firstDay + days) / 7);
+    let body = '';
+    for (let w = 0; w < weeks; w++) {
+      body += '<tr>';
+      for (let d = 0; d < 7; d++) {
+        const day = new Date(Date.UTC(y, m, 1 - firstDay + w * 7 + d));
+        const k = day.toISOString().slice(0, 10);
+        const inMonth = day.getUTCMonth() === m;
+        const items = (byDay[k] || []).map(x => {
+          const time = !x.e.allDay && x.first ? '<span class="mcal-time">' + clock(x.e.start.slice(11)) + '</span> ' : '';
+          const kind = isCompetition(x.e.title) ? 'mcal-ev--comp' : 'mcal-ev--misc';
+          const tip = x.e.where ? ' title="' + escapeHTML(x.e.title + ' — ' + x.e.where) + '"' : '';
+          return '<li class="mcal-ev ' + kind + '"' + tip + '>' + time + escapeHTML(x.e.title) + '</li>';
+        }).join('');
+        const cls = 'mcal-cell' + (inMonth ? '' : ' mcal-cell--out') + (k === todayKey ? ' mcal-cell--today' : '');
+        body += '<td class="' + cls + '"><span class="mcal-num">' + day.getUTCDate() + '</span>' + (items ? '<ul class="mcal-evs">' + items + '</ul>' : '') + '</td>';
+      }
+      body += '</tr>';
+    }
+    mount.innerHTML =
+      '<div class="mcal-bar">' +
+        '<h3 class="mcal-title" aria-live="polite">' + MONTHS[m] + ' ' + y + '</h3>' +
+        '<div class="mcal-nav">' +
+          '<button type="button" class="mcal-btn mcal-today"' + (offset === 0 ? ' disabled' : '') + '>Today</button>' +
+          '<button type="button" class="mcal-btn mcal-prev" aria-label="Previous month"' + (offset <= 0 ? ' disabled' : '') + '>&#8249;</button>' +
+          '<button type="button" class="mcal-btn mcal-next" aria-label="Next month"' + (offset >= maxIndex ? ' disabled' : '') + '>&#8250;</button>' +
+        '</div>' +
+      '</div>' +
+      '<table class="mcal-table"><caption class="sr-only">' + MONTHS[m] + ' ' + y + '</caption>' +
+      '<thead><tr>' + DAYS.map(d => '<th scope="col">' + d + '</th>').join('') + '</tr></thead>' +
+      '<tbody>' + body + '</tbody></table>';
+  }
+
+  mount.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn || btn.disabled) return;
+    if (btn.classList.contains('mcal-prev')) offset = Math.max(0, offset - 1);
+    else if (btn.classList.contains('mcal-next')) offset = Math.min(maxIndex, offset + 1);
+    else if (btn.classList.contains('mcal-today')) offset = 0;
+    else return;
+    render();
+    const again = mount.querySelector('.' + btn.className.split(' ').filter(c => c !== 'mcal-btn')[0]);
+    if (again && !again.disabled) again.focus();
+  });
+
+  render();
+  mount.hidden = false;
+  document.getElementById('calendar').classList.add('has-grid');
 })();
 
 // ── Season page: live stream ──────────────────────────

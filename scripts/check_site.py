@@ -265,8 +265,7 @@ SCHEMAS = {
                 info=opt("weburl"), results=opt("weburl")))))),
         calendar=opt(obj(
             enabled=opt("bool"), title=opt("str"), feed=opt("weburl"),
-            exclude=opt(("list", "str")), limit=opt("int"),
-            display=opt(("enum", ["list", "embed", "both"])), calendarId=opt("str"), autoload=opt("bool"))),
+            exclude=opt(("list", "str")), limit=opt("int"))),
         robot=opt(obj(
             enabled=opt("bool"), name=opt("str"), description=opt("str"),
             photos=opt(("list", obj(src=req("str"), caption=opt("str")))),
