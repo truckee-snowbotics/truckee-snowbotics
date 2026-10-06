@@ -811,3 +811,5 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .alumni-more[open] > summary::after { content: "▴"; }
 .alumni-more > summary:hover { border-color: var(--accent); }
 .alumni-more[open] > summary { margin-bottom: 2.5rem; }
+.alumni-year .team-grid { display: flex; flex-wrap: wrap; justify-content: center; }
+.alumni-year .member-card { flex: 0 1 260px; width: min(100%, 260px); }
