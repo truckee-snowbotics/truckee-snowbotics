@@ -30,7 +30,7 @@
     "photos": [
       {
         "src": "/images/gallery/01-2026-development-3.webp",
-        "caption": "Hello"
+        "caption": "Development of the robot"
       }
     ],
     "specs": [
@@ -50,6 +50,6 @@
       }
     ],
     "name": "Our robot",
-    "description": "Our 2026–27 BIOBUZZ robot will appear here as it comes together. Until then, here's last season's DECODE robot."
+    "description": ""
   }
 }

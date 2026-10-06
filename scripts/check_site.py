@@ -270,7 +270,7 @@ SCHEMAS = {
             enabled=opt("bool"), title=opt("str"), feed=opt("weburl"),
             exclude=opt(("list", "str")), limit=opt("int"))),
         robot=opt(obj(
-            enabled=opt("bool"), name=opt("str"), description=opt("str"),
+            enabled=opt("bool"), name=opt("str"), description=opt("text"),
             photos=opt(("list", obj(src=req("str"), caption=opt("str")))),
             specs=opt(("list", obj(label=req("str"), value=req("str")))),
             links=opt(("list", obj(label=req("str"), url=req("url"))))))),
