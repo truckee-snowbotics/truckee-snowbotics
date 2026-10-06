@@ -73,11 +73,11 @@ def groups_html(members):
         if not group:
             continue
         out.append(
-            f'<div class="team-group">\n'
-            f'  <h3 class="team-group-title">{title}</h3>\n'
+            '<details class="team-group" data-collapse-mobile open>\n'
+            f'  <summary><h3 class="team-group-title"><span>{title}</span><span class="team-group-count">{len(group)}</span></h3></summary>\n'
             '  <div class="team-grid">\n'
             + indent("\n".join(card(m) for m in group), "    ")
-            + "\n  </div>\n</div>"
+            + "\n  </div>\n</details>"
         )
     return "\n".join(out)
 

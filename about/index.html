@@ -153,8 +153,8 @@
         </div>
         <!-- Generated from /assets/data/team.json by scripts/build_team.py -->
           <!-- @team -->
-          <div class="team-group">
-            <h3 class="team-group-title">Students</h3>
+          <details class="team-group" data-collapse-mobile open>
+            <summary><h3 class="team-group-title"><span>Students</span><span class="team-group-count">7</span></h3></summary>
             <div class="team-grid">
               <article class="member-card">
                 <div class="member-photo"><span class="member-initials" aria-hidden="true">BL</span></div>
@@ -206,9 +206,9 @@
                 </div>
               </article>
             </div>
-          </div>
-          <div class="team-group">
-            <h3 class="team-group-title">Mentors &amp; Advisors</h3>
+          </details>
+          <details class="team-group" data-collapse-mobile open>
+            <summary><h3 class="team-group-title"><span>Mentors &amp; Advisors</span><span class="team-group-count">2</span></h3></summary>
             <div class="team-grid">
               <article class="member-card">
                 <div class="member-photo"><span class="member-initials" aria-hidden="true">MH</span></div>
@@ -225,7 +225,7 @@
                 </div>
               </article>
             </div>
-          </div>
+          </details>
           <!-- @endteam -->
       </div>
     </section>
@@ -238,19 +238,22 @@
         <div class="section-header">
           <h2>Alumni</h2>
         </div>
-        <div class="alumni-year">
-          <h3 class="alumni-year-title">2026</h3>
-          <div class="team-grid">
-            <article class="member-card">
-              <div class="member-photo"><span class="member-initials" aria-hidden="true">ES</span></div>
-              <div class="member-body">
-                <h4 class="member-name">Eden Sacks</h4>
-                <p class="member-role">Former President</p>
-                <p class="member-bio">Eden was the President of the team in 2026 and the lead developer for the 2025-2026 season robot.</p>
-              </div>
-            </article>
+        <details class="alumni-all" data-collapse-mobile open>
+          <summary>Show alumni (1)</summary>
+          <div class="alumni-year">
+            <h3 class="alumni-year-title">2026</h3>
+            <div class="team-grid">
+              <article class="member-card">
+                <div class="member-photo"><span class="member-initials" aria-hidden="true">ES</span></div>
+                <div class="member-body">
+                  <h4 class="member-name">Eden Sacks</h4>
+                  <p class="member-role">Former President</p>
+                  <p class="member-bio">Eden was the President of the team in 2026 and the lead developer for the 2025-2026 season robot.</p>
+                </div>
+              </article>
+            </div>
           </div>
-        </div>
+        </details>
       </div>
     </section>
     <!-- @endalumni -->

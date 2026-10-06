@@ -261,11 +261,16 @@ ul { list-style: none; }
 
 /* ── Team ────────────────────────────────────── */
 .team-group + .team-group { margin-top: 3.5rem; }
+.team-group > summary, .alumni-all > summary { list-style: none; }
+.team-group > summary::-webkit-details-marker, .alumni-all > summary::-webkit-details-marker { display: none; }
 .team-group-title {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 1.25rem; padding-bottom: .75rem;
   border-bottom: 1px solid var(--border);
 }
+.team-group-count { display: none; color: var(--text-dim); letter-spacing: .04em; }
+.alumni-all > summary { display: none; }
 .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
 .member-card {
   background: var(--surface); border: 1px solid var(--border);
@@ -808,3 +813,28 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .alumni-more[open] > summary::after { content: "▴"; }
 .alumni-more > summary:hover { border-color: var(--accent); }
 .alumni-more[open] > summary { margin-bottom: 2.5rem; }
+
+/* Phones: team groups and alumni collapse behind a tap target */
+@media (max-width: 700px) {
+  .team-group + .team-group { margin-top: 1rem; }
+  .team-group > summary { cursor: pointer; }
+  .team-group-title {
+    margin-bottom: 0; padding: .95rem 1rem; background: var(--surface);
+    border: 1px solid var(--border-h);
+  }
+  .team-group-count { display: inline; margin-left: auto; }
+  .team-group-title::after { content: "▾"; font-size: .9rem; }
+  .team-group[open] > summary .team-group-title::after { content: "▴"; }
+  .team-group[open] > summary .team-group-title { border-bottom-color: var(--border-h); }
+  .team-group[open] > .team-grid { margin-top: 1.25rem; }
+  .team-group:not([open]) > .team-grid { display: none; }
+
+  .alumni-all > summary {
+    display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    padding: .95rem 1rem; background: var(--surface); border: 1px solid var(--border-h);
+    font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+  }
+  .alumni-all > summary::after { content: "▾"; font-size: .9rem; }
+  .alumni-all[open] > summary::after { content: "▴"; }
+  .alumni-all[open] > summary { margin-bottom: 1.5rem; }
+}

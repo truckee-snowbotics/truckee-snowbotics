@@ -270,6 +270,21 @@ getLinks().then(() => {
   });
 })();
 
+// ── Collapsible sections on phones ───────────
+// <details data-collapse-mobile open>: open (and not toggleable) on desktop, collapsed on phones.
+(function () {
+  const groups = document.querySelectorAll('details[data-collapse-mobile]');
+  if (!groups.length) return;
+  const phone = window.matchMedia('(max-width: 700px)');
+  const sync = () => groups.forEach(d => { d.open = !phone.matches; });
+  groups.forEach(d => {
+    const summary = d.querySelector('summary');
+    if (summary) summary.addEventListener('click', e => { if (!phone.matches) e.preventDefault(); });
+  });
+  if (phone.addEventListener) phone.addEventListener('change', sync); else phone.addListener(sync);
+  sync();
+})();
+
 // ── External links ────────────────────────────
 document.querySelectorAll('a[href^="http"]').forEach(a => {
   a.setAttribute('target', '_blank');
