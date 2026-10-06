@@ -22,10 +22,10 @@ Generated files (`gallery.json`, `sitemap.xml`, `news.xml`, the lists inside pag
 ## Preview locally
 
 ```sh
-pip install -r requirements.txt
-python3 scripts/build.py
-python3 -m http.server
+./preview
 ```
+
+It builds the site, starts a local server and opens http://localhost:8000. Run it again to rebuild after editing a data file (`./preview 8080` uses another port; Ctrl+C stops it). The first run sets up its own Python environment in `.venv`.
 
 ## Folders
 

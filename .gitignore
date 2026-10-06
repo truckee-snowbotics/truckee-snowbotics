@@ -43,3 +43,6 @@ rollover-checklist.md
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Local preview environment (./preview)
+.venv/
