@@ -12,7 +12,9 @@ We design, build, and program competitive robots for the FIRST Tech Challenge (F
 - [Season](https://snowbotics.org/season/): Live stream of the events we compete in, the event schedule, and our current robot.
 - [Sponsors](https://snowbotics.org/sponsors/): Current sponsors, donation info, and how to become a sponsor.
 - [Contact](https://snowbotics.org/contact/): Contact form and sponsorship inquiries.
-- [About](https://snowbotics.org/about/): Meet the team members and mentors.
+- [About](https://snowbotics.org/about/): Meet the students, mentors and alumni of the team.
+- [Terms & Photo Policy](https://snowbotics.org/terms/): How photos are used, how to submit one, and how to request a takedown.
+- [Privacy Policy](https://snowbotics.org/privacy/): What data the site collects and which third-party services it uses.
 
 ## Contact
 

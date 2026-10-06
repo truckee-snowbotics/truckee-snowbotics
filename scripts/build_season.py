@@ -3,7 +3,7 @@
 
 Fills the marked regions of season/index.html:
   <!-- @season --> ... <!-- @endseason -->          page content
-  <!-- @seasonmeta --> ... <!-- @endseasonmeta -->  description meta tags (+ noindex when off)
+  <!-- @seasonmeta --> ... <!-- @endseasonmeta -->  description meta tag (+ noindex when off)
 and the current-season stat in the home page hero (<!-- @seasonstat -->).
 
 "enabled": false in season.json turns the whole page off: the page shows only a short
@@ -20,14 +20,11 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+from _lib import ROOT, esc, fill_markers
+
 PAGE = ROOT / "season" / "index.html"
 TIMEZONE = "America/Los_Angeles"
 KEEP_DAYS = 90  # events that ended longer ago than this are dropped from the page
-
-
-def esc(value):
-    return html.escape(str(value), quote=True)
 
 
 def pacific(value):
@@ -221,33 +218,19 @@ def fill_inline(text, name, value):
     return rx.sub(lambda m: m.group(1) + html.escape(value, quote=False) + m.group(3), text)
 
 
-def fill(text, start_marker, end_marker, body):
-    rx = re.compile(rf"^(?P<i>[ \t]*){re.escape(start_marker)}\n.*?^[ \t]*{re.escape(end_marker)}", re.S | re.M)
-
-    def sub(m):
-        ind = m["i"]
-        inner = "\n".join(ind + line if line.strip() else "" for line in body.split("\n")) if body else ""
-        return f"{ind}{start_marker}\n" + (inner + "\n" if inner else "") + f"{ind}{end_marker}"
-
-    if not rx.search(text):
-        raise SystemExit(f"error: season/index.html is missing {start_marker} ... {end_marker}")
-    return rx.sub(sub, text)
-
-
 def main():
     data = json.loads((ROOT / "assets" / "data" / "season.json").read_text())
     today = datetime.date.today()
     text = PAGE.read_text()
-    new = fill(text, "<!-- @season -->", "<!-- @endseason -->", page_content(data, today))
+    new = fill_markers(text, "season", page_content(data, today), PAGE)
     season, game = data.get("season", ""), data.get("game", "")
     summary = (f"Watch Truckee Snowbotics FTC Team #32587 compete live and see our robot for the "
                f"{season} FIRST Tech Challenge season" + (f", {game}." if game else "."))
-    meta = [f'<meta name="description" content="{esc(summary)}" />',
-            f'<meta property="og:description" content="{esc(summary)}" />',
-            f'<meta name="twitter:description" content="{esc(summary)}" />']
+    # build_meta.py derives the og:/twitter: tags (and drops the canonical URL when noindex) from these
+    meta = [f'<meta name="description" content="{esc(summary)}" />']
     if not data.get("enabled", True):
         meta.append('<meta name="robots" content="noindex" />')
-    new = fill(new, "<!-- @seasonmeta -->", "<!-- @endseasonmeta -->", "\n".join(meta))
+    new = fill_markers(new, "seasonmeta", "\n".join(meta), PAGE)
     # Information page: this season's game and dates
     info = ROOT / "information" / "index.html"
     itext = info.read_text()
@@ -261,7 +244,7 @@ def main():
     htext = home.read_text()
     stat = (f'<div class="hstat">\n  <dt class="hstat-key">{esc(season)} season</dt>\n'
             f'  <dd class="hstat-val">{esc(game or "FTC")}</dd>\n</div>')
-    hnew = fill(htext, "<!-- @seasonstat -->", "<!-- @endseasonstat -->", stat)
+    hnew = fill_markers(htext, "seasonstat", stat, home)
     if hnew != htext:
         home.write_text(hnew)
     if new != text:

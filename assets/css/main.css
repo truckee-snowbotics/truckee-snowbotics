@@ -1,5 +1,13 @@
 /* main.css — Truckee Snowbotics */
 
+/* ── Font ───────────────────────────────────── */
+/* Inter (SIL Open Font License, assets/fonts/Inter-OFL.txt), hosted here so visitors never contact Google Fonts. */
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(/assets/fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ── Tokens ─────────────────────────────────── */
 :root {
   --bg:          #151b24;
@@ -10,17 +18,13 @@
 
   --text:        #e6ebf3;
   --text-mid:    #aeb8c8;
-  --text-dim:    #8794a8;
+  --text-dim:    #95a2b6;
   --heading:     #f4f7fc;
 
   --accent:      #64b3f6;
   --accent-fill: #64b3f6;
   --accent-soft: rgba(100,179,246,.13);
   --accent-line: rgba(100,179,246,.4);
-  --blue:        var(--accent);
-  --blue-dark:   var(--accent);
-  --blue-light:  var(--accent-soft);
-  --blue-border: var(--accent-line);
 
   --border:      rgba(255,255,255,.1);
   --border-h:    rgba(255,255,255,.2);
@@ -30,7 +34,6 @@
 
   --font:        'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono:        var(--font); /* labels use Inter too */
-  --ease:        cubic-bezier(0.22, 1, 0.36, 1);
   --max:         1160px;
   --max-narrow:  720px;
   --max-outer:   calc(var(--max) + 2 * var(--gutter)); /* for containers that pad themselves */
@@ -278,7 +281,6 @@ ul { list-style: none; }
   display: flex; flex-direction: column;
   flex: 0 1 260px; width: min(100%, 260px);
 }
-.member-card--empty { opacity: .55; }
 
 .member-photo {
   aspect-ratio: 1 / 1; background: var(--surface-2);
@@ -442,7 +444,6 @@ ul { list-style: none; }
   display: flex; align-items: center; justify-content: space-between; gap: .5rem;
 }
 .link-card-label::after { content: '↗'; font-size: .85rem; color: var(--accent); }
-.link-card-desc { font-size: .85rem; color: var(--text-mid); line-height: 1.5; }
 .link-card-category {
   font-family: var(--mono); font-size: .68rem; font-weight: 600;
   letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim);
@@ -562,7 +563,7 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .contact-form textarea { min-height: 150px; resize: vertical; }
 .contact-form button { justify-self: start; }
 .contact-send-btn { width: auto; padding-inline: 2rem; }
-.contact-send-btn:disabled { cursor: not-allowed; }
+.contact-send-btn:disabled { opacity: .45; cursor: not-allowed; }
 .contact-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
 
 /* ── Sponsorship process steps ───────────────── */
@@ -672,7 +673,6 @@ a.sponsor-bar-logo:hover { opacity: .7; }
   content: 'LIVE'; margin-left: .75rem; padding: .15rem .5rem; vertical-align: middle;
   font-size: .68rem; font-weight: 700; letter-spacing: .08em; color: #0d1117; background: var(--accent);
 }
-.season-empty { color: var(--text-mid); font-size: .95rem; }
 @media (max-width: 800px) {
   .season-event { grid-template-columns: 1fr; }
   .season-event-when, .season-event-name, .season-event-where, .season-event-links { grid-column: 1; grid-row: auto; }
@@ -753,13 +753,24 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 /* ── Utility ─────────────────────────────────── */
 .hidden { display: none !important; }
 
-/* ── Section visibility (SECTION_VISIBILITY in main.js) ── */
+/* ── Hidden by script (expired news) ── */
 .section-hidden { display: none !important; }
-.section-notice {
-  background: rgba(240,197,64,.08);
-  border-bottom: 1px solid rgba(240,197,64,.3);
-  padding: .85rem var(--gutter);
-  text-align: center; font-size: .9rem; font-weight: 500; color: #f0c540;
+
+/* ── Contact notice banner (shown only when CONTACT_NOTICE.enabled in main.js) ── */
+.notice-banner {
+  display: none; position: relative; text-align: center; padding: .75rem 3rem;
+  background: #3b1010; border-bottom: 1px solid #7f1d1d; color: #fca5a5;
+  font-size: .95rem; font-weight: 500; line-height: 1.4;
+}
+.notice-banner a, .form-notice a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.notice-banner-close {
+  position: absolute; right: .75rem; top: 50%; transform: translateY(-50%);
+  background: none; border: 0; color: inherit; font-size: 1.2rem; line-height: 1;
+  cursor: pointer; padding: .25rem .5rem; opacity: .8;
+}
+.form-notice {
+  margin-top: .75rem; font-size: .875rem; line-height: 1.5; padding: .6rem .85rem;
+  background: #3b1010; color: #fca5a5; border: 1px solid #7f1d1d;
 }
 
 /* ── Form feedback ───────────────────────────── */

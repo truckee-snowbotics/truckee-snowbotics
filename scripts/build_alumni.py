@@ -10,47 +10,17 @@ whole list is collapsed behind a "Show alumni" button (see main.js, data-collaps
 Alumnus fields: name, year (required; whole number); role, bio, photo (optional, may be
 blank; photo is an /images/... path, e.g. /images/team/name.webp).
 """
-import html
 import json
-import re
 import sys
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+from _lib import ROOT, fill_markers, indent, member_card
+
 ABOUT = ROOT / "about" / "index.html"
-MARKER = re.compile(r"^(?P<indent>[ \t]*)<!-- @alumni -->\n.*?^[ \t]*<!-- @endalumni -->", re.S | re.M)
 MAX_VISIBLE_YEARS = 4
 
 
-def esc(value):
-    return html.escape(str(value), quote=True)
-
-
-def indent(text, ind):
-    return "\n".join(ind + line if line.strip() else "" for line in text.split("\n"))
-
-
-def initials(name):
-    return "".join(w[0] for w in name.split()[:2]).upper()
-
-
 def card(a):
-    if a.get("photo"):
-        photo = f'<img src="{esc(a["photo"])}" alt="{esc(a["name"])}" loading="lazy" decoding="async" />'
-    else:
-        photo = f'<span class="member-initials" aria-hidden="true">{esc(initials(a["name"]))}</span>'
-    lines = [
-        '<article class="member-card">',
-        f'  <div class="member-photo">{photo}</div>',
-        '  <div class="member-body">',
-        f'    <h4 class="member-name">{esc(a["name"])}</h4>',
-    ]
-    if a.get("role"):
-        lines.append(f'    <p class="member-role">{esc(a["role"])}</p>')
-    if a.get("bio"):
-        lines.append(f'    <p class="member-bio">{esc(a["bio"])}</p>')
-    lines += ["  </div>", "</article>"]
-    return "\n".join(lines)
+    return member_card(a["name"], a.get("role", ""), "", a.get("bio", ""), a.get("photo", ""))
 
 
 def year_block(year, people):
@@ -95,17 +65,8 @@ def section(alumni):
 
 def main():
     alumni = json.loads((ROOT / "assets" / "data" / "alumni.json").read_text())
-    body = section(alumni)
     text = ABOUT.read_text()
-    if "<!-- @alumni -->" not in text:
-        raise SystemExit("error: about/index.html is missing <!-- @alumni --> ... <!-- @endalumni -->")
-
-    def sub(m):
-        ind = m["indent"]
-        inner = indent(body, ind) + "\n" if body else ""
-        return f"{ind}<!-- @alumni -->\n{inner}{ind}<!-- @endalumni -->"
-
-    new = MARKER.sub(sub, text)
+    new = fill_markers(text, "alumni", section(alumni), ABOUT)
     if new != text:
         ABOUT.write_text(new)
     print(f"Alumni: {len(alumni)} in about/index.html")

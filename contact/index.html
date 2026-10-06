@@ -6,6 +6,7 @@
   <meta name="author" content="Truckee Snowbotics" />
   <meta name="description" content="Get in touch with Truckee Snowbotics FTC Team #32587. Reach out with questions, sponsorship inquiries, or to get involved with our team." />
   <title>Contact · Truckee Snowbotics</title>
+  <!-- @meta -->
   <link rel="canonical" href="https://snowbotics.org/contact/" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -18,11 +19,12 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:alt" content="Truckee Snowbotics — FTC Team #32587" />
-  <meta name="twitter:image" content="https://snowbotics.org/images/site/og-card.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Contact · Truckee Snowbotics" />
   <meta name="twitter:description" content="Get in touch with Truckee Snowbotics FTC Team #32587. Reach out with questions, sponsorship inquiries, or to get involved with our team." />
+  <meta name="twitter:image" content="https://snowbotics.org/images/site/og-card.png" />
+  <!-- @endmeta -->
   <!-- @partial head-common -->
   <link rel="icon" type="image/svg+xml" href="/images/site/favicon.svg" />
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -30,13 +32,11 @@
   <meta name="theme-color" content="#151b24" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="alternate" type="application/rss+xml" title="Truckee Snowbotics news" href="/news.xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <!-- @endpartial head-common -->
   <!-- Structured Data -->
+  <!-- @breadcrumb -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,6 +47,7 @@
     ]
   }
   </script>
+  <!-- @endbreadcrumb -->
   <!-- Preload page data -->
   <link rel="preload" href="/assets/data/links.json" as="fetch" crossorigin />
 </head>
@@ -54,9 +55,9 @@
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <!-- ── TEMPORARY NOTICE BANNER ──────────────── -->
-  <div id="notice-banner" style="display:none;background:#b91c1c;color:#fff;text-align:center;padding:.75rem 1rem;font-family:Inter,sans-serif;font-size:.95rem;font-weight:500;line-height:1.4;position:relative;">
-    <strong>&#9888; Important Notice:</strong> Our contact pages and email are currently unavailable. For inquiries, please contact us directly at <a data-notice-email href="mailto:example@example.com" style="color:#fde68a;text-decoration:underline;">example@example.com</a>.
-    <button data-notice-close aria-label="Dismiss notice" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:1.2rem;line-height:1;cursor:pointer;padding:.25rem .5rem;opacity:.8;">&times;</button>
+  <div id="notice-banner" class="notice-banner">
+    <strong>&#9888; Important Notice:</strong> Our contact pages and email are currently unavailable. For inquiries, please contact us directly at <a data-notice-email href="mailto:example@example.com">example@example.com</a>.
+    <button class="notice-banner-close" data-notice-close aria-label="Dismiss notice">&times;</button>
   </div>
 
   <!-- ── HEADER ──────────────────────────────── -->

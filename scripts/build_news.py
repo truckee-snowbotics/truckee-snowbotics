@@ -27,15 +27,13 @@ import os
 import re
 import sys
 from email.utils import format_datetime
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-DOMAIN = (ROOT / "CNAME").read_text().strip() if (ROOT / "CNAME").exists() else "snowbotics.org"
+from _lib import ROOT, indent, marker_pattern, read_domain
+
+DOMAIN = read_domain()
 TIMEZONE = "America/Los_Angeles"
 TODAY = datetime.date.fromisoformat(os.environ.get("NEWS_TODAY") or datetime.date.today().isoformat())
-MARKER = re.compile(
-    r"^(?P<indent>[ \t]*)<!-- @news -->\n.*?^[ \t]*<!-- @endnews -->", re.S | re.M
-)
+MARKER = marker_pattern("news")
 
 
 def day(value):
@@ -160,10 +158,6 @@ def render(items, link_ids):
     return "\n".join(chunks)
 
 
-def indented(text, indent):
-    return "\n".join(indent + line if line.strip() else "" for line in text.split("\n"))
-
-
 def feed(items):
     out = []
     for i in items:
@@ -208,7 +202,7 @@ def main():
     for page in sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")):
         text = page.read_text()
         new = MARKER.sub(
-            lambda m: f"{m['indent']}<!-- @news -->\n{indented(body, m['indent'])}\n{m['indent']}<!-- @endnews -->"
+            lambda m: f"{m['indent']}<!-- @news -->\n{indent(body, m['indent'])}\n{m['indent']}<!-- @endnews -->"
             if body else f"{m['indent']}<!-- @news -->\n{m['indent']}<!-- @endnews -->",
             text,
         )

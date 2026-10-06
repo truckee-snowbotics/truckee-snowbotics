@@ -15,18 +15,14 @@ import datetime
 import json
 import re
 import sys
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+from _lib import ROOT, indent
+
 PARTIALS = ROOT / "partials"
 MARKER = re.compile(
     r"^(?P<indent>[ \t]*)<!-- @partial (?P<name>[\w-]+) -->\n.*?^[ \t]*<!-- @endpartial (?P=name) -->",
     re.S | re.M,
 )
-
-
-def indented(text, indent):
-    return "\n".join(indent + line if line.strip() else "" for line in text.rstrip("\n").split("\n"))
 
 
 def season_enabled():
@@ -58,7 +54,7 @@ def main():
                 problems += 1
                 return m.group(0)
             ind = m["indent"]
-            return (f"{ind}<!-- @partial {name} -->\n{indented(partials[name], ind)}\n"
+            return (f"{ind}<!-- @partial {name} -->\n{indent(partials[name], ind)}\n"
                     f"{ind}<!-- @endpartial {name} -->")
 
         new = MARKER.sub(fill, text)

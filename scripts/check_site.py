@@ -233,8 +233,8 @@ def opt(node):
 
 SCHEMAS = {
     "team.json": ("list", obj(
-        id=opt("str"), initials=opt("str"), name=req("str"), role=req("text"),
-        photo=opt("text"), empty=opt("bool"),
+        id=opt("str"), name=req("str"), role=req("text"),
+        photo=opt("text"),
         group=opt(("enum", ["students", "mentors"])), grade=opt("text"), bio=opt("text"))),
     "alumni.json": ("list", obj(
         name=req("str"), year=req("int"), role=opt("text"), bio=opt("text"), photo=opt("text"))),
@@ -424,9 +424,35 @@ def check_xml():
             err(name, f"not well-formed XML ({e})")
 
 
+def check_llms():
+    """Every page in the sitemap should be described in llms.txt (what AI tools read)."""
+    llms, sitemap = ROOT / "llms.txt", ROOT / "sitemap.xml"
+    if not (llms.exists() and sitemap.exists()):
+        return
+    text = llms.read_text()
+    for url in re.findall(r"<loc>([^<]+)</loc>", sitemap.read_text()):
+        if url not in text:
+            warn("llms.txt", f"doesn't mention {url}")
+
+
+def check_unreferenced():
+    """Images and downloads that nothing on the site points to (likely leftovers)."""
+    suffixes = {".html", ".css", ".js", ".json", ".xml", ".xsl", ".txt", ".webmanifest", ".md", ".py", ".yml"}
+    corpus = ""
+    for f in ROOT.rglob("*"):
+        if f.is_file() and f.suffix in suffixes and ".git" not in f.parts and "thumbs" not in f.parts:
+            corpus += f.read_text(errors="ignore")
+    for folder in ("images", "assets/files", "assets/fonts"):
+        for f in sorted((ROOT / folder).rglob("*")):
+            if f.is_file() and not f.name.startswith(".") and "thumbs" not in f.parts and f.suffix != ".txt" and f.name not in corpus:
+                warn(str(f.relative_to(ROOT)), "isn't referenced anywhere (remove it, or link to it)")
+
+
 def main():
     check_xml()
     check_json()
+    check_llms()
+    check_unreferenced()
     for where, count in PLACEHOLDERS.items():
         warn(where, f"{count} placeholder value(s) starting with \"Update\" still present")
     check_html()

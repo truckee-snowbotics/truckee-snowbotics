@@ -26,49 +26,6 @@ const SPONSORSHIP_FORM_NOTICE = {
 };
 
 // ╔══════════════════════════════════════════════════╗
-// ║  SECTION VISIBILITY                              ║
-// ╠══════════════════════════════════════════════════╣
-// ║  Hide parts of the site and/or show a notice     ║
-// ║  strip. Each rule:                               ║
-// ║    page:     optional — only apply on this page  ║
-// ║              (e.g. '/season/'; omit = all pages) ║
-// ║    selector: CSS selector for the target(s)      ║
-// ║    hide:     false → keep visible, notice only   ║
-// ║              (default true: hide the target)     ║
-// ║    message:  optional notice strip shown where   ║
-// ║              the target is/was                   ║
-// ║  Examples:                                       ║
-// ║  { page: '/gallery/', selector: '#gallery',      ║
-// ║    message: 'Gallery is being updated.' }        ║
-// ║  { selector: '#news', hide: true }  ← silent     ║
-// ╚══════════════════════════════════════════════════╝
-const SECTION_VISIBILITY = [
-  // The Season page is switched on/off with "enabled" in /assets/data/season.json.
-];
-
-// ── Apply section visibility rules ────────────────
-(function () {
-  const currentPath = window.location.pathname.replace(/\/?$/, '/');
-  SECTION_VISIBILITY.forEach(rule => {
-    if (!rule.selector) return;
-    if (rule.page && rule.page.replace(/\/?$/, '/') !== currentPath) return;
-    const targets = document.querySelectorAll(rule.selector);
-    if (!targets.length) return;
-    if (rule.hide !== false) {
-      // Class with !important so later scripts toggling inline styles
-      // (e.g. the season loader) can't accidentally reveal the section.
-      targets.forEach(el => el.classList.add('section-hidden'));
-    }
-    if (rule.message) {
-      const notice = document.createElement('div');
-      notice.className = 'section-notice';
-      notice.textContent = rule.message;
-      targets[0].insertAdjacentElement('beforebegin', notice);
-    }
-  });
-})();
-
-// ╔══════════════════════════════════════════════════╗
 // ║  LINKS — single source of truth:                 ║
 // ║  /assets/data/links.json                         ║
 // ╠══════════════════════════════════════════════════╣
@@ -151,13 +108,11 @@ getLinks().then(() => {
   const sendBtn = document.querySelector('.contact-send-btn');
   if (sendBtn) {
     sendBtn.disabled = true;
-    sendBtn.style.opacity = '0.45';
-    sendBtn.style.cursor = 'not-allowed';
 
     // Insert explanation below the button
     const notice = document.createElement('p');
-    notice.style.cssText = 'margin-top:.75rem;font-size:.875rem;background:#3b1010;color:#fca5a5;border:1px solid #7f1d1d;border-radius:0;padding:.6rem .85rem;line-height:1.5;';
-    notice.innerHTML = '&#9888; Contact form submissions are currently unavailable. Please reach us directly at <a href="mailto:' + noticeEmail + '" style="color:#fde68a;text-decoration:underline;font-weight:600;">' + noticeEmail + '</a>.';
+    notice.className = 'form-notice';
+    notice.innerHTML = '&#9888; Contact form submissions are currently unavailable. Please reach us directly at <a href="mailto:' + noticeEmail + '">' + noticeEmail + '</a>.';
     sendBtn.insertAdjacentElement('afterend', notice);
 
     const form = sendBtn.closest('form');
