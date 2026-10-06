@@ -216,7 +216,7 @@ def check_html():
 
 
 # ── Data file schemas ─────────────────────────────────
-# Leaf types: "str" (non-empty), "int", "bool", "url" (http(s)://, mailto:, /path or #),
+# Leaf types: "str" (non-empty), "text" (may be blank), "int", "bool", "url" (http(s)://, mailto:, /path or #),
 # "weburl" (http(s):// only), "date" (YYYY-MM-DD), "datetime" (YYYY-MM-DDTHH:MM), "time" (HH:MM), ("enum", [...]). Containers: ("list", node) and
 # ("obj", {field: (node, required)}). Unknown fields only warn (usually typos).
 def obj(**fields):
@@ -234,8 +234,8 @@ def opt(node):
 SCHEMAS = {
     "team.json": ("list", obj(
         id=opt("str"), initials=opt("str"), name=req("str"), role=req("str"),
-        photo=opt("str"), empty=opt("bool"),
-        group=opt(("enum", ["students", "mentors"])), grade=opt("str"), bio=opt("str"))),
+        photo=opt("text"), empty=opt("bool"),
+        group=opt(("enum", ["students", "mentors"])), grade=opt("text"), bio=opt("text"))),
     "news.json": ("list", obj(
         date=req("date"), endDate=opt("date"), displayDate=opt("str"),
         title=req("str"), text=req("str"),
@@ -276,6 +276,9 @@ def validate(node, value, path, where):
             err(where, f"{path}: expected non-empty text")
         elif value.strip().startswith("Update"):
             PLACEHOLDERS[where] = PLACEHOLDERS.get(where, 0) + 1
+    elif kind == "text":  # like "str", but may be left blank
+        if not isinstance(value, str):
+            err(where, f"{path}: expected text")
     elif kind == "int":
         if not isinstance(value, int) or isinstance(value, bool):
             err(where, f"{path}: expected a whole number")

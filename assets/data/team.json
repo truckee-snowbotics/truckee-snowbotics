@@ -3,56 +3,90 @@
     "id": "bach-le",
     "initials": "BL",
     "name": "Bach Le",
-    "role": "President - Engineering Lead"
+    "role": "President - Engineering Lead",
+    "group": "students",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "jack-west",
     "initials": "JW",
     "name": "Jack West",
-    "role": "Co-President - Software Lead"
+    "role": "Co-President - Software Lead",
+    "group": "students",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "eduardo-sosa",
     "initials": "ES",
     "name": "Eduardo Sosa",
-    "role": "Strategy & Control"
+    "role": "Strategy & Control",
+    "group": "students",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "jonathan-bohnet",
     "initials": "JB",
     "name": "Jonathan Bohnet",
-    "role": "Design & Outreach"
+    "role": "Design & Outreach",
+    "group": "students",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "corbin-hoff",
     "initials": "CH",
     "name": "Corbin Hoff",
-    "role": "Driver & Community"
+    "role": "Driver & Community",
+    "group": "students",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "noah-pilon",
     "initials": "NP",
     "name": "Noah Pilon",
-    "role": "Team Member"
+    "role": "Team Member",
+    "group": "students",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "rayce-rignes",
     "initials": "RR",
     "name": "Rayce Rignes",
-    "role": "Team Member"
+    "role": "Team Member",
+    "group": "students",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "maura-hoff",
     "initials": "MH",
     "name": "Maura Hoff",
     "role": "Mentor & Advisor",
-    "group": "mentors"
+    "group": "mentors",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   },
   {
     "id": "izzak-eberst",
     "initials": "IE",
     "name": "Izzak Eberst",
     "role": "Faculty Advisor",
-    "group": "mentors"
+    "group": "mentors",
+    "photo": "",
+    "grade": "",
+    "bio": ""
   }
 ]
