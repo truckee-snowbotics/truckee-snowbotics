@@ -112,7 +112,7 @@ ul { list-style: none; }
   position: relative;
   display: flex; align-items: center;
   padding: 0 .65rem;
-  font-size: .875rem; font-weight: 500; color: var(--text-mid);
+  font-size: .95rem; font-weight: 500; color: var(--text-mid);
   white-space: nowrap; transition: color .15s;
 }
 .nav a:hover { color: var(--heading); }
@@ -163,7 +163,7 @@ ul { list-style: none; }
 .mobile-nav-actions a { border: none; font-size: .875rem; color: var(--text-dim); padding: 0; }
 .mobile-nav-actions a[data-link-key="join"] { color: var(--accent); font-weight: 600; }
 
-@media (max-width: 1060px) {
+@media (max-width: 1100px) {
   .nav { display: none; }
   .hamburger { display: flex; }
   .header-inner { gap: 1rem; }
