@@ -2,9 +2,11 @@
 """Build the news section and feed from assets/data/news.json.
 
 Writes, on every build:
-  - the news cards (plus Event structured data for upcoming events) into every page
-    that has <!-- @news --> ... <!-- @endnews --> markers (the home page), so the news
-    is real HTML for search engines and visitors without JavaScript;
+  - the whole "News & Updates" section (heading, cards, plus Event structured data for
+    upcoming events) into every page that has <!-- @news --> ... <!-- @endnews --> markers
+    (the home page), so the news is real HTML for search engines and visitors without
+    JavaScript. With no news to show (empty file, or everything expired), the section is
+    left out entirely;
   - news.xml, an RSS feed.
 
 Item fields (all dates are ISO, YYYY-MM-DD):
@@ -153,9 +155,24 @@ def event_ld(item):
 
 
 def render(items, link_ids):
+    """The whole news section, or "" when there is nothing to show."""
+    if not items:
+        return ""
     chunks = [card(i, link_ids) for i in items]
     chunks += [ld for ld in (event_ld(i) for i in items) if ld]
-    return "\n".join(chunks)
+    cards = "\n".join("      " + line if line.strip() else "" for line in "\n".join(chunks).split("\n"))
+    return (
+        '<section class="section section--alt" id="news">\n'
+        '  <div class="section-inner">\n'
+        '    <div class="section-header">\n'
+        "      <h2>News &amp; Updates</h2>\n"
+        "    </div>\n"
+        '    <div class="news-grid" id="news-grid">\n'
+        f"{cards}\n"
+        "    </div>\n"
+        "  </div>\n"
+        "</section>"
+    )
 
 
 def feed(items):
