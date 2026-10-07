@@ -10,15 +10,15 @@
 
 /* ── Tokens ─────────────────────────────────── */
 :root {
-  --bg:          #f3f0e9;
-  --bg-alt:      #eae6dc;
-  --surface:     #faf8f3;
-  --surface-2:   #e4e0d5;
+  --bg:          #e6e4de;
+  --bg-alt:      #d9d7d0;
+  --surface:     #efede7;
+  --surface-2:   #d0cec6;
   --bg-card:     var(--surface);
 
   --text:        #23272d;
   --text-mid:    #464b53;
-  --text-dim:    #5a6069;
+  --text-dim:    #4f5660;
   --heading:     #14181d;
 
   --accent:      #035c93;
@@ -27,14 +27,14 @@
   --accent-soft: rgba(3,92,147,.09);
   --accent-line: rgba(3,92,147,.4);
 
-  --border:      rgba(17,20,24,.14);
-  --border-h:    rgba(17,20,24,.26);
+  --border:      rgba(17,20,24,.16);
+  --border-h:    rgba(17,20,24,.3);
 
   /* more tokens */
-  --footer-bg:   #dcd8cc;
-  --scroll:      #bcb8ac;
+  --footer-bg:   #cbc9c1;
+  --scroll:      #aeaca3;
   --hover-line:  rgba(17,20,24,.42);
-  --chip-bg:     rgba(250,248,243,.94);
+  --chip-bg:     rgba(239,237,231,.94);
   --soft-fill:   rgba(17,20,24,.06);
   --shadow:      0 8px 24px rgba(17,20,24,.2);
   --btn-hover:   #024670;
@@ -240,6 +240,14 @@ ul { list-style: none; }
 
 /* ── Sections ────────────────────────────────── */
 .section { padding: clamp(2.75rem, 6vw, 4.5rem) var(--gutter); }
+/* Grey band and blue band: break up long pages */
+.section--band { background: var(--bg-alt); }
+.section--blue {
+  --bg: #035c93; --text: #f3f0e9; --text-mid: #dbe7f1; --text-dim: #c3d6e6; --heading: #ffffff;
+  --accent: #ffffff; --accent-fill: #f3f0e9; --on-accent: #035c93; --btn-hover: #ffffff;
+  --border: rgba(255,255,255,.28); --border-h: rgba(255,255,255,.55); --accent-line: rgba(255,255,255,.6);
+  background: var(--bg); color: var(--text);
+}
 /* Side-heading layout: heading on the left, content on the right */
 .section--split .section-inner {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.3fr);

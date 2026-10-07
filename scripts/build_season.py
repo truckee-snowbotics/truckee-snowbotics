@@ -120,7 +120,7 @@ def robot_section(robot):
     links = robot.get("links", [])
     ids = link_ids()
     title = robot.get("name") or "Our robot"
-    parts = [f'<section class="section" id="robot">', '  <div class="section-inner">',
+    parts = [f'<section class="section section--band" id="robot">', '  <div class="section-inner">',
              '    <div class="section-header">', f'      <h2>{esc(title)}</h2>']
     if robot.get("description"):
         parts.append(f'      <p>{esc(robot["description"])}</p>')
