@@ -248,7 +248,7 @@ SCHEMAS = {
         id=req("str"), name=req("str"), banner=req("str"), website=req("weburl"),
         tier=req(("enum", ["platinum", "gold", "silver", "bronze"])))),
     "links.json": ("list", obj(
-        id=req("str"), label=req("str"), url=req("url"), category=req("str"), listed=req("bool"))),
+        id=req("str"), label=req("str"), url=req("url"), listed=req("bool"))),
     "gallery.json": ("list", "str"),
     "gallery-captions.json": ("dict", "str"),
     "site.json": obj(

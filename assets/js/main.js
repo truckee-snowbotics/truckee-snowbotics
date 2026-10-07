@@ -5,7 +5,7 @@
 // ║  LINKS — single source of truth:                 ║
 // ║  /assets/data/links.json                         ║
 // ╠══════════════════════════════════════════════════╣
-// ║  Each entry: { id, label, url, category, listed }║
+// ║  Each entry: { id, label, url, listed }          ║
 // ║  - id matches data-link-key / data-form-action   ║
 // ║    attributes in the HTML                        ║
 // ║  - listed: true → also rendered on the           ║
@@ -349,7 +349,6 @@ function getSponsors() {
         grid.innerHTML = items.map(item => `
             <a class="link-card" href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">
               <span class="link-card-label">${escapeHTML(item.label || '')}</span>
-              ${item.category ? `<span class="link-card-category">${escapeHTML(item.category)}</span>` : ''}
             </a>`).join('');
       }
 

@@ -484,10 +484,6 @@ ul { list-style: none; }
   display: flex; align-items: center; justify-content: space-between; gap: .5rem;
 }
 .link-card-label::after { content: '↗'; font-size: .85rem; color: var(--accent); }
-.link-card-category {
-  font-family: var(--mono); font-size: .68rem; font-weight: 600;
-  letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim);
-}
 
 /* ── Sponsors ────────────────────────────────── */
 .sponsor-grid { display: flex; flex-direction: column; gap: 3rem; }

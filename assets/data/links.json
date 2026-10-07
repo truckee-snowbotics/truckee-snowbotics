@@ -3,133 +3,114 @@
     "id": "join",
     "label": "Join the Team",
     "url": "https://forms.gle/M5mx37r9PuM68nzm7",
-    "category": "Forms",
     "listed": true
   },
   {
     "id": "ftc-manual",
     "label": "FTC Game Manual",
     "url": "https://ftc-docs.firstinspires.org/",
-    "category": "Resources",
     "listed": true
   },
   {
     "id": "github",
     "label": "Team GitHub",
     "url": "https://github.com/truckee-snowbotics",
-    "category": "Resources",
     "listed": true
   },
   {
     "id": "githubRepo",
     "label": "Website Source",
     "url": "https://github.com/truckee-snowbotics/truckee-snowbotics",
-    "category": "Resources",
     "listed": false
   },
   {
     "id": "sponsorshipForm",
     "label": "Sponsorship Form",
     "url": "/assets/files/sponsorship-form-2026.pdf",
-    "category": "Sponsors",
     "listed": true
   },
   {
     "id": "contract",
     "label": "2026-27 Contract",
     "url": "#",
-    "category": "Resources",
     "listed": true
   },
   {
     "id": "photos",
     "label": "Photos and Videos",
     "url": "https://drive.google.com/drive/folders/1ZynUB_7i7hJAZ9k3wf3-3QVjwDKErunw?usp=drive_link",
-    "category": "Media",
     "listed": true
   },
   {
     "id": "donate",
     "label": "Donate",
     "url": "https://hcb.hackclub.com/donations/start/truckee-snowbotics",
-    "category": "Support",
     "listed": true
   },
   {
     "id": "sierra-sun-article",
     "label": "Sierra Sun Article",
     "url": "https://www.sierrasun.com/news/snowbotics-truckee-highs-robotics-team-makes-a-comeback/",
-    "category": "News",
     "listed": true
   },
   {
     "id": "instagram",
     "label": "Instagram",
     "url": "https://www.instagram.com/truckeesnowbotics/",
-    "category": "Social",
     "listed": false
   },
   {
     "id": "youtube",
     "label": "YouTube",
     "url": "https://www.youtube.com/@TruckeeSnowbotics",
-    "category": "Social",
     "listed": false
   },
   {
     "id": "formAction",
     "label": "Contact form endpoint (Formspree)",
     "url": "https://formspree.io/f/mqewdqbb",
-    "category": "Forms",
     "listed": false
   },
   {
     "id": "email",
     "label": "Contact Email",
     "url": "mailto:contact@snowbotics.org",
-    "category": "Contact",
     "listed": false
   },
   {
     "id": "submitPhoto",
     "label": "Submit a photo",
     "url": "https://github.com/truckee-snowbotics/truckee-snowbotics/issues/new?template=gallery-photo.yml",
-    "category": "Forms",
     "listed": false
   },
   {
     "id": "reportProblem",
     "label": "Report a problem",
     "url": "https://github.com/truckee-snowbotics/truckee-snowbotics/issues/new?template=site-problem.yml",
-    "category": "Forms",
     "listed": false
   },
   {
     "id": "takedown",
     "label": "Photo takedown request",
     "url": "mailto:contact@snowbotics.org?subject=Photo%20takedown%20request&body=Page%20or%20photo%20link%3A%0A%0AWhat%20you%27d%20like%20removed%3A%0A%0AYour%20name%20(optional)%3A",
-    "category": "Forms",
     "listed": false
   },
   {
     "id": "firstNevadaCalendar",
     "label": "FIRST Nevada calendar",
     "url": "https://firstnevada.org/all-events/#calendar",
-    "category": "Resources",
     "listed": false
   },
   {
     "id": "ftcCalendarGoogle",
     "label": "Add the FTC calendar to Google Calendar",
     "url": "https://calendar.google.com/calendar/r?cid=ftc%40firstnevada.org",
-    "category": "Resources",
     "listed": false
   },
   {
     "id": "ftcCalendarFeed",
     "label": "FTC calendar iCal feed",
     "url": "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics",
-    "category": "Resources",
     "listed": false
   }
 ]

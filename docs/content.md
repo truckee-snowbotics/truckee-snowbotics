@@ -162,7 +162,6 @@ one use their filename.
   "id": "join",
   "label": "Join the Team",
   "url": "https://forms.gle/...",
-  "category": "Forms",
   "listed": true
 }
 ```
