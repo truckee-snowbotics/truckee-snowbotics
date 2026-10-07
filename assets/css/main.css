@@ -455,6 +455,10 @@ ul { list-style: none; }
 .donate-card-body { font-size: .925rem; color: var(--text-mid); line-height: 1.65; flex: 1; margin-bottom: .5rem; }
 .donate-card .btn-primary, .donate-card .btn-outline { align-self: flex-start; margin-top: auto; }
 
+.about-split .info-text { grid-template-columns: 1fr; gap: 1.5rem; }
+.about-split--flip { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); }
+.about-split--flip .about-split__img { order: -1; }
+@media (max-width: 800px) { .about-split--flip { grid-template-columns: 1fr; } .about-split--flip .about-split__img { order: 0; } }
 .info-text {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 4rem;
   max-width: 1000px;
