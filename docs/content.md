@@ -192,16 +192,17 @@ check fails the deploy if a link hard-codes a URL that's in `links.json`, or use
   "enabled": true,
   "title": "STEM for the Truckee community",
   "intro": "A short paragraph about your outreach.",
+  "invite": "An optional second paragraph, e.g. how people can get in touch.",
   "photo": { "src": "/images/gallery/03-2026-maker-show-2.webp", "alt": "What the photo shows" },
   "items": [ { "title": "At community events", "text": "One or two sentences." } ],
   "buttons": [
-    { "label": "Invite us to your event", "url": "/contact/", "primary": true },
+    { "label": "Get in touch", "url": "/contact/", "primary": true },
     { "label": "Join the team", "link": "join" }
   ]
 }
 ```
 
-`title` and `intro` are required; `photo`, `items` (the small cards) and `buttons` are optional. A button takes either a `url` or a `link` (an id from `links.json`, so URLs stay in one place); `primary` makes it the white button. Set `"enabled": false` to hide the section. Add real activities as you do them (school visits, workshops, demos) and keep the wording true to what the team actually did.
+`title` and `intro` are required; `invite` (a second paragraph), `photo`, `items` (the small cards) and `buttons` are optional. A button takes either a `url` or a `link` (an id from `links.json`, so URLs stay in one place); `primary` makes it the white button. Set `"enabled": false` to hide the section. Add real activities as you do them (school visits, workshops, demos) and keep the wording true to what the team actually did.
 
 ## Home and About photos
 

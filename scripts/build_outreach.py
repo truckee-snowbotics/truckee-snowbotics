@@ -6,6 +6,7 @@ written when "enabled" is false or the file has no title/intro, so the section j
 the page.
 
     title, intro   required text
+    invite         optional second paragraph (for example, how to get in touch)
     photo          optional {"src": "/images/...", "alt": "..."} shown beside the intro
     items          optional list of {"title", "text"} cards under it
     buttons        optional list of {"label", and either "link": "<id in links.json>" or
@@ -41,6 +42,8 @@ def section(data):
         "        </div>",
         f'        <p class="about-body">{esc(data["intro"])}</p>',
     ]
+    if data.get("invite"):
+        parts.append(f'        <p class="about-body">{esc(data["invite"])}</p>')
     if data.get("buttons"):
         parts.append('        <div class="btn-row">')
         parts += ["          " + button(b) for b in data["buttons"]]

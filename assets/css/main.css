@@ -927,3 +927,4 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 /* Home page: sections alternate plain / tinted by position, so a missing news section doesn't break the rhythm */
 .home > section.section:nth-of-type(even) { background: var(--bg-alt); }
 .outreach-points { margin-top: 2.5rem; }
+.about-body + .about-body { margin-top: 1rem; }
