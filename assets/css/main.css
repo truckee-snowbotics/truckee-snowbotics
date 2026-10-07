@@ -131,11 +131,27 @@ ul { list-style: none; }
 }
 .header-brand img { flex-shrink: 0; width: 30px; height: 30px; }
 
+.nav { position: relative; display: flex; gap: .25rem; flex: 1; min-width: 0; overflow: hidden; align-self: stretch; }
+.nav a {
+  position: relative; flex-shrink: 0;
+  display: flex; align-items: center;
+  padding: 0 .65rem;
+  font-size: .95rem; font-weight: 500; color: var(--text-mid);
+  white-space: nowrap;
+}
+.nav a:hover { color: var(--heading); }
+.nav a.active { color: var(--heading); }
+.nav a.active::after {
+  content: ''; position: absolute; left: .75rem; right: .75rem; bottom: -1px;
+  height: 2px; background: var(--accent-2);
+}
+.nav a.in-menu { display: none; }
+
 .header-actions { display: flex; align-items: center; gap: .25rem; }
 .header-actions .hamburger { margin-left: .5rem; }
 
 .hamburger {
-  display: flex; flex-direction: column; justify-content: center;
+  display: none; flex-direction: column; justify-content: center;
   gap: 5px; width: 40px; height: 40px;
   background: none; border: 1px solid var(--border-h);
   border-radius: var(--r-sm); cursor: pointer; padding: 11px;
@@ -144,6 +160,7 @@ ul { list-style: none; }
   display: block; height: 2px; background: var(--text-mid);
   border-radius: 0;
 }
+.hamburger.show { display: flex; }
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
@@ -171,6 +188,7 @@ ul { list-style: none; }
   border-bottom: 1px solid var(--border);
 
 }
+.mobile-nav a.in-bar { display: none; }
 .mobile-nav a:hover, .mobile-nav a.active { color: var(--heading); }
 .mobile-nav a.active { font-weight: 600; }
 .mobile-nav-actions {
@@ -181,7 +199,6 @@ ul { list-style: none; }
 .mobile-nav-actions a[data-link-key="join"] { color: var(--accent); font-weight: 600; }
 
 .header-inner { gap: 1rem; }
-.header-brand { margin-right: auto; }
 @media (max-width: 520px) {
   .header-actions .btn-icon { display: none; }
 }

@@ -58,9 +58,9 @@ getLinks().then(items => {
     if (url && url !== '#') el.action = url;
   });
 }).catch(() => { /* keep the fallback hrefs hard-coded in the HTML */ });
-// ── Active menu link (page-based) ────────────
+// ── Active nav link (page-based) ─────────────
 (function () {
-  const links = document.querySelectorAll('#mobile-nav > a');
+  const links = document.querySelectorAll('.nav a, #mobile-nav > a');
   if (!links.length) return;
 
   // Normalise pathname to always end with /
@@ -71,6 +71,45 @@ getLinks().then(items => {
     const linkPath = href.split('#')[0].replace(/\/?$/, '/');
     l.classList.toggle('active', linkPath === currentPath);
   });
+})();
+
+// ── Nav that folds into the hamburger ────────
+// As the window narrows, the last links move into the hamburger menu one at a time. If fewer
+// than MIN_INLINE links would stay in the bar, they all move into the menu.
+(function () {
+  const nav = document.getElementById('main-nav');
+  const btn = document.getElementById('hamburger');
+  const drawer = document.getElementById('mobile-nav');
+  if (!nav || !btn || !drawer) return;
+  const MIN_INLINE = 3;
+  const links = Array.from(nav.querySelectorAll('a'));
+  const drawerLinks = Array.from(drawer.querySelectorAll(':scope > a'));
+
+  const fitCount = () => {
+    let n = 0;
+    links.forEach((l, i) => { if (l.offsetLeft + l.offsetWidth <= nav.clientWidth) n = i + 1; });
+    return n;
+  };
+  const layout = () => {
+    links.forEach(l => l.classList.remove('in-menu'));
+    btn.classList.remove('show');
+    let n = fitCount();
+    if (n < links.length) {            // something doesn't fit: the hamburger takes space, so measure again
+      btn.classList.add('show');
+      n = fitCount();
+    }
+    if (n < MIN_INLINE) n = 0;
+    links.forEach((l, i) => l.classList.toggle('in-menu', i >= n));
+    drawerLinks.forEach((l, i) => l.classList.toggle('in-bar', i < n));
+    btn.classList.toggle('show', n < links.length);
+    if (n >= links.length) {           // everything fits: close the menu if it was open
+      drawer.classList.remove('open'); btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false'); drawer.setAttribute('aria-hidden', 'true');
+    }
+  };
+  layout();
+  if (window.ResizeObserver) new ResizeObserver(layout).observe(nav.parentElement); else window.addEventListener('resize', layout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
 })();
 
 // ── Hamburger / mobile nav toggle ────────────
