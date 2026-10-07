@@ -51,7 +51,7 @@ def section(alumni):
             + "\n</details>"
         )
     return (
-        '<section class="section section--alt" id="alumni">\n'
+        '<section class="section" id="alumni">\n'
         '  <div class="section-inner">\n'
         '    <div class="section-header">\n'
         "      <h2>Alumni</h2>\n"

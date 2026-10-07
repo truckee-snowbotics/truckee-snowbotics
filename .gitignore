@@ -12,25 +12,10 @@ desktop.ini
 # Logs
 *.log
 
-# Node (if you ever add a build step)
-node_modules/
-
-# Build output
-dist/
-build/
-
 # Secrets — never commit these
 .env
 .env.*
 !.env.example
-
-# Jekyll (deleting old scaffold — these are no longer used)
-_site/
-.jekyll-cache/
-.jekyll-metadata
-Gemfile
-Gemfile.lock
-_config.yml
 
 # Generated gallery thumbnails (scripts/optimize_images.py)
 images/gallery/thumbs/

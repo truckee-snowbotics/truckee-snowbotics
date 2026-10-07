@@ -89,7 +89,7 @@ def event_card(e, ids):
     return "\n".join(lines)
 
 
-def stream_section(stream, today, alt=False):
+def stream_section(stream, today):
     events = [e for e in stream.get("events", []) if pacific(e["end"]).date() + datetime.timedelta(days=KEEP_DAYS) >= today]
     events.sort(key=lambda e: e["start"])
     ids = link_ids()
@@ -98,7 +98,7 @@ def stream_section(stream, today, alt=False):
     if events:
         cards = '<div class="season-events" id="season-events">\n' + "\n".join(event_card(e, ids) for e in events) + "\n</div>"
         listing = '    <h3 class="stream-events-title">Event schedule</h3>\n' + "\n".join("    " + line for line in cards.split("\n")) + "\n"
-    return f'''<section class="section{" section--alt" if alt else ""}" id="watch" data-autoplay="{autoplay}">
+    return f'''<section class="section" id="watch" data-autoplay="{autoplay}">
   <div class="section-inner">
     <div class="section-header">
       <h2>Watch live</h2>
@@ -114,13 +114,13 @@ def stream_section(stream, today, alt=False):
 </section>'''
 
 
-def robot_section(robot, alt=True):
+def robot_section(robot):
     photos = robot.get("photos", [])
     specs = robot.get("specs", [])
     links = robot.get("links", [])
     ids = link_ids()
     title = robot.get("name") or "Our robot"
-    parts = [f'<section class="section{" section--alt" if alt else ""}" id="robot">', '  <div class="section-inner">',
+    parts = [f'<section class="section" id="robot">', '  <div class="section-inner">',
              '    <div class="section-header">', f'      <h2>{esc(title)}</h2>']
     if robot.get("description"):
         parts.append(f'      <p>{esc(robot["description"])}</p>')
@@ -203,7 +203,7 @@ def cal_full_when(e):
     return when_text(start, end)
 
 
-def calendar_section(cal, today, alt):
+def calendar_section(cal, today):
     exclude = [x.lower() for x in cal.get("exclude", [])]
     events = [e for e in load_calendar()
               if datetime.date.fromisoformat(e["end"][:10]) >= today
@@ -255,7 +255,7 @@ def calendar_section(cal, today, alt):
     links = [anchor("Add to Google Calendar →", "https://calendar.google.com/calendar/r?cid=ftc%40firstnevada.org", ids, "season-event-link"),
              anchor("iCal feed →", cal.get("feed") or "", ids, "season-event-link"),
              anchor("Full FIRST Nevada calendar →", "https://firstnevada.org/all-events/#calendar", ids, "season-event-link")]
-    return f'''<section class="section{" section--alt" if alt else ""}" id="calendar">
+    return f'''<section class="section" id="calendar">
   <div class="section-inner">
     <div class="section-header">
       <h2>{esc(title)}</h2>
@@ -284,16 +284,13 @@ def page_content(data, today):
   <p>See where we compete, meet our robot, and watch our events live.</p>
 </section>'''
     blocks = [hero]
-    alt = False  # sections alternate plain / tinted background, starting plain
     # Page order: calendar, robot, then the live stream.
     if data.get("calendar", {}).get("enabled", True) and data.get("calendar", {}).get("feed"):
-        blocks.append(calendar_section(data["calendar"], today, alt))
-        alt = not alt
+        blocks.append(calendar_section(data["calendar"], today))
     if data.get("robot", {}).get("enabled", True) and data.get("robot"):
-        blocks.append(robot_section(data["robot"], alt))
-        alt = not alt
+        blocks.append(robot_section(data["robot"]))
     if data.get("stream", {}).get("enabled", True):
-        blocks.append(stream_section(data.get("stream", {}), today, alt))
+        blocks.append(stream_section(data.get("stream", {}), today))
     return "\n\n".join(blocks)
 
 

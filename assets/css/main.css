@@ -272,7 +272,6 @@ ul { list-style: none; }
 
 /* ── Sections ────────────────────────────────── */
 .section { padding: clamp(2.75rem, 6vw, 4.5rem) var(--gutter); }
-.section--alt { background: none; }
 /* Side-heading layout: heading on the left, content on the right */
 .section--split .section-inner {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.3fr);
