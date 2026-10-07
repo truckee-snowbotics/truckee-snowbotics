@@ -3,7 +3,7 @@
 into a GitHub issue. Run locally with:  python3 scripts/health_check.py
 
 Checks
-  - outside links still work (links.json, news links, season stream/event/robot links,
+  - outside links still work (links.json, banner link, season stream/event/robot links,
     sponsor websites). Sites that block bots (403/429/999) are listed as "couldn't verify"
     and never open an issue on their own.
   - events starting within the next 7 days that still have no stream link
@@ -50,8 +50,7 @@ def collect_links():
 
     for l in load("links.json"):
         add(l.get("url"), f'links.json "{l.get("label", l.get("id"))}"')
-    for n in load("news.json"):
-        add(n.get("link"), f'news.json "{n.get("title")}"')
+    add((load("site.json").get("banner") or {}).get("link"), "site.json banner")
     for s in load("sponsors.json"):
         add(s.get("website"), f'sponsors.json "{s.get("name")}"')
     season = load("season.json")
@@ -137,7 +136,7 @@ def rollover_checklist():
     body = f"""FIRST Tech Challenge kickoff is usually in mid-September. Things to update for **{season}**:
 
 - [ ] `assets/data/season.json`: season, game name, robot section (name, description, photos, specs), clear last season's events
-- [ ] `assets/data/news.json`: add the kickoff and first events; remove or expire old items
+- [ ] `assets/data/site.json`: update the home page banner message
 - [ ] `assets/data/team.json`: this season's roster and roles
 - [ ] Information page: season dates and a short description of the new game
 - [ ] Sponsorship form and contract PDFs in `assets/files/`, plus the contract link in `links.json`

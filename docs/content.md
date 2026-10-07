@@ -2,55 +2,20 @@
 
 Every page is generated from the data files in `assets/data/`. Edit a file, push to `main`, and the deploy rebuilds the site. To test locally, run `./build` and refresh your preview.
 
-## News
+## Home banner
 
-`assets/data/news.json` is a list of items; the build renders them into the home page
-(real HTML, so search engines see them), writes `news.xml` (RSS) and, for upcoming
-events, Event structured data. The News & Updates section always shows; with no news to show (an empty list, or every item expired) it says "No news right now." To switch news off without deleting items, or to change those words, use `news` in `site.json`: `"news": { "enabled": false, "emptyText": "No news right now." }`. Featured items first, then upcoming items soonest-first, then past items newest-first (by `date`); no ordering field to maintain.
+The strip under the home page hero comes from `banner` in `assets/data/site.json` (`build_banner.py`):
 
 ```json
-{
-  "date": "2026-06-07",
-  "title": "Truckee Maker Show",
-  "text": "Join us at the Truckee Maker Show…",
-  "event": true, "location": "Truckee Community Center",
-  "startTime": "11:00", "endTime": "17:00"
+"banner": {
+  "enabled": true,
+  "message": "2026–27 season: BIOBUZZ presented by RTX. See our robot, the live stream and the regional event calendar.",
+  "linkLabel": "Season page",
+  "link": "/season/"
 }
 ```
 
-| Field | |
-|---|---|
-| `date`, `title`, `text` | required (`date` is `YYYY-MM-DD`) |
-| `endDate` | optional, for a span of days |
-| `displayDate` | optional text shown instead of the formatted date ("Post-Season 2026") |
-| `link`, `linkLabel` | optional "Read more →" link (URLs already in `links.json` are kept single-source) |
-| `image`, `imageAlt` | optional picture shown under the text |
-| `featured` | `true` pins the item to the top, highlighted |
-| `expires` | hidden after this date, including in visitors' browsers between deploys |
-| `event`, `location`, `address`, `startTime`, `endTime` | `event: true` publishes Event data while upcoming (times are Pacific) |
-
-The site check warns about past events without an `expires` date, and if every item has expired.
-
-### Date text
-
-The text shown next to each item is built automatically from `date` and `endDate`:
-
-| `date` / `endDate` | Shown as |
-|---|---|
-| `2026-06-07` | Sunday, June 7, 2026 |
-| `2026-10-20` / `2026-10-22` | October 20–22, 2026 |
-| `2026-03-01` / `2026-06-30` | March 1 – June 30, 2026 |
-| `2026-12-28` / `2027-01-03` | December 28, 2026 – January 3, 2027 |
-
-`displayDate` is an optional override for timing that isn't a real date ("Fall 2026").
-`date` still decides the sort order, so it needs a sensible value even when you
-override the text. **Leave `displayDate` out whenever the real date is known**, so the
-exact date shows and you have one less thing to keep in sync.
-
-Two current items still use `displayDate` because their dates are placeholders I made up
-to get the sort order right: "Recruiting New Members" (`2026-06-01`, shown as "Post-Season
-2026") and "Post-Season Begins" (`2026-03-01` to `2026-06-30`, shown as "March-June 2026").
-When their real dates are known, set `date` / `endDate` and delete `displayDate`.
+`message` is the text. `link` is a page on the site (`/season/`), a full URL, or an id from `links.json`; leave it out for a banner with no button, and `linkLabel` sets the button's words. Set `"enabled": false` to hide the banner.
 
 ## Season page
 
@@ -197,6 +162,6 @@ check fails the deploy if a link hard-codes a URL that's in `links.json`, or use
 
 ## Other settings
 
-Site-wide switches live in the data files: the Season page with `enabled` in `season.json`, and the News section with `news` in `site.json`.
+Site-wide switches live in the data files: the Season page with `enabled` in `season.json`, and the home banner with `banner.enabled` in `site.json`.
 
 The email addresses and every other URL come from `links.json`; fonts (Plus Jakarta Sans) are hosted in `assets/fonts/`, so visitors never contact Google Fonts.

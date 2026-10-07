@@ -1,6 +1,6 @@
 #!/bin/sh
 # Rebuild the site for local testing:   ./build
-# Run it after editing a data file (team, alumni, news, season, links...), then refresh your preview.
+# Run it after editing a data file (team, alumni, season, links...), then refresh your preview.
 # First run creates a private Python environment in .venv and installs the build tools.
 cd "$(dirname "$0")" || exit 1
 

@@ -6,7 +6,7 @@ We design, build, and program competitive robots for the FIRST Tech Challenge (F
 
 ## Pages
 
-- [Home](https://snowbotics.org/): Team overview, latest news, and donation options.
+- [Home](https://snowbotics.org/): Team overview, outreach, and donation options.
 - [Information](https://snowbotics.org/information/): Details about FTC, how to join the team, and our nonprofit structure.
 - [Gallery](https://snowbotics.org/gallery/): Photos from the build floor, competitions, and events.
 - [Season](https://snowbotics.org/season/): Live stream of the events we compete in, the event schedule, and our current robot.

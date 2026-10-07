@@ -7,8 +7,10 @@
     "src": "/images/site/about.webp",
     "alt": "The Snowbotics team"
   },
-  "news": {
-    "enabled": false,
-    "emptyText": "No news right now."
+  "banner": {
+    "enabled": true,
+    "message": "2026–27 season: BIOBUZZ presented by RTX. See our robot, the live stream and the regional event calendar.",
+    "linkLabel": "Season page",
+    "link": "/season/"
   }
 }

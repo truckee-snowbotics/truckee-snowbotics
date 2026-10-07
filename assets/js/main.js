@@ -377,23 +377,6 @@ function getSponsors() {
     .catch(() => {});
 })();
 
-// ── News ─────────────────────────────────────────────
-// The cards are rendered into the page at build time (scripts/build_news.py from
-// news.json). Here we only hide items whose "expires" date has passed since the
-// last deploy, and show the "no news" message if nothing is left.
-(function () {
-  const grid = document.getElementById('news-grid');
-  if (!grid) return;
-  const now = new Date();
-  const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-  grid.querySelectorAll('.news-card[data-expires]').forEach(card => {
-    if (card.dataset.expires < today) card.remove();
-  });
-  if (!grid.querySelector('.news-card') && !grid.querySelector('.news-empty')) {
-    grid.innerHTML = '<p class="news-empty">' + escapeHTML(grid.dataset.empty || 'No news right now.') + '</p>';
-  }
-})();
-
 // ── Contact form ─────────────────────────────────────
 (function () {
   const form = document.querySelector('.contact-form');

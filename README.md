@@ -8,7 +8,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages. Python scripts in `scripts/` build th
 
 | To change | Edit | Guide |
 |---|---|---|
-| News on the home page | `assets/data/news.json` | [News](docs/content.md#news) |
+| Banner under the home hero | `assets/data/site.json` | [Banner](docs/content.md#home-banner) |
 | Season page: live stream schedule, robot, on/off switch | `assets/data/season.json` | [Season page](docs/content.md#season-page) |
 | Team roster (About page) | `assets/data/team.json` | [Team](docs/content.md#team) |
 | Alumni (About page) | `assets/data/alumni.json` | [Alumni](docs/content.md#alumni) |
@@ -18,7 +18,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages. Python scripts in `scripts/` build th
 | Any link or email (socials, forms, downloads) | `assets/data/links.json` | [Links](docs/content.md#links) |
 | Header, footer, shared `<head>` | `partials/` | [Build and checks](docs/automation.md#build-and-checks) |
 
-Generated files (`gallery.json`, `sitemap.xml`, `news.xml`, the lists inside pages) are rewritten by the build; don't edit inside the `<!-- @... -->` markers.
+Generated files (`gallery.json`, `sitemap.xml`, the lists inside pages) are rewritten by the build; don't edit inside the `<!-- @... -->` markers.
 
 ## Rebuild for testing
 

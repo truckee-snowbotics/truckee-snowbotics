@@ -11,7 +11,7 @@ on:
     branches: [main]
   schedule:
     # Daily at 13:17 UTC (about 6:15 AM Pacific; off the hour, since GitHub delays or skips jobs at :00) so date-based content refreshes without a push:
-    # news ordering and the RSS feed, upcoming-event data, sitemap dates.
+    # upcoming-event data, the regional calendar, sitemap dates.
     - cron: '17 13 * * *'
   workflow_dispatch:
 

@@ -24,7 +24,7 @@ ORDER = ["", "about", "season", "gallery", "information", "contact", "sponsors",
 
 # Content a page loads at runtime, so changes to it count as changes to the page.
 DEPENDENCIES = {
-    "": ["assets/data/news.json", "assets/data/sponsors.json"],
+    "": ["assets/data/site.json", "assets/data/sponsors.json"],
     "about": ["assets/data/team.json", "assets/data/alumni.json"],
     "season": ["assets/data/season.json", "assets/data/calendar.json"],
     "gallery": ["images/gallery", "assets/data/gallery-captions.json"],

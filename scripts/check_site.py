@@ -238,12 +238,6 @@ SCHEMAS = {
         group=opt(("enum", ["students", "mentors"])), grade=opt("text"), bio=opt("text"))),
     "alumni.json": ("list", obj(
         name=req("str"), year=req("int"), role=opt("text"), bio=opt("text"), photo=opt("text"))),
-    "news.json": ("list", obj(
-        date=req("date"), endDate=opt("date"), displayDate=opt("str"),
-        title=req("str"), text=req("str"),
-        link=opt("url"), linkLabel=opt("str"), image=opt("str"), imageAlt=opt("str"),
-        featured=opt("bool"), expires=opt("date"), event=opt("bool"),
-        location=opt("str"), address=opt("str"), startTime=opt("time"), endTime=opt("time"))),
     "sponsors.json": ("list", obj(
         id=req("str"), name=req("str"), banner=req("str"), website=req("weburl"),
         tier=req(("enum", ["platinum", "gold", "silver", "bronze"])))),
@@ -254,7 +248,7 @@ SCHEMAS = {
     "site.json": obj(
         heroPhoto=req(obj(src=req("str"), alt=req("str"))),
         aboutPhoto=req(obj(src=req("str"), alt=req("str"))),
-        news=opt(obj(enabled=opt("bool"), emptyText=opt("str")))),
+        banner=opt(obj(enabled=opt("bool"), message=req("str"), linkLabel=opt("str"), link=opt("str")))),
     "calendar.json": obj(events=req(("list", obj(
         title=req("str"), start=req("str"), end=req("str"), allDay=req("bool"), location=opt("str"))))),
     "season.json": obj(
@@ -344,29 +338,6 @@ def validate(node, value, path, where):
                 warn(where, f"{path}: unknown field \"{name}\" (typo?)")
 
 
-def check_news(items, where):
-    today = datetime.date.today()
-    dated = [i for i in items if isinstance(i, dict) and isinstance(i.get("date"), str)]
-
-    def parse(value):
-        try:
-            return datetime.date.fromisoformat(value)
-        except (TypeError, ValueError):
-            return None
-
-    for n, i in enumerate(dated):
-        start, end = parse(i["date"]), parse(i.get("endDate") or i["date"])
-        if start and end and end < start:
-            err(where, f"$[{n}]: endDate is before date")
-        if i.get("event") and end and end < today and not i.get("expires"):
-            warn(where, f"\"{i.get('title')}\" is a past event with no expires date; it will keep showing")
-        if i.get("image") and not i.get("imageAlt"):
-            pass  # decorative by default; the title sits right next to it
-    live = [i for i in dated if not i.get("expires") or (parse(i["expires"]) or today) >= today]
-    if dated and not live:
-        warn(where, "every news item has expired, so the news section will be hidden")
-
-
 def check_schema(name, data, where):
     schema = SCHEMAS.get(name)
     if not schema:
@@ -379,8 +350,6 @@ def check_schema(name, data, where):
             if i in seen:
                 err(where, f"duplicate id \"{i}\"")
             seen.add(i)
-    if name == "news.json" and isinstance(data, list):
-        check_news(data, where)
     if name == "season.json" and isinstance(data, dict):
         for n, e in enumerate((data.get("stream") or {}).get("events", [])):
             try:
@@ -423,7 +392,7 @@ def check_json():
 
 def check_xml():
     import xml.etree.ElementTree as ET
-    for name in ("sitemap.xml", "sitemap.xsl", "news.xml"):
+    for name in ("sitemap.xml", "sitemap.xsl"):
         f = ROOT / name
         if not f.exists():
             continue
