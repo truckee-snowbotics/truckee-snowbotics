@@ -183,6 +183,26 @@ at runtime. The repo's HTML therefore shows `href="#"`, not the live URL. The si
 check fails the deploy if a link hard-codes a URL that's in `links.json`, or uses a
 `data-link-key` that doesn't exist.
 
+## Outreach section
+
+`assets/data/outreach.json` fills the "STEM for the Truckee community" section on the home page (between News and Support Us):
+
+```json
+{
+  "enabled": true,
+  "title": "STEM for the Truckee community",
+  "intro": "A short paragraph about your outreach.",
+  "photo": { "src": "/images/gallery/03-2026-maker-show-2.webp", "alt": "What the photo shows" },
+  "items": [ { "title": "At community events", "text": "One or two sentences." } ],
+  "buttons": [
+    { "label": "Invite us to your event", "url": "/contact/", "primary": true },
+    { "label": "Join the team", "link": "join" }
+  ]
+}
+```
+
+`title` and `intro` are required; `photo`, `items` (the small cards) and `buttons` are optional. A button takes either a `url` or a `link` (an id from `links.json`, so URLs stay in one place); `primary` makes it the white button. Set `"enabled": false` to hide the section. Add real activities as you do them (school visits, workshops, demos) and keep the wording true to what the team actually did.
+
 ## Home and About photos
 
 `assets/data/site.json` sets the two big photos that aren't part of the gallery:

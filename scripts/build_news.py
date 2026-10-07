@@ -162,7 +162,7 @@ def render(items, link_ids):
     chunks += [ld for ld in (event_ld(i) for i in items) if ld]
     cards = "\n".join("      " + line if line.strip() else "" for line in "\n".join(chunks).split("\n"))
     return (
-        '<section class="section section--alt" id="news">\n'
+        '<section class="section" id="news">\n'
         '  <div class="section-inner">\n'
         '    <div class="section-header">\n'
         "      <h2>News &amp; Updates</h2>\n"

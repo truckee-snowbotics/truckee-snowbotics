@@ -68,3 +68,13 @@ def member_card(name, role="", grade="", bio="", photo="", level=4):
         lines.append(f'    <p class="member-bio">{esc(bio)}</p>')
     lines += ["  </div>", "</article>"]
     return "\n".join(lines)
+
+
+def image_size(src):
+    """(width, height) of a site image (path like /images/x.webp), or None if Pillow is missing."""
+    try:
+        from PIL import Image
+        with Image.open(ROOT / src.lstrip("/")) as im:
+            return im.size
+    except Exception:  # Pillow missing or an unreadable format: pages work without the size
+        return None

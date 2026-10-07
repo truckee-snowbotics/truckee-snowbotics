@@ -13,23 +13,14 @@ while the photo loads.
 import json
 import sys
 
-from _lib import ROOT, esc, fill_markers
+from _lib import ROOT, esc, fill_markers, image_size
 
 HERO = ROOT / "index.html"
 ABOUT = ROOT / "about" / "index.html"
 
 
-def size(src):
-    try:
-        from PIL import Image
-        with Image.open(ROOT / src.lstrip("/")) as im:
-            return im.size
-    except Exception:  # Pillow missing, or a format it can't read: the page works without the size
-        return None
-
-
 def img(photo, extra):
-    dims = size(photo["src"])
+    dims = image_size(photo["src"])
     wh = f' width="{dims[0]}" height="{dims[1]}"' if dims else ""
     return f'<img src="{esc(photo["src"])}" alt="{esc(photo["alt"])}"{wh}{extra} decoding="async" />'
 

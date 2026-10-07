@@ -251,6 +251,11 @@ SCHEMAS = {
         id=req("str"), label=req("str"), url=req("url"), category=req("str"), listed=req("bool"))),
     "gallery.json": ("list", "str"),
     "gallery-captions.json": ("dict", "str"),
+    "outreach.json": obj(
+        enabled=opt("bool"), title=req("str"), intro=req("str"),
+        photo=opt(obj(src=req("str"), alt=req("str"))),
+        items=opt(("list", obj(title=req("str"), text=req("str")))),
+        buttons=opt(("list", obj(label=req("str"), url=opt("url"), link=opt("str"), primary=opt("bool"))))),
     "site.json": obj(
         heroPhoto=req(obj(src=req("str"), alt=req("str"))),
         aboutPhoto=req(obj(src=req("str"), alt=req("str")))),
