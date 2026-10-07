@@ -12,7 +12,7 @@
     "end": "2027-05-01"
   },
   "stream": {
-    "enabled": true,
+    "enabled": false,
     "autoplay": true,
     "events": []
   },
