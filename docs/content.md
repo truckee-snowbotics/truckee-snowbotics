@@ -102,7 +102,7 @@ else is shown only when you fill it in:
 ```
 
 `name` and `year` are required; `role`, `bio` and `photo` can be blank and only show when filled in.
-People are grouped by year (year on the left, names on the right), newest year first, as a compact list inside a "Show alumni" dropdown (open by default); a `photo` shows as a small thumbnail. The newest 4 years show;
+People are grouped by year (year on the left, names on the right), newest year first, as a compact list; a `photo` shows as a small thumbnail. The newest 4 years show;
 older years go inside an "Earlier alumni" dropdown. The section disappears if the file is empty.
 
 ## Gallery

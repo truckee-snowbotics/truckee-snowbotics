@@ -746,16 +746,6 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .alumni-role { color: var(--text-mid); }
 .alumni-role::before { content: "· "; }
 .alumni-bio { display: block; font-size: .9rem; color: var(--text-mid); line-height: 1.5; }
-details.alumni-all > summary { list-style: none; }
-details.alumni-all > summary::-webkit-details-marker { display: none; }
-.alumni-all > summary {
-  display: flex; align-items: center; justify-content: space-between; cursor: pointer;
-  padding: .75rem 1rem; background: var(--surface); border: 1px solid var(--border-h);
-  font-size: .9rem; font-weight: 600; color: var(--accent);
-}
-.alumni-all > summary::after { content: "▾"; font-size: .9rem; }
-.alumni-all[open] > summary::after { content: "▴"; }
-.alumni-all[open] > summary { margin-bottom: 1rem; }
 .alumni-more { margin-top: .5rem; }
 .alumni-more > summary { cursor: pointer; width: fit-content; padding: .5rem 0; font-size: .9rem; font-weight: 600; color: var(--accent); }
 .alumni-more > summary::after { content: " ▾"; }

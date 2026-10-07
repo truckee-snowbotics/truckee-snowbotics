@@ -4,8 +4,7 @@
 Writes the whole section (nothing if the file is empty) between <!-- @alumni --> and
 <!-- @endalumni -->. Alumni are grouped by `year`, newest year first, as a compact
 list (year on the left, names on the right). The newest MAX_VISIBLE_YEARS years are shown; any older years go
-inside an "Earlier alumni" dropdown (a native <details>, no JavaScript). The whole list
-is also behind a "Show alumni" dropdown (open by default, tap to collapse).
+inside an "Earlier alumni" dropdown (a native <details>, no JavaScript).
 
 Alumnus fields: name, year (required; whole number); role, bio, photo (optional, may be
 blank; photo is an /images/... path, e.g. /images/team/name.webp; shown as a small thumbnail).
@@ -64,10 +63,9 @@ def section(alumni):
         '    <div class="section-header">\n'
         "      <h2>Alumni</h2>\n"
         "    </div>\n"
-        '    <details class="alumni-all alumni-list" open>\n'
-        f"      <summary>Show alumni ({len(alumni)})</summary>\n"
+        '    <div class="alumni-list">\n'
         + indent("\n".join(blocks), "      ")
-        + "\n    </details>\n  </div>\n</section>"
+        + "\n    </div>\n  </div>\n</section>"
     )
 
 
