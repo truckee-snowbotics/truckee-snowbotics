@@ -619,29 +619,26 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .contact-form button { justify-self: start; }
 .contact-send-btn { width: auto; padding-inline: 2rem; }
 .contact-send-btn:disabled { opacity: .45; cursor: not-allowed; }
-.contact-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
 
 /* ── Sponsorship process steps ───────────────── */
-.process-steps {
-  list-style: none; counter-reset: steps;
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1rem; padding: 0; margin: 0;
+.steps-text {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 3rem;
 }
-.process-steps li {
-  counter-increment: steps;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 1.5rem;
-  display: flex; flex-direction: column; gap: .5rem;
+.step-num { display: block; font-size: .85rem; font-weight: 600; color: var(--accent); margin-bottom: .5rem; letter-spacing: .04em; }
+.steps-text a, .donate-card a:not([class]) { color: var(--accent); }
+@media (max-width: 760px) { .steps-text { grid-template-columns: 1fr; } }
+
+/* Contact: form on the left, other ways to reach us on the right */
+.contact-split {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem); align-items: start;
 }
-.process-steps li::before {
-  content: "0" counter(steps);
-  font-family: var(--mono); font-size: .8rem; font-weight: 600;
-  color: var(--accent); margin-bottom: .5rem;
-}
-.process-steps li strong { font-size: 1rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; }
-.process-steps li span { font-size: .875rem; color: var(--text-mid); line-height: 1.6; }
-.process-steps li a, .donate-card a:not([class]) { color: var(--accent); }
-@media (max-width: 760px) { .process-steps { grid-template-columns: 1fr; } }
+.contact-side-title { font-size: 1.35rem; font-weight: 650; color: var(--heading); letter-spacing: -.02em; margin-bottom: 1.5rem; }
+.contact-side-item + .contact-side-item { margin-top: 1.75rem; }
+.contact-side-item p { font-size: 1rem; color: var(--text-mid); line-height: 1.7; margin-bottom: .9rem; }
+.contact-side-item a:not([class]) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent-line); }
+@media (max-width: 900px) { .contact-split { grid-template-columns: 1fr; } }
 
 /* ── Footer ──────────────────────────────────── */
 .site-footer { border-top: 1px solid var(--border); background: var(--footer-bg); color: var(--text-mid); }
