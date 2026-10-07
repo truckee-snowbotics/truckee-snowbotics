@@ -925,11 +925,13 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 /* Banner under the hero */
 .banner {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 2rem;
-  padding: .9rem max(var(--gutter), calc((100% - var(--max)) / 2)); background: var(--heading); color: var(--bg); font-size: .98rem;
+  padding: .9rem max(var(--gutter), calc((100% - var(--max)) / 2));
+  background: var(--surface); color: var(--text);
+  border-top: 1px solid var(--border-h); border-bottom: 1px solid var(--border-h); font-size: .98rem;
 }
-.banner-text { font-weight: 600; }
+.banner-text { font-weight: 500; }
 .banner-link {
-  padding: .55rem 1rem; border: 1px solid var(--bg); border-radius: var(--r-sm);
-  font-size: .9rem; font-weight: 600; color: var(--bg); white-space: nowrap;
+  padding: .55rem 1rem; border-radius: var(--r-sm); border: 1px solid var(--heading);
+  background: var(--heading); color: var(--bg); font-size: .9rem; font-weight: 600; white-space: nowrap;
 }
-.banner-link:hover { background: var(--bg); color: var(--heading); }
+.banner-link:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
