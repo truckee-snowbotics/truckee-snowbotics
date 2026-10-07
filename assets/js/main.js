@@ -248,7 +248,7 @@ getLinks().then(() => {
   const buttons = document.querySelectorAll('.theme-toggle');
   const apply = theme => {
     root.dataset.theme = theme;
-    if (meta) meta.setAttribute('content', theme === 'light' ? '#f5f7fa' : '#151b24');
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#eceef0' : '#151b24');
     buttons.forEach(b => {
       b.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
       if (b.classList.contains('theme-toggle-text')) b.textContent = theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme';

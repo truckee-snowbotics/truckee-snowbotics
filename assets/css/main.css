@@ -60,31 +60,31 @@
 
 /* ── Light theme (set by data-theme="light" on <html>; see the head script and the header toggle) ── */
 :root[data-theme="light"] {
-  --bg:          #f5f7fa;
-  --bg-alt:      #e9eef4;
-  --surface:     #ffffff;
-  --surface-2:   #edf1f6;
+  --bg:          #eceef0;
+  --bg-alt:      #dfe2e6;
+  --surface:     #f6f7f8;
+  --surface-2:   #e3e6ea;
 
-  --text:        #1c2635;
-  --text-mid:    #3f4f66;
-  --text-dim:    #55667d;
-  --heading:     #0e1622;
+  --text:        #1f242b;
+  --text-mid:    #434a54;
+  --text-dim:    #59616c;
+  --heading:     #111418;
 
-  --accent:      #1565b8;
-  --accent-fill: #1565b8;
-  --accent-soft: rgba(21,101,184,.1);
-  --accent-line: rgba(21,101,184,.4);
+  --accent:      #1260ad;
+  --accent-fill: #1260ad;
+  --accent-soft: rgba(18,96,173,.1);
+  --accent-line: rgba(18,96,173,.4);
 
-  --border:      rgba(14,22,34,.12);
-  --border-h:    rgba(14,22,34,.24);
+  --border:      rgba(17,20,24,.14);
+  --border-h:    rgba(17,20,24,.26);
 
-  --footer-bg:   #dfe6ee;
-  --scroll:      #b7c3d2;
-  --hover-line:  rgba(14,22,34,.4);
-  --chip-bg:     rgba(255,255,255,.92);
-  --soft-fill:   rgba(14,22,34,.05);
-  --shadow:      0 8px 24px rgba(14,22,34,.18);
-  --btn-hover:   #2b3b52;
+  --footer-bg:   #d3d7dc;
+  --scroll:      #b4bac2;
+  --hover-line:  rgba(17,20,24,.42);
+  --chip-bg:     rgba(246,247,248,.94);
+  --soft-fill:   rgba(17,20,24,.06);
+  --shadow:      0 8px 24px rgba(17,20,24,.2);
+  --btn-hover:   #343b45;
   --on-accent:   #ffffff;
   --notice-bg:   #fde8e8;  --notice-fg:  #9b1c1c;  --notice-line: #f0b3b3;
   --err-bg:      rgba(220,38,38,.08);  --err-fg:  #b42318;  --err-line: rgba(220,38,38,.35);
