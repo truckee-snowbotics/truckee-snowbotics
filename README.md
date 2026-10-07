@@ -13,7 +13,6 @@ Plain HTML/CSS/JS, hosted on GitHub Pages. Python scripts in `scripts/` build th
 | Team roster (About page) | `assets/data/team.json` | [Team](docs/content.md#team) |
 | Alumni (About page) | `assets/data/alumni.json` | [Alumni](docs/content.md#alumni) |
 | Gallery photos and captions | `images/gallery/`, `assets/data/gallery-captions.json` | [Gallery](docs/content.md#gallery) |
-| Home outreach section | `assets/data/outreach.json` | [Outreach section](docs/content.md#outreach-section) |
 | Home hero photo and About photo | `assets/data/site.json` | [Home and About photos](docs/content.md#home-and-about-photos) |
 | Sponsors | `assets/data/sponsors.json` | |
 | Any link or email (socials, forms, downloads) | `assets/data/links.json` | [Links](docs/content.md#links) |
