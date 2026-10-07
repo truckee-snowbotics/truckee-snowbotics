@@ -169,24 +169,6 @@ getLinks().then(() => {
   });
 }).catch(() => {});
 
-// ── Scroll reveal ─────────────────────────────
-(function () {
-  const targets = document.querySelectorAll('.section, .card, .about-stats, .about-text');
-  if (!targets.length) return;
-
-  targets.forEach(el => el.classList.add('reveal'));
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('visible');
-      io.unobserve(e.target);
-    });
-  }, { threshold: 0.08 });
-
-  targets.forEach(el => io.observe(el));
-})();
-
 // ── Active nav link (page-based) ─────────────
 (function () {
   const links = document.querySelectorAll('.nav a');
