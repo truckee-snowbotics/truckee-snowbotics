@@ -208,18 +208,11 @@ ul { list-style: none; }
   border-top: 1px solid var(--border);
 }
 .hstat {
-  display: flex; flex-direction: column-reverse; gap: .35rem;
   padding: 1.5rem 1.5rem 0 0;
+  font-size: clamp(1rem, 1.5vw, 1.15rem); font-weight: 600;
+  color: var(--heading); letter-spacing: -.01em; line-height: 1.35;
 }
 .hstat + .hstat { padding-left: 1.5rem; border-left: 1px solid var(--border); }
-.hstat-val {
-  font-size: clamp(1.15rem, 2.2vw, 1.6rem); font-weight: 600;
-  color: var(--heading); letter-spacing: -.02em; line-height: 1.15;
-}
-.hstat-key {
-  font-family: var(--mono); font-size: .7rem; font-weight: 600;
-  color: var(--text-dim); text-transform: uppercase; letter-spacing: .08em;
-}
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-photo { order: -1; aspect-ratio: 16 / 10; }

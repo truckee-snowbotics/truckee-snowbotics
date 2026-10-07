@@ -4,7 +4,7 @@
 Fills the marked regions of season/index.html:
   <!-- @season --> ... <!-- @endseason -->          page content
   <!-- @seasonmeta --> ... <!-- @endseasonmeta -->  description meta tag (+ noindex when off)
-and the current-season stat in the home page hero (<!-- @seasonstat -->).
+and the home page hero's calendar button (<!-- @seasoncta -->).
 
 "enabled": false in season.json turns the whole page off: the page shows only a short
 "not available" message and is marked noindex, and the Season links disappear from the
@@ -373,14 +373,10 @@ def main():
     inew = fill_markers(inew, "calendarbtn", cta_html(data, "btn-primary", "Our event calendar →"), info)
     if inew != itext:
         info.write_text(inew)
-    # Home page hero stat for the current season
+    # Home page hero button to the calendar (only while the Season page and its calendar are on)
     home = ROOT / "index.html"
     htext = home.read_text()
-    stat = (f'<div class="hstat">\n  <dt class="hstat-key">{esc(season)} season</dt>\n'
-            f'  <dd class="hstat-val">{esc(game or "FTC")}</dd>\n</div>')
-    hnew = fill_markers(htext, "seasonstat", stat, home)
-    # Home page hero button to the calendar (only while the Season page and its calendar are on)
-    hnew = fill_markers(hnew, "seasoncta", cta_html(data, "btn-outline", "Event calendar"), home)
+    hnew = fill_markers(htext, "seasoncta", cta_html(data, "btn-outline", "Event calendar"), home)
     if hnew != htext:
         home.write_text(hnew)
     if new != text:

@@ -62,8 +62,8 @@ footer and sitemap. (Set it back to `true` to bring everything back.) `stream.en
 `robot.enabled` switch off just one of the two sections.
 
 `season`, `gameTitle`, `gameSummary`, `kickoff`, `qualifiersStart` and `championship` also feed the
-Information page's season sentences ("The 2026–27 season kicked off on…") and the home
-page stat, so a new season is a `season.json` edit. The footer year updates itself.
+Information page's season sentences ("The 2026–27 season kicked off on…"), so a new season
+is mostly a `season.json` edit. The footer year updates itself.
 
 **Live stream.** Add each event we compete in to `stream.events`. Times are Pacific:
 
