@@ -174,7 +174,7 @@ one use their filename.
 - `url: "#"` — placeholder for a link that has no destination yet; elements bound to
   it are hidden and it is excluded from the Information page until a real URL is set.
 - Emails are entries too, as `mailto:` URLs: `email` (public address, also used for
-  visible text and the JSON-LD) and `noticeEmail` (shown by the contact notice banner).
+  visible text and the JSON-LD).
 
 This is the only place URLs live. In the HTML, write links as
 `<a href="#" data-link-key="instagram">`; the deploy build (`apply_links.py`) fills in
@@ -198,6 +198,6 @@ check fails the deploy if a link hard-codes a URL that's in `links.json`, or use
 
 ## Other settings
 
-Site-wide switches live at the top of `assets/js/main.js`: `CONTACT_NOTICE` (red banner + disables the contact form) and `SPONSORSHIP_FORM_NOTICE` (hover warning on sponsorship form buttons). The Season page is switched with `enabled` in `season.json`.
+Site-wide switches live in the data files: the Season page with `enabled` in `season.json`, and the News section with `news` in `site.json`.
 
 The email addresses and every other URL come from `links.json`; fonts (Plus Jakarta Sans) are hosted in `assets/fonts/`, so visitors never contact Google Fonts.

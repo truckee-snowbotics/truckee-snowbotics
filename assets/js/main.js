@@ -2,30 +2,6 @@
 'use strict';
 
 // ╔══════════════════════════════════════════════════╗
-// ║  CONTACT NOTICE BANNER                           ║
-// ╠══════════════════════════════════════════════════╣
-// ║  Set enabled: true to show the banner,           ║
-// ║  false to hide it site-wide instantly.           ║
-// ║  The address shown is the "noticeEmail" entry in ║
-// ║  /assets/data/links.json.                        ║
-// ╚══════════════════════════════════════════════════╝
-const CONTACT_NOTICE = {
-  enabled: false,
-};
-
-// ╔══════════════════════════════════════════════════╗
-// ║  SPONSORSHIP FORM NOTICE                         ║
-// ╠══════════════════════════════════════════════════╣
-// ║  Set enabled: true to show a hover popup on all  ║
-// ║  sponsorship form buttons. Edit message freely;  ║
-// ║  {email} becomes the "email" entry in links.json. ║
-// ╚══════════════════════════════════════════════════╝
-const SPONSORSHIP_FORM_NOTICE = {
-  enabled: false,
-  message: 'The sponsorship form has an incorrect email. Please use {email} instead.',
-};
-
-// ╔══════════════════════════════════════════════════╗
 // ║  LINKS — single source of truth:                 ║
 // ║  /assets/data/links.json                         ║
 // ╠══════════════════════════════════════════════════╣
@@ -36,8 +12,7 @@ const SPONSORSHIP_FORM_NOTICE = {
 // ║    Information page links grid and in the footer ║
 // ║  - url "#" → no destination yet; the element is  ║
 // ║    hidden until a real URL is set                ║
-// ║  - emails are entries too: "email" (public) and  ║
-// ║    "noticeEmail", as mailto: URLs                ║
+// ║  - emails are entries too, as mailto: URLs       ║
 // ║  - at deploy, scripts/apply_links.py writes these║
 // ║    URLs into the HTML, so the HTML needs only    ║
 // ║    data-link-key (href stays "#")                ║
@@ -83,92 +58,6 @@ getLinks().then(items => {
     if (url && url !== '#') el.action = url;
   });
 }).catch(() => { /* keep the fallback hrefs hard-coded in the HTML */ });
-
-// ── Contact notice banner ─────────────────────────
-getLinks().then(() => {
-  const banner = document.getElementById('notice-banner');
-  if (!banner || !CONTACT_NOTICE.enabled) return;
-  const noticeEmail = emailOf('noticeEmail');
-
-  // Populate email link from links.json
-  const link = banner.querySelector('a[data-notice-email]');
-  if (link) {
-    link.href = 'mailto:' + noticeEmail;
-    link.textContent = noticeEmail;
-  }
-
-  // Wire up close button
-  const btn = banner.querySelector('[data-notice-close]');
-  if (btn) btn.addEventListener('click', () => { banner.style.display = 'none'; });
-
-  // Show only after setup is complete — prevents flash
-  banner.style.display = 'block';
-
-  // Disable contact form send button when notice is active
-  const sendBtn = document.querySelector('.contact-send-btn');
-  if (sendBtn) {
-    sendBtn.disabled = true;
-
-    // Insert explanation below the button
-    const notice = document.createElement('p');
-    notice.className = 'form-notice';
-    notice.innerHTML = '&#9888; Contact form submissions are currently unavailable. Please reach us directly at <a href="mailto:' + noticeEmail + '">' + noticeEmail + '</a>.';
-    sendBtn.insertAdjacentElement('afterend', notice);
-
-    const form = sendBtn.closest('form');
-    if (form) {
-      form.addEventListener('submit', (e) => { e.preventDefault(); });
-    }
-  }
-}).catch(() => {});
-
-// ── Sponsorship form hover notice ────────────
-getLinks().then(() => {
-  if (!SPONSORSHIP_FORM_NOTICE.enabled) return;
-
-  const tooltip = document.createElement('div');
-  tooltip.style.cssText = [
-    'position:fixed',
-    'z-index:9999',
-    'max-width:280px',
-    'padding:.6rem .9rem',
-    'background:#3b1010',
-    'color:#fca5a5',
-    'border:1px solid #7f1d1d',
-    'border-radius:0',
-    'font-size:.825rem',
-    'line-height:1.5',
-    'pointer-events:none',
-    'display:none',
-    'box-shadow:0 4px 16px rgba(0,0,0,.45)',
-  ].join(';');
-  tooltip.textContent = SPONSORSHIP_FORM_NOTICE.message.replace('{email}', emailOf('email'));
-  document.body.appendChild(tooltip);
-
-  function show(btn) {
-    const r = btn.getBoundingClientRect();
-    tooltip.style.visibility = 'hidden';
-    tooltip.style.display = 'block';
-    const gap = 8;
-    let top = r.bottom + gap;
-    if (top + tooltip.offsetHeight > window.innerHeight) top = r.top - tooltip.offsetHeight - gap;
-    let left = r.left;
-    if (left + tooltip.offsetWidth > window.innerWidth) left = window.innerWidth - tooltip.offsetWidth - 8;
-    tooltip.style.top  = top  + 'px';
-    tooltip.style.left = left + 'px';
-    tooltip.style.visibility = '';
-  }
-
-  function hide() { tooltip.style.display = 'none'; }
-
-  document.querySelectorAll('[data-link-key="sponsorshipForm"]').forEach(btn => {
-    btn.addEventListener('mouseenter', () => show(btn));
-    btn.addEventListener('mouseleave', hide);
-    btn.addEventListener('focus',      () => show(btn));
-    btn.addEventListener('blur',       hide);
-  });
-}).catch(() => {});
-
 // ── Active nav link (page-based) ─────────────
 (function () {
   const links = document.querySelectorAll('.nav a');

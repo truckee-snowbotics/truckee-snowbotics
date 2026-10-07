@@ -91,13 +91,6 @@
     "listed": false
   },
   {
-    "id": "noticeEmail",
-    "label": "Contact notice email (shown when the contact notice banner is on)",
-    "url": "mailto:truckeesnowbotics@gmail.com",
-    "category": "Contact",
-    "listed": false
-  },
-  {
     "id": "submitPhoto",
     "label": "Submit a photo",
     "url": "https://github.com/truckee-snowbotics/truckee-snowbotics/issues/new?template=gallery-photo.yml",

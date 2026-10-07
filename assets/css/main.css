@@ -38,7 +38,6 @@
   --shadow:      0 8px 24px rgba(0,0,0,.4);
   --btn-hover:   #fff;
   --on-accent:   #0d1117;
-  --notice-bg:   #3b1010;  --notice-fg:  #fca5a5;  --notice-line: #7f1d1d;
   --err-bg:      rgba(239,68,68,.1);  --err-fg:  #fca5a5;  --err-line: rgba(239,68,68,.35);
   --ok-bg:       rgba(16,185,129,.1); --ok-fg:   #6ee7b7;  --ok-line:  rgba(16,185,129,.35);
   color-scheme: dark;
@@ -86,7 +85,6 @@
   --shadow:      0 8px 24px rgba(17,20,24,.2);
   --btn-hover:   #343b45;
   --on-accent:   #ffffff;
-  --notice-bg:   #fde8e8;  --notice-fg:  #9b1c1c;  --notice-line: #f0b3b3;
   --err-bg:      rgba(220,38,38,.08);  --err-fg:  #b42318;  --err-line: rgba(220,38,38,.35);
   --ok-bg:       rgba(5,150,105,.08);  --ok-fg:   #067647;  --ok-line:  rgba(5,150,105,.35);
   color-scheme: light;
@@ -791,23 +789,6 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 
 /* ── Hidden by script (expired news) ── */
 .section-hidden { display: none !important; }
-
-/* ── Contact notice banner (shown only when CONTACT_NOTICE.enabled in main.js) ── */
-.notice-banner {
-  display: none; position: relative; text-align: center; padding: .75rem 3rem;
-  background: var(--notice-bg); border-bottom: 1px solid var(--notice-line); color: var(--notice-fg);
-  font-size: .95rem; font-weight: 500; line-height: 1.4;
-}
-.notice-banner a, .form-notice a { color: var(--accent); text-decoration: underline; font-weight: 600; }
-.notice-banner-close {
-  position: absolute; right: .75rem; top: 50%; transform: translateY(-50%);
-  background: none; border: 0; color: inherit; font-size: 1.2rem; line-height: 1;
-  cursor: pointer; padding: .25rem .5rem; opacity: .8;
-}
-.form-notice {
-  margin-top: .75rem; font-size: .875rem; line-height: 1.5; padding: .6rem .85rem;
-  background: var(--notice-bg); color: var(--notice-fg); border: 1px solid var(--notice-line);
-}
 
 /* ── Form feedback ───────────────────────────── */
 .form-error {
