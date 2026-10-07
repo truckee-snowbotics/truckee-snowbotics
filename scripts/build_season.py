@@ -4,7 +4,7 @@
 Fills the marked regions of season/index.html:
   <!-- @season --> ... <!-- @endseason -->          page content
   <!-- @seasonmeta --> ... <!-- @endseasonmeta -->  description meta tag (+ noindex when off)
-the home page hero's calendar button (<!-- @seasoncta -->) and banner (<!-- @seasonbanner -->).
+and the home page hero's calendar button (<!-- @seasoncta -->).
 
 "enabled": false in season.json turns the whole page off: the page shows only a short
 "not available" message and is marked noindex, and the Season links disappear from the
@@ -348,18 +348,6 @@ def cta_html(data, css, label):
     return ""
 
 
-def banner_html(data):
-    """Small home-page banner about this season's game; empty while the Season page is off."""
-    if not data.get("enabled", True) or not data.get("gameTitle"):
-        return ""
-    season = esc(data.get("season", ""))
-    return (f'<a class="season-banner" href="/season/">\n'
-            f'  <span class="season-banner-text"><strong>{season} season: {esc(data["gameTitle"])}.</strong> '
-            f'See our robot, the live stream and the regional event calendar.</span>\n'
-            f'  <span class="season-banner-go">Season page &rarr;</span>\n'
-            f'</a>')
-
-
 def main():
     data = json.loads((ROOT / "assets" / "data" / "season.json").read_text())
     today = datetime.date.today()
@@ -387,7 +375,6 @@ def main():
     home = ROOT / "index.html"
     htext = home.read_text()
     hnew = fill_markers(htext, "seasoncta", cta_html(data, "btn-outline", "Event calendar"), home)
-    hnew = fill_markers(hnew, "seasonbanner", banner_html(data), home)
     if hnew != htext:
         home.write_text(hnew)
     if new != text:

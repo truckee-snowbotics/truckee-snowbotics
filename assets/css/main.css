@@ -965,7 +965,7 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 /* Season banner under the hero */
 .season-banner {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 2rem;
-  padding: 1rem max(var(--gutter), calc((100% - var(--max)) / 2)); background: var(--accent); color: var(--on-accent); font-size: .98rem;
+  padding: 1rem max(var(--gutter), calc((100% - var(--max)) / 2)); background: var(--heading); color: var(--bg); font-size: .98rem;
 }
 .season-banner-text, .season-banner-go { max-width: var(--max); }
 .season-banner strong { font-weight: 650; }
