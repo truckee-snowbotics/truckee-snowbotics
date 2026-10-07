@@ -111,28 +111,6 @@ getLinks().then(items => {
   sync();
 })();
 
-// ── Light / dark theme toggle ─────────────────
-// The head script sets data-theme before first paint (saved choice, else the device setting).
-(function () {
-  const root = document.documentElement;
-  const meta = document.querySelector('meta[name="theme-color"]');
-  const buttons = document.querySelectorAll('.theme-toggle');
-  const apply = theme => {
-    root.dataset.theme = theme;
-    if (meta) meta.setAttribute('content', theme === 'light' ? '#f3f0e9' : '#22262c');
-    buttons.forEach(b => {
-      b.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
-      if (b.classList.contains('theme-toggle-text')) b.textContent = theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme';
-    });
-  };
-  apply(root.dataset.theme === 'light' ? 'light' : 'dark');
-  buttons.forEach(b => b.addEventListener('click', () => {
-    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-    apply(next);
-    try { localStorage.setItem('snowbotics-theme', next); } catch (e) { /* private mode: the choice just isn't remembered */ }
-  }));
-})();
-
 // ── External links ────────────────────────────
 document.querySelectorAll('a[href^="http"]').forEach(a => {
   a.setAttribute('target', '_blank');

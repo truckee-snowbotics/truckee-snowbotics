@@ -4,8 +4,8 @@
   "description": "FTC Team #32587 — Tahoe-Truckee High School, Truckee, CA",
   "start_url": "/",
   "display": "browser",
-  "background_color": "#22262c",
-  "theme_color": "#22262c",
+  "background_color": "#f3f0e9",
+  "theme_color": "#f3f0e9",
   "icons": [
     {
       "src": "/images/site/favicon.svg",
