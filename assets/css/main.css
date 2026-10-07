@@ -10,34 +10,34 @@
 
 /* ── Tokens ─────────────────────────────────── */
 :root {
-  --bg:          #131416;
-  --bg-alt:      #191b1e;
-  --surface:     #1e2023;
-  --surface-2:   #282b2f;
+  --bg:          #22262c;
+  --bg-alt:      #272c33;
+  --surface:     #2d333b;
+  --surface-2:   #373e47;
   --bg-card:     var(--surface);
 
-  --text:        #e9e7e3;
-  --text-mid:    #b4b2ad;
-  --text-dim:    #9a9791;
-  --heading:     #f7f5f1;
+  --text:        #eeebe4;
+  --text-mid:    #c0bdb6;
+  --text-dim:    #a6a39c;
+  --heading:     #faf8f3;
 
-  --accent:      #44b3fc;
-  --accent-fill: #44b3fc;
-  --accent-soft: rgba(68,179,252,.13);
-  --accent-line: rgba(68,179,252,.4);
+  --accent:      #66b2ff;
+  --accent-fill: #66b2ff;
+  --accent-soft: rgba(102,178,255,.14);
+  --accent-line: rgba(102,178,255,.45);
 
   --border:      rgba(255,255,255,.1);
   --border-h:    rgba(255,255,255,.2);
 
   /* extra tokens that differ between themes */
-  --footer-bg:   #0e0f11;
-  --scroll:      #3a3d42;
+  --footer-bg:   #191c20;
+  --scroll:      #454c56;
   --hover-line:  rgba(255,255,255,.32);
-  --chip-bg:     rgba(19,20,22,.92);
+  --chip-bg:     rgba(34,38,44,.92);
   --soft-fill:   rgba(255,255,255,.05);
   --shadow:      0 8px 24px rgba(0,0,0,.4);
-  --btn-hover:   #fff;
-  --on-accent:   #0d1117;
+  --btn-hover:   #8cc4ff;
+  --on-accent:   #0b1727;
   --err-bg:      rgba(239,68,68,.1);  --err-fg:  #fca5a5;  --err-line: rgba(239,68,68,.35);
   --ok-bg:       rgba(16,185,129,.1); --ok-fg:   #6ee7b7;  --ok-line:  rgba(16,185,129,.35);
   color-scheme: dark;
@@ -59,31 +59,31 @@
 
 /* ── Light theme (set by data-theme="light" on <html>; see the head script and the header toggle) ── */
 :root[data-theme="light"] {
-  --bg:          #eceef0;
-  --bg-alt:      #dfe2e6;
-  --surface:     #f6f7f8;
-  --surface-2:   #e3e6ea;
+  --bg:          #f3f0e9;
+  --bg-alt:      #eae6dc;
+  --surface:     #faf8f3;
+  --surface-2:   #e4e0d5;
 
-  --text:        #1f242b;
-  --text-mid:    #434a54;
-  --text-dim:    #59616c;
-  --heading:     #111418;
+  --text:        #23272d;
+  --text-mid:    #464b53;
+  --text-dim:    #5a6069;
+  --heading:     #14181d;
 
-  --accent:      #1260ad;
-  --accent-fill: #1260ad;
-  --accent-soft: rgba(18,96,173,.1);
-  --accent-line: rgba(18,96,173,.4);
+  --accent:      #1c5fb8;
+  --accent-fill: #1c5fb8;
+  --accent-soft: rgba(28,95,184,.1);
+  --accent-line: rgba(28,95,184,.42);
 
   --border:      rgba(17,20,24,.14);
   --border-h:    rgba(17,20,24,.26);
 
-  --footer-bg:   #d3d7dc;
-  --scroll:      #b4bac2;
+  --footer-bg:   #dcd8cc;
+  --scroll:      #bcb8ac;
   --hover-line:  rgba(17,20,24,.42);
-  --chip-bg:     rgba(246,247,248,.94);
+  --chip-bg:     rgba(250,248,243,.94);
   --soft-fill:   rgba(17,20,24,.06);
   --shadow:      0 8px 24px rgba(17,20,24,.2);
-  --btn-hover:   #343b45;
+  --btn-hover:   #164a91;
   --on-accent:   #ffffff;
   --err-bg:      rgba(220,38,38,.08);  --err-fg:  #b42318;  --err-line: rgba(220,38,38,.35);
   --ok-bg:       rgba(5,150,105,.08);  --ok-fg:   #067647;  --ok-line:  rgba(5,150,105,.35);
@@ -129,7 +129,7 @@ ul { list-style: none; }
 
 }
 .btn-primary {
-  background: var(--heading); color: var(--bg); border: 1px solid var(--heading);
+  background: var(--accent-fill); color: var(--on-accent); border: 1px solid var(--accent-fill);
 }
 .btn-primary:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
 .btn-outline {
@@ -925,12 +925,11 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .banner {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 2rem;
   padding: .9rem max(var(--gutter), calc((100% - var(--max)) / 2));
-  background: var(--surface); color: var(--text);
-  border-top: 1px solid var(--border-h); border-bottom: 1px solid var(--border-h); font-size: .98rem;
+  background: var(--accent-fill); color: var(--on-accent); font-size: .98rem;
 }
-.banner-text { font-weight: 500; }
+.banner-text { font-weight: 600; }
 .banner-link {
-  padding: .55rem 1rem; border-radius: var(--r-sm); border: 1px solid var(--heading);
-  background: var(--heading); color: var(--bg); font-size: .9rem; font-weight: 600; white-space: nowrap;
+  padding: .55rem 1rem; border: 1px solid var(--on-accent);
+  font-size: .9rem; font-weight: 600; color: var(--on-accent); white-space: nowrap;
 }
-.banner-link:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
+.banner-link:hover { background: var(--on-accent); color: var(--accent-fill); }
