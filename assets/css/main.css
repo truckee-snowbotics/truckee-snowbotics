@@ -926,5 +926,13 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 
 /* Home page: sections alternate plain / tinted by position, so a missing news section doesn't break the rhythm */
 .home > section.section:nth-of-type(even) { background: var(--bg-alt); }
-.outreach-points { margin-top: 2.5rem; }
 .about-body + .about-body { margin-top: 1rem; }
+
+/* Outreach programs: photo cards */
+.program-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+.program-card { background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; }
+.program-card img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-bottom: 1px solid var(--border); }
+.program-card-body { padding: 1.25rem 1.4rem 1.5rem; }
+.program-card-title { font-size: 1.1rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; }
+.program-card-text { font-size: .95rem; color: var(--text-mid); line-height: 1.65; margin-top: .5rem; }
+@media (max-width: 700px) { .program-grid { grid-template-columns: 1fr; } }
