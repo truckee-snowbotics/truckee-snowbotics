@@ -200,4 +200,4 @@ check fails the deploy if a link hard-codes a URL that's in `links.json`, or use
 
 Site-wide switches live at the top of `assets/js/main.js`: `CONTACT_NOTICE` (red banner + disables the contact form) and `SPONSORSHIP_FORM_NOTICE` (hover warning on sponsorship form buttons). The Season page is switched with `enabled` in `season.json`.
 
-The email addresses and every other URL come from `links.json`; fonts (Inter) are hosted in `assets/fonts/`, so visitors never contact Google Fonts.
+The email addresses and every other URL come from `links.json`; fonts (Plus Jakarta Sans) are hosted in `assets/fonts/`, so visitors never contact Google Fonts.

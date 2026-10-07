@@ -30,7 +30,7 @@ Rebuilds every generated part of the site and runs the checks; then refresh your
 
 ## Folders
 
-- `assets/` — `css/`, `js/`, `data/` (all site content), `fonts/` (Inter, self-hosted), `files/` (PDFs)
+- `assets/` — `css/`, `js/`, `data/` (all site content), `fonts/` (Plus Jakarta Sans, self-hosted), `files/` (PDFs)
 - `images/` — `site/` (logo, favicons, social card, home photo), `gallery/`, `sponsors/`, `team/` (portraits)
 - `partials/` — shared header, footer and `<head>` chunks
 - `scripts/` — build and check scripts ([what each does](docs/automation.md#build-and-checks))

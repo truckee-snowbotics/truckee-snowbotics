@@ -1,10 +1,10 @@
 /* main.css — Truckee Snowbotics */
 
 /* ── Font ───────────────────────────────────── */
-/* Inter (SIL Open Font License, assets/fonts/Inter-OFL.txt), hosted here so visitors never contact Google Fonts. */
+/* Plus Jakarta Sans (SIL Open Font License, assets/fonts/PlusJakartaSans-OFL.txt), hosted here so visitors never contact Google Fonts. */
 @font-face {
-  font-family: 'Inter'; font-style: normal; font-weight: 400 700; font-display: swap;
-  src: url(/assets/fonts/inter-latin.woff2) format('woff2');
+  font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(/assets/fonts/plus-jakarta-sans.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -32,8 +32,8 @@
   --sponsor-logo-h: 150px; /* logo height on the sponsors page */
   --sponsor-bar-h:  112px;  /* logo height in the sponsor bar */
 
-  --font:        'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --mono:        var(--font); /* labels use Inter too */
+  --font:        'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:        var(--font); /* labels use the same font */
   --max:         1160px;
   --max-narrow:  720px;
   --max-outer:   calc(var(--max) + 2 * var(--gutter)); /* for containers that pad themselves */
@@ -98,7 +98,7 @@ ul { list-style: none; }
   max-width: var(--max-outer); margin: 0 auto;
   padding: 0 var(--gutter);
   height: var(--header-h);
-  display: flex; align-items: center; gap: 2.5rem;
+  display: flex; align-items: center; gap: 1.75rem;
 }
 .header-brand {
   display: flex; align-items: center; gap: .7rem;
@@ -111,7 +111,7 @@ ul { list-style: none; }
 .nav a {
   position: relative;
   display: flex; align-items: center;
-  padding: 0 .75rem;
+  padding: 0 .65rem;
   font-size: .875rem; font-weight: 500; color: var(--text-mid);
   white-space: nowrap; transition: color .15s;
 }
@@ -163,7 +163,7 @@ ul { list-style: none; }
 .mobile-nav-actions a { border: none; font-size: .875rem; color: var(--text-dim); padding: 0; }
 .mobile-nav-actions a[data-link-key="join"] { color: var(--accent); font-weight: 600; }
 
-@media (max-width: 880px) {
+@media (max-width: 1060px) {
   .nav { display: none; }
   .hamburger { display: flex; }
   .header-inner { gap: 1rem; }
