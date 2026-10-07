@@ -279,9 +279,7 @@ def page_content(data, today):
     <a href="/" class="btn-primary">Back to home</a>
   </div>
 </section>'''
-    eyebrow = " · ".join(x for x in (f'{data.get("season", "")} season'.strip(), data.get("game", "")) if x and x != "season")
     hero = f'''<section class="page-hero">
-  <p class="eyebrow">{esc(eyebrow)}</p>
   <h1>Season {esc(data.get("season", ""))}</h1>
   <p>See where we compete, meet our robot, and watch our events live.</p>
 </section>'''
