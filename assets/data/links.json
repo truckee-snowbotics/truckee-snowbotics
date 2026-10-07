@@ -81,7 +81,7 @@
     "id": "submitPhoto",
     "label": "Submit a photo",
     "url": "https://github.com/truckee-snowbotics/truckee-snowbotics/issues/new?template=gallery-photo.yml",
-    "listed": false
+    "listed": true
   },
   {
     "id": "reportProblem",

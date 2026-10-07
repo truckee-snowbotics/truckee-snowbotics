@@ -31,6 +31,14 @@
       {
         "src": "/images/gallery/01-2026-development-3.webp",
         "caption": "Development of the robot"
+      },
+      {
+        "src": "/images/gallery/02-2026-development-2.webp",
+        "caption": "Assembling robot parts at the workbench"
+      },
+      {
+        "src": "/images/gallery/08-2025-robot.webp",
+        "caption": "Last season's DECODE competition robot"
       }
     ],
     "specs": [
@@ -41,6 +49,38 @@
       {
         "label": "Control system",
         "value": "REV Control Hub"
+      },
+      {
+        "label": "Drivetrain",
+        "value": "TBD"
+      },
+      {
+        "label": "Dimensions",
+        "value": "TBD"
+      },
+      {
+        "label": "Weight",
+        "value": "TBD"
+      },
+      {
+        "label": "Drive motors",
+        "value": "TBD"
+      },
+      {
+        "label": "Sensors",
+        "value": "TBD"
+      },
+      {
+        "label": "Autonomous",
+        "value": "TBD"
+      },
+      {
+        "label": "Scoring mechanism",
+        "value": "TBD"
+      },
+      {
+        "label": "Endgame",
+        "value": "TBD"
       }
     ],
     "links": [
