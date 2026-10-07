@@ -52,7 +52,7 @@
       },
       {
         "label": "Drivetrain",
-        "value": "TBD"
+        "value": "Mecanum wheels"
       },
       {
         "label": "Dimensions",
@@ -64,23 +64,11 @@
       },
       {
         "label": "Drive motors",
-        "value": "TBD"
+        "value": "GoBILDA 5203 Series"
       },
       {
         "label": "Sensors",
-        "value": "TBD"
-      },
-      {
-        "label": "Autonomous",
-        "value": "TBD"
-      },
-      {
-        "label": "Scoring mechanism",
-        "value": "TBD"
-      },
-      {
-        "label": "Endgame",
-        "value": "TBD"
+        "value": "None... yet"
       }
     ],
     "links": [
