@@ -253,7 +253,8 @@ SCHEMAS = {
     "gallery-captions.json": ("dict", "str"),
     "site.json": obj(
         heroPhoto=req(obj(src=req("str"), alt=req("str"))),
-        aboutPhoto=req(obj(src=req("str"), alt=req("str")))),
+        aboutPhoto=req(obj(src=req("str"), alt=req("str"))),
+        news=opt(obj(enabled=opt("bool"), emptyText=opt("str")))),
     "calendar.json": obj(events=req(("list", obj(
         title=req("str"), start=req("str"), end=req("str"), allDay=req("bool"), location=opt("str"))))),
     "season.json": obj(

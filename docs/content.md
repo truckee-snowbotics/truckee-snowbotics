@@ -6,7 +6,7 @@ Every page is generated from the data files in `assets/data/`. Edit a file, push
 
 `assets/data/news.json` is a list of items; the build renders them into the home page
 (real HTML, so search engines see them), writes `news.xml` (RSS) and, for upcoming
-events, Event structured data. With no news to show (an empty list, or every item expired), the whole News & Updates section is left out of the home page. Featured items first, then upcoming items soonest-first, then past items newest-first (by `date`); no ordering field to maintain.
+events, Event structured data. The News & Updates section always shows; with no news to show (an empty list, or every item expired) it says "No news right now." To switch news off without deleting items, or to change those words, use `news` in `site.json`: `"news": { "enabled": false, "emptyText": "No news right now." }`. Featured items first, then upcoming items soonest-first, then past items newest-first (by `date`); no ordering field to maintain.
 
 ```json
 {

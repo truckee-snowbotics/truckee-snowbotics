@@ -6,5 +6,9 @@
   "aboutPhoto": {
     "src": "/images/site/about.webp",
     "alt": "The Snowbotics team"
+  },
+  "news": {
+    "enabled": true,
+    "emptyText": "No news right now."
   }
 }

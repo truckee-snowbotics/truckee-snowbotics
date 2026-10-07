@@ -488,7 +488,7 @@ function getSponsors() {
 // ── News ─────────────────────────────────────────────
 // The cards are rendered into the page at build time (scripts/build_news.py from
 // news.json). Here we only hide items whose "expires" date has passed since the
-// last deploy, and hide the whole section if nothing is left.
+// last deploy, and show the "no news" message if nothing is left.
 (function () {
   const grid = document.getElementById('news-grid');
   if (!grid) return;
@@ -497,9 +497,8 @@ function getSponsors() {
   grid.querySelectorAll('.news-card[data-expires]').forEach(card => {
     if (card.dataset.expires < today) card.remove();
   });
-  if (!grid.querySelector('.news-card')) {
-    const section = grid.closest('section');
-    if (section) section.classList.add('section-hidden');
+  if (!grid.querySelector('.news-card') && !grid.querySelector('.news-empty')) {
+    grid.innerHTML = '<p class="news-empty">' + escapeHTML(grid.dataset.empty || 'No news right now.') + '</p>';
   }
 })();
 

@@ -936,3 +936,5 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .program-card-title { font-size: 1.1rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; }
 .program-card-text { font-size: .95rem; color: var(--text-mid); line-height: 1.65; margin-top: .5rem; }
 @media (max-width: 700px) { .program-grid { grid-template-columns: 1fr; } }
+
+.news-empty { color: var(--text-mid); padding: 1.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }

@@ -5,8 +5,9 @@ Writes, on every build:
   - the whole "News & Updates" section (heading, cards, plus Event structured data for
     upcoming events) into every page that has <!-- @news --> ... <!-- @endnews --> markers
     (the home page), so the news is real HTML for search engines and visitors without
-    JavaScript. With no news to show (empty file, or everything expired), the section is
-    left out entirely;
+    JavaScript. The section always shows: with no news to show (empty file, everything
+    expired, or "news": {"enabled": false} in site.json) it says "No news right now."
+    (change the words with news.emptyText in site.json);
   - news.xml, an RSS feed.
 
 Item fields (all dates are ISO, YYYY-MM-DD):
@@ -154,12 +155,12 @@ def event_ld(item):
     return f'<script type="application/ld+json">\n{body}\n</script>'
 
 
-def render(items, link_ids):
-    """The whole news section, or "" when there is nothing to show."""
-    if not items:
-        return ""
+def render(items, link_ids, empty_text):
+    """The whole news section: the cards, or a short message when there is nothing to show."""
     chunks = [card(i, link_ids) for i in items]
     chunks += [ld for ld in (event_ld(i) for i in items) if ld]
+    if not items:
+        chunks = [f'<p class="news-empty">{html.escape(empty_text)}</p>']
     cards = "\n".join("      " + line if line.strip() else "" for line in "\n".join(chunks).split("\n"))
     return (
         '<section class="section" id="news">\n'
@@ -167,7 +168,7 @@ def render(items, link_ids):
         '    <div class="section-header">\n'
         "      <h2>News &amp; Updates</h2>\n"
         "    </div>\n"
-        '    <div class="news-grid" id="news-grid">\n'
+        f'    <div class="news-grid" id="news-grid" data-empty="{html.escape(empty_text)}">\n'
         f"{cards}\n"
         "    </div>\n"
         "  </div>\n"
@@ -212,8 +213,13 @@ def main():
     items = json.loads((ROOT / "assets" / "data" / "news.json").read_text())
     links = json.loads((ROOT / "assets" / "data" / "links.json").read_text())
     link_ids = {norm(l["url"]): l["id"] for l in links if l.get("url") and l["url"] != "#"}
-    shown = active_items(items)
-    body = render(shown, link_ids)
+    try:
+        news_cfg = json.loads((ROOT / "assets" / "data" / "site.json").read_text()).get("news", {})
+    except (OSError, ValueError):
+        news_cfg = {}
+    empty_text = news_cfg.get("emptyText") or "No news right now."
+    shown = active_items(items) if news_cfg.get("enabled", True) else []
+    body = render(shown, link_ids, empty_text)
 
     changed = 0
     for page in sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")):
