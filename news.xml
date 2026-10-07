@@ -5,14 +5,7 @@
     <link>https://snowbotics.org/</link>
     <description>News and updates from Truckee Snowbotics, FTC Team #32587.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Oct 2026 12:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://snowbotics.org/news.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Scrimmage</title>
-      <link>https://snowbotics.org/#news-2026-10-10-scrimmage</link>
-      <guid isPermaLink="true">https://snowbotics.org/#news-2026-10-10-scrimmage</guid>
-      <pubDate>Sat, 10 Oct 2026 12:00:00 +0000</pubDate>
-      <description>Our scrimmage for the 2026–27 BIOBUZZ season.</description>
-    </item>
   </channel>
 </rss>

@@ -8,7 +8,7 @@
     "alt": "The Snowbotics team"
   },
   "news": {
-    "enabled": true,
+    "enabled": false,
     "emptyText": "No news right now."
   }
 }
