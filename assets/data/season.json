@@ -19,11 +19,16 @@
   "calendar": {
     "enabled": true,
     "title": "Northern Nevada FTC calendar",
-    "feed": "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics",
-    "exclude": [
-      "SoNV"
-    ],
-    "limit": 10
+    "id": "ftc@firstnevada.org",
+    "timezone": "America/Los_Angeles",
+    "view": "month",
+    "height": 700,
+    "links": [
+      {
+        "label": "Full FIRST Nevada calendar",
+        "link": "firstNevadaCalendar"
+      }
+    ]
   },
   "robot": {
     "enabled": true,

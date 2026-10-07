@@ -4,7 +4,7 @@
 
 | Workflow | When | What |
 |---|---|---|
-| `deploy.yml` | every push to `main`, **and daily around 6:15 AM Pacific** | Builds, checks and deploys. The daily run refreshes date-based content (the regional calendar, upcoming-event data, sitemap dates) without a push. |
+| `deploy.yml` | every push to `main`, **and daily around 6:15 AM Pacific** | Builds, checks and deploys. The daily run refreshes date-based content (the live-stream schedule, sitemap dates) without a push. |
 | `check.yml` | pull requests, non-main pushes, or "Run workflow" | The same release build and checks as the deploy, without deploying. On pull requests it also scores the built pages with Lighthouse (targets in `lighthouserc.json`; misses are warnings, change `warn` to `error` there to make them block) and links a public report. |
 | `gallery-photo.yml` | a "Submit a gallery photo" issue is opened | Adds the photo and caption on a branch and opens a pull request for review. |
 | `health.yml` | Mondays around 8:30 AM Pacific, or "Run workflow" | Runs `scripts/health_check.py`: broken outside links, events within a week that have no stream link, `security.txt` expiring soon. Opens or updates **one** issue labeled `site-health`, and closes it when everything passes. In the first week of September it also opens a "Season rollover checklist" issue. |
@@ -26,7 +26,6 @@ requests and non-main pushes. Any ERROR stops the deploy.
 | `build_meta.py` | Writes each page's canonical URL, Open Graph/Twitter tags and breadcrumb data between `<!-- @meta -->` and `<!-- @breadcrumb -->` markers, from the page's own `<title>` and description (the only place a page's name and summary are written). For a new page, write its title and description and copy the marker pairs from another page. |
 | `build_team.py` | Writes the About page team cards and the `humans.txt` team list from `team.json`. |
 | `build_alumni.py` | Renders the Alumni section of the About page from `alumni.json`. |
-| `build_calendar.py` | Fetches the FIRST Nevada FTC iCal feed into `assets/data/calendar.json` for the Season page calendar. A failed fetch keeps the last copy and only warns. |
 | `build_season.py` | Renders the Season page from `season.json` (and the on/off switch). |
 | `build_pages.py` | Copies `partials/` (head-common, header, footer, scripts) into every page between `<!-- @partial name -->` markers. Edit the partial, run the build, commit the updated pages. Don't edit inside the markers. |
 | `optimize_images.py` | Gallery: JPG/PNG → WebP capped at 1600px, plus small thumbnails (`images/gallery/thumbs/`, generated, gitignored) used by the grid. Sponsors capped at 800px and `images/site/` at 1600px, same format. Needs Pillow (skipped if missing). |

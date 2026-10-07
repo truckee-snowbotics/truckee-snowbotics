@@ -9,7 +9,7 @@ if [ ! -x .venv/bin/python ]; then
   python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt || { echo "Setup failed"; exit 1; }
 fi
 
-# macOS Python often can't find certificates; this lets the build fetch the FTC calendar.
+# macOS Python often can't find certificates; this lets the build check outside links.
 [ -f /etc/ssl/cert.pem ] && export SSL_CERT_FILE=/etc/ssl/cert.pem
 
 .venv/bin/python scripts/build.py "$@"

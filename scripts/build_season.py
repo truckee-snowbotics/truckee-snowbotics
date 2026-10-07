@@ -18,6 +18,7 @@ import html
 import json
 import re
 import sys
+import urllib.parse
 from pathlib import Path
 
 from _lib import ROOT, esc, fill_markers
@@ -163,119 +164,28 @@ def robot_section(robot):
     return "\n".join(parts)
 
 
-def load_calendar():
-    try:
-        return json.loads((ROOT / "assets" / "data" / "calendar.json").read_text()).get("events", [])
-    except (OSError, ValueError):
-        return []
-
-
-def clean_title(title):
-    """'FTC - NoNV - League Meet # 1N' / 'FTC League Meet # 1N - NoNV' -> 'League Meet # 1N'."""
-    t = re.sub(r"\s*-\s*(?:NoNV|SoNV|NV)\b", "", title)
-    t = re.sub(r"^FTC\s*-?\s*", "", t).strip(" -")
-    return t or title
-
-
-def cal_when(e):
-    """Time line under an event's title."""
-    if e.get("allDay"):
-        a, b = datetime.date.fromisoformat(e["start"]), datetime.date.fromisoformat(e["end"])
-        return "All day" if a == b else f"All day · through {b:%a}, {b:%b} {b.day}"
-    start, end = datetime.datetime.fromisoformat(e["start"]), datetime.datetime.fromisoformat(e["end"])
-    if end <= start:
-        return f"{start:%A} · {clock(start)} PT"
-    if start.date() == end.date():
-        return f"{start:%A} · {clock(start)} – {clock(end)} PT"
-    return f"{start:%a} {clock(start)} – {end:%a} {clock(end)} PT"
-
-
-def split_where(location):
-    """'Venue, 1 Main St, City, NV 89000, USA' -> ('Venue', '1 Main St, City, NV 89000')."""
-    parts = [p.strip() for p in location.split(",") if p.strip()]
-    if parts and parts[-1] in ("USA", "US"):
-        parts.pop()
-    return (parts[0], ", ".join(parts[1:])) if parts else ("", "")
-
-
-def cal_where(location):
-    venue, address = split_where(location)
-    if not venue:
-        return ""
-    return f'<span class="cal-venue">{esc(venue)}</span>' + (f" · {esc(address)}" if address else "")
-
-
-def cal_full_when(e):
-    """Date and time line for the month view's hover card."""
-    if e.get("allDay"):
-        a, b = datetime.date.fromisoformat(e["start"]), datetime.date.fromisoformat(e["end"])
-        return f"{a:%A, %B} {a.day} · All day" if a == b else f"{a:%A, %B} {a.day} – {b:%A, %B} {b.day} · All day"
-    start, end = datetime.datetime.fromisoformat(e["start"]), datetime.datetime.fromisoformat(e["end"])
-    if end <= start:
-        return f"{start:%A, %B} {start.day} · {clock(start)} PT"
-    return when_text(start, end)
-
-
-def calendar_section(cal, today):
-    exclude = [x.lower() for x in cal.get("exclude", [])]
-    events = [e for e in load_calendar()
-              if datetime.date.fromisoformat(e["end"][:10]) >= today
-              and not any(x in e["title"].lower() for x in exclude)]
+def calendar_section(cal):
+    """The Season page's calendar: an embedded Google Calendar (settings under "calendar" in season.json)."""
+    cid = cal["id"].strip()
+    tz = cal.get("timezone") or TIMEZONE
+    mode = {"month": "MONTH", "week": "WEEK", "agenda": "AGENDA"}.get((cal.get("view") or "month").lower(), "MONTH")
+    height = int(cal.get("height") or 700)
+    q = urllib.parse.quote
+    src = ("https://calendar.google.com/calendar/embed?" + "&".join([
+        f"src={q(cid, safe='')}", f"ctz={q(tz, safe='')}", f"mode={mode}", "hl=en",
+        "showTitle=0", "showPrint=0", "showTabs=0", "showCalendars=0", "showTz=0", "bgcolor=%23ffffff"]))
+    title = cal.get("title") or "Calendar"
     ids = link_ids()
-    title = cal.get("title") or "Regional calendar"
-    def rows(items):
-        out = []
-        for e in items:
-            d = datetime.date.fromisoformat(e["start"][:10])
-            where = cal_where(e["location"]) if e.get("location") else ""
-            out.append(
-                '<li class="cal-item">\n'
-                f'  <time class="cal-date" datetime="{e["start"][:10]}"><span class="cal-month">{d:%b}</span><span class="cal-day">{d.day}</span></time>\n'
-                '  <div class="cal-body">\n'
-                f'    <h3 class="cal-title">{esc(clean_title(e["title"]))}</h3>\n'
-                f'    <p class="cal-meta">{esc(cal_when(e))}</p>\n'
-                + (f'    <p class="cal-where">{where}</p>\n' if where else "")
-                + "  </div>\n</li>"
-            )
-        return "\n".join(out)
-
-    def ol(items, extra=""):
-        body = "\n".join("  " + line for line in rows(items).split("\n"))
-        return f'<ol class="cal-list{extra}">\n{body}\n</ol>'
-
-    if events:
-        limit = cal.get("limit", 10)
-        shown, more = events[:limit], events[limit:]
-        listing = "\n".join("    " + line for line in ol(shown).split("\n")) + "\n"
-        if more:
-            inner = "\n".join("      " + line for line in ol(more, " cal-list--more").split("\n"))
-            listing += (f'    <details class="cal-more">\n      <summary>More events ({len(more)})</summary>\n{inner}\n    </details>\n')
-    else:
-        listing = '    <p class="cal-empty">No upcoming events are listed right now. Check the full calendar below.</p>\n'
-    # Month grid: main.js draws it from this JSON on wide screens; the list above is what
-    # phones, search engines and visitors without JavaScript see.
-    grid = ""
-    if events:
-        payload = []
-        for e in events:
-            venue, address = split_where(e.get("location", ""))
-            payload.append({"title": clean_title(e["title"]), "start": e["start"], "end": e["end"],
-                            "allDay": bool(e.get("allDay")), "when": cal_full_when(e),
-                            "venue": venue, "address": address})
-        data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
-        grid = ('    <div class="mcal" id="mcal" hidden></div>\n'
-                f'    <script type="application/json" id="cal-data">{data}</script>\n')
-    links = [anchor("Add to Google Calendar →", "https://calendar.google.com/calendar/r?cid=ftc%40firstnevada.org", ids, "season-event-link"),
-             anchor("iCal feed →", cal.get("feed") or "", ids, "season-event-link"),
-             anchor("Full FIRST Nevada calendar →", "https://firstnevada.org/all-events/#calendar", ids, "season-event-link")]
+    links = [f'<a class="season-event-link" href="https://calendar.google.com/calendar/ical/{q(cid, safe="")}/public/basic.ics" target="_blank" rel="noopener">iCal feed &rarr;</a>']
+    for l in cal.get("links", []):
+        links.append(robot_link(dict(l, label=l["label"] + " →"), ids).replace("btn-outline", "season-event-link"))
+    description = f"      <p>{esc(cal['description'])}</p>\n" if cal.get("description") else ""
     return f'''<section class="section" id="calendar">
   <div class="section-inner">
     <div class="section-header">
       <h2>{esc(title)}</h2>
-      <p>Upcoming league meets, tournaments and workshops in our region, from the FIRST Nevada calendar. Updated daily.</p>
-    </div>
-{grid}    <div class="cal-list-wrap">
-{listing}    </div>
+{description}    </div>
+    <iframe class="gcal" src="{src}" title="{esc(title)}" style="height:{height}px" loading="lazy"></iframe>
     <div class="cal-links">{" ".join(links)}</div>
   </div>
 </section>'''
@@ -298,8 +208,8 @@ def page_content(data, today):
 </section>'''
     blocks = [hero]
     # Page order: calendar, robot, then the live stream.
-    if data.get("calendar", {}).get("enabled", True) and data.get("calendar", {}).get("feed"):
-        blocks.append(calendar_section(data["calendar"], today))
+    if data.get("calendar", {}).get("enabled", True) and data.get("calendar", {}).get("id"):
+        blocks.append(calendar_section(data["calendar"]))
     if data.get("robot", {}).get("enabled", True) and data.get("robot"):
         blocks.append(robot_section(data["robot"]))
     if data.get("stream", {}).get("enabled", True):
@@ -353,7 +263,7 @@ def fill_inline(text, name, value):
 def cta_html(data, css, label):
     """Button to the Season page's calendar; empty when the Season page or its calendar is off."""
     cal = data.get("calendar") or {}
-    if data.get("enabled", True) and cal.get("enabled", True) and cal.get("feed"):
+    if data.get("enabled", True) and cal.get("enabled", True) and cal.get("id"):
         return f'<a href="/season/#calendar" class="{css}">{esc(label)}</a>'
     return ""
 

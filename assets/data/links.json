@@ -106,17 +106,5 @@
     "label": "FIRST Nevada calendar",
     "url": "https://firstnevada.org/all-events/#calendar",
     "listed": true
-  },
-  {
-    "id": "ftcCalendarGoogle",
-    "label": "Add the FTC calendar to Google Calendar",
-    "url": "https://calendar.google.com/calendar/r?cid=ftc%40firstnevada.org",
-    "listed": false
-  },
-  {
-    "id": "ftcCalendarFeed",
-    "label": "FTC calendar iCal feed",
-    "url": "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics",
-    "listed": false
   }
 ]

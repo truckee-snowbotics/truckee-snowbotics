@@ -249,8 +249,6 @@ SCHEMAS = {
         heroPhoto=req(obj(src=req("str"), alt=req("str"))),
         aboutPhoto=req(obj(src=req("str"), alt=req("str"))),
         banner=opt(obj(enabled=opt("bool"), message=req("str"), linkLabel=opt("str"), link=opt("str")))),
-    "calendar.json": obj(events=req(("list", obj(
-        title=req("str"), start=req("str"), end=req("str"), allDay=req("bool"), location=opt("str"))))),
     "season.json": obj(
         enabled=opt("bool"), season=req("str"), game=opt("str"),
         gameTitle=opt("str"), gameSummary=opt("str"), kickoff=opt("date"), qualifiersStart=opt("str"),
@@ -262,8 +260,9 @@ SCHEMAS = {
                 location=opt("str"), stream=opt("weburl"), youtubeChannelId=opt("str"),
                 info=opt("weburl"), results=opt("weburl")))))),
         calendar=opt(obj(
-            enabled=opt("bool"), title=opt("str"), feed=opt("weburl"),
-            exclude=opt(("list", "str")), limit=opt("int"))),
+            enabled=opt("bool"), title=opt("str"), description=opt("text"), id=opt("str"), timezone=opt("str"),
+            view=opt(("enum", ["month", "week", "agenda"])), height=opt("int"),
+            links=opt(("list", obj(label=req("str"), url=opt("url"), link=opt("str")))))),
         robot=opt(obj(
             enabled=opt("bool"), name=opt("str"), description=opt("text"),
             photos=opt(("list", obj(src=req("str"), caption=opt("str")))),

@@ -785,78 +785,9 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 
 }
 
-/* ── Regional calendar (Season page) ── */
-.cal-list { list-style: none; border-top: 1px solid var(--border); }
-.cal-item { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1.25rem; padding: 1.1rem 0; border-bottom: 1px solid var(--border); }
-.cal-date {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  align-self: start; padding: .5rem 0; background: var(--surface); border: 1px solid var(--border-h); line-height: 1.1;
-}
-.cal-month { font-size: .85rem; font-weight: 600; color: var(--accent); }
-.cal-day { font-size: 1.5rem; font-weight: 600; color: var(--heading); }
-.cal-title { font-size: 1.05rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; }
-.cal-meta { font-size: .9rem; color: var(--text-dim); margin-top: .15rem; }
-.cal-where { font-size: .9rem; color: var(--text-mid); margin-top: .15rem; }
-.cal-venue { color: var(--text); font-weight: 500; }
-.cal-empty { color: var(--text-mid); }
+/* ── Calendar (Season page): embedded Google Calendar ── */
+.gcal { display: block; width: 100%; border: 1px solid var(--border-h); background: #fff; }
 .cal-links { display: flex; flex-wrap: wrap; gap: .6rem 1.75rem; margin-top: 1.5rem; }
-
-/* Month grid (drawn by main.js; hidden on phones and without JS, where the list shows) */
-.mcal { position: relative; margin-bottom: 1rem; }
-.mcal-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-.mcal-title { font-size: 1.35rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; }
-.mcal-nav { display: flex; gap: .5rem; }
-.mcal-btn {
-  background: transparent; color: var(--text); border: 1px solid var(--border-h);
-  min-width: 2.5rem; height: 2.5rem; padding: 0 .9rem; font-size: 1rem; font-weight: 500; cursor: pointer;
-}
-.mcal-btn:hover:not(:disabled) { border-color: var(--accent); }
-.mcal-btn:disabled { opacity: .4; cursor: default; }
-.mcal-table { width: 100%; border-collapse: collapse; table-layout: fixed; border: 1px solid var(--border-h); }
-.mcal-table th {
-  padding: .6rem 0; font-size: .85rem; font-weight: 600;
-  color: var(--text-dim); background: var(--surface); border-bottom: 1px solid var(--border-h);
-}
-.mcal-cell { height: 7.5rem; vertical-align: top; padding: .4rem; border: 1px solid var(--border); background: var(--bg); }
-.mcal-cell--out { background: transparent; }
-.mcal-cell--out .mcal-num { color: var(--text-dim); opacity: .6; }
-.mcal-num { display: inline-block; min-width: 1.6rem; padding: .1rem .3rem; text-align: center; font-size: .85rem; font-weight: 500; color: var(--text-mid); }
-.mcal-cell--today .mcal-num { background: var(--accent); color: var(--bg); font-weight: 700; }
-.mcal-evs { list-style: none; display: flex; flex-direction: column; gap: .25rem; margin-top: .3rem; }
-.mcal-ev { font-size: .75rem; line-height: 1.3; padding: .2rem .4rem; color: var(--text); overflow-wrap: anywhere; }
-.mcal-ev--comp { background: var(--accent-soft); border-left: 2px solid var(--accent-2); }
-.mcal-ev--misc { background: var(--soft-fill); border-left: 2px solid var(--text-dim); }
-.mcal-time { color: var(--text-dim); font-weight: 500; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-@media (min-width: 701px) { .has-grid .cal-list-wrap { display: none; } }
-@media (max-width: 700px) { .mcal { display: none; } }
-
-/* "More events" dropdown under the list */
-.cal-more { margin-top: 1.5rem; }
-.cal-more > summary {
-  list-style: none; cursor: pointer; width: fit-content;
-  padding: .7rem 1.4rem; border: 1px solid var(--border-h); color: var(--text);
-  font-size: .9rem; font-weight: 500; display: flex; align-items: center; gap: .6rem;
-}
-.cal-more > summary::-webkit-details-marker { display: none; }
-.cal-more > summary::after { content: "▾"; color: var(--accent); }
-.cal-more[open] > summary::after { content: "▴"; }
-.cal-more > summary:hover { border-color: var(--accent); }
-.cal-more[open] > summary { margin-bottom: 1.25rem; }
-.cal-list--more { margin-top: 0; }
-.mcal-ev { cursor: pointer; }
-.mcal-ev:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.mcal-pop {
-  position: absolute; z-index: 5; width: min(300px, 100%); pointer-events: none;
-  background: var(--surface-2); border: 1px solid var(--border-h); border-left-width: 3px;
-  padding: .85rem 1rem; box-shadow: var(--shadow);
-}
-.mcal-pop--comp { border-left-color: var(--accent-2); }
-.mcal-pop--misc { border-left-color: var(--text-dim); }
-.mcal-pop-title { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.35; }
-.mcal-pop-when { font-size: .85rem; color: var(--text-mid); margin-top: .35rem; }
-.mcal-pop-where { font-size: .85rem; color: var(--text-mid); margin-top: .6rem; line-height: 1.5; }
-.mcal-pop-where strong { color: var(--text); font-weight: 500; }
 
 /* Row of buttons under a section's content */
 .btn-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }

@@ -55,19 +55,26 @@ is mostly a `season.json` edit. The footer year updates itself.
   that YouTube/Twitch may set cookies; update it if you change providers.
 - Events that ended more than 90 days ago drop off the schedule.
 
-**Regional calendar.** Below the stream, the page shows upcoming Northern Nevada FTC events from FIRST Nevada's public calendar: a month view (with Previous, Next and Today buttons; hover, focus or click an event for its date, time and venue) on wide screens, and a plain event list on phones and for visitors without JavaScript. League meets, tournaments, scrimmages and kickoffs are tinted blue; workshops and deadlines are grey. The build (`build_calendar.py`) fetches the feed into `assets/data/calendar.json`, and the daily deploy keeps it fresh; if the feed is down the last good copy is used. Configure it under `calendar` in `season.json`:
+**Calendar.** Below the page heading, the Season page embeds a public Google Calendar (FIRST Nevada's by default), so it shows the official calendar exactly as Google draws it, and it's always up to date (nothing to rebuild when events change). Configure it under `calendar` in `season.json`:
 
 ```json
 "calendar": {
   "enabled": true,
   "title": "Northern Nevada FTC calendar",
-  "feed": "https://calendar.google.com/calendar/ical/ftc%40firstnevada.org/public/basic.ics",
-  "exclude": ["SoNV"],
-  "limit": 12
+  "id": "ftc@firstnevada.org",
+  "timezone": "America/Los_Angeles",
+  "view": "month",
+  "height": 700,
+  "links": [{ "label": "Full FIRST Nevada calendar", "link": "firstNevadaCalendar" }]
 }
 ```
 
-`exclude` hides events whose title contains any of those words (add `"Coaches Corner"` to drop workshops, for example); `limit` is how many events the list shows before a "More events (N)" dropdown (default 10; the month view shows all of them). This list is separate from `stream.events`, which are the events *we* compete in and drive the live embed.
+- `id` is the calendar's ID (Google Calendar → the calendar's settings → "Integrate calendar" → Calendar ID). **To switch to your own team calendar, change this one value** (the calendar must be set to public; for a Google Workspace calendar, "Make available to public" and "See all event details").
+- `view` is `month` (default), `week` or `agenda`; `height` is the box height in pixels; `timezone` sets the displayed times; `description` (optional) adds a line of text under the title.
+- `links` are extra links shown under the calendar (a `link` is an id from `links.json`, or use `url`). An "iCal feed" link is always added for the calendar you chose.
+- `enabled: false` hides the calendar (and the home and Information calendar buttons).
+
+The embed loads from Google, so it sets Google cookies when the page is opened; the privacy page says so. It shows every event on the calendar (including southern-Nevada ones); to filter events, you'd need to make your own calendar.
 
 **Robot.** `robot` takes optional `name`, `description`, `photos` (`src` + `caption`),
 `specs` (`label` + `value`) and `links` (`label` plus either `url`, a web address, or `link`, an id from `links.json`; a `link` whose url is `#` stays hidden). Only what you fill in is shown.
