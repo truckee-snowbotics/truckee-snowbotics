@@ -58,9 +58,9 @@ getLinks().then(items => {
     if (url && url !== '#') el.action = url;
   });
 }).catch(() => { /* keep the fallback hrefs hard-coded in the HTML */ });
-// ── Active nav link (page-based) ─────────────
+// ── Active menu link (page-based) ────────────
 (function () {
-  const links = document.querySelectorAll('.nav a');
+  const links = document.querySelectorAll('#mobile-nav > a');
   if (!links.length) return;
 
   // Normalise pathname to always end with /
@@ -86,6 +86,13 @@ getLinks().then(items => {
     nav.setAttribute('aria-hidden', String(!open));
   });
 
+  const close = () => {
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    nav.setAttribute('aria-hidden', 'true');
+  };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { close(); btn.focus(); } });
   nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       nav.classList.remove('open');
