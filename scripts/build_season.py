@@ -140,7 +140,7 @@ def robot_section(robot, alt=True):
         side.append("        </dl>")
     if links:
         side.append('        <div class="robot-links">')
-        side += ["          " + anchor(l["label"] + " →", l["url"], ids, "btn-outline") for l in links]
+        side += ["          " + anchor(l["label"], l["url"], ids, "btn-outline") for l in links]
         side.append("        </div>")
     if side:
         parts.append('      <div class="robot-side">')
@@ -368,7 +368,7 @@ def main():
     inew = fill_inline(itext, "seasonchallenge", challenge)
     inew = fill_inline(inew, "seasonsummary", season_sentence)
     # Information page: button to our calendar (only while the Season page and its calendar are on)
-    inew = fill_markers(inew, "calendarbtn", cta_html(data, "btn-primary", "Our event calendar →"), info)
+    inew = fill_markers(inew, "calendarbtn", cta_html(data, "btn-primary", "Our event calendar"), info)
     if inew != itext:
         info.write_text(inew)
     # Home page hero button to the calendar (only while the Season page and its calendar are on)
