@@ -191,6 +191,31 @@ def calendar_section(cal):
 </section>'''
 
 
+def season_hero(data):
+    """Blue banner at the top of the Season page: the season, this year's game and the key dates."""
+    facts = []
+    if data.get("kickoff"):
+        facts.append(("Kickoff", long_date(datetime.date.fromisoformat(data["kickoff"]))))
+    if data.get("qualifiersStart"):
+        facts.append(("Qualifiers begin", data["qualifiersStart"][:1].upper() + data["qualifiersStart"][1:]))
+    champ = data.get("championship") or {}
+    if champ.get("start") and champ.get("end"):
+        facts.append((champ.get("name") or "Championship",
+                      date_range(datetime.date.fromisoformat(champ["start"]), datetime.date.fromisoformat(champ["end"]))))
+    out = ['<section class="season-hero section--blue">', '  <div class="season-hero-inner">', '    <div class="season-hero-main">',
+           f'      <h1>Season {esc(data.get("season", ""))}</h1>']
+    if data.get("gameTitle"):
+        out.append(f'      <p class="season-hero-game">{esc(data["gameTitle"])}</p>')
+    out.append("      <p>See where we compete, meet our robot, and watch our events live.</p>")
+    out.append("    </div>")
+    if facts:
+        out.append('    <dl class="season-hero-facts">')
+        out += [f"      <div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in facts]
+        out.append("    </dl>")
+    out += ["  </div>", "</section>"]
+    return "\n".join(out)
+
+
 def page_content(data, today):
     if not data.get("enabled", True):
         return '''<section class="section" id="season-off">
@@ -202,10 +227,7 @@ def page_content(data, today):
     <a href="/" class="btn-primary">Back to home</a>
   </div>
 </section>'''
-    hero = f'''<section class="page-hero">
-  <h1>Season {esc(data.get("season", ""))}</h1>
-  <p>See where we compete, meet our robot, and watch our events live.</p>
-</section>'''
+    hero = season_hero(data)
     blocks = [hero]
     # Page order: calendar, robot, then the live stream.
     if data.get("calendar", {}).get("enabled", True) and data.get("calendar", {}).get("id"):

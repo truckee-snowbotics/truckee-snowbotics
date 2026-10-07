@@ -701,6 +701,21 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 }
 .page-hero p { max-width: var(--max); margin: 0 auto; font-size: 1rem; color: var(--text-mid); }
 
+/* Season page banner */
+.season-hero { padding: clamp(2.5rem, 6vw, 4rem) var(--gutter); }
+.season-hero-inner {
+  max-width: var(--max); margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 2rem clamp(2rem, 6vw, 5rem); align-items: end;
+}
+.season-hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); font-weight: 650; letter-spacing: -.035em; line-height: 1.05; color: var(--heading); }
+.season-hero-game { margin-top: .6rem; font-size: clamp(1.15rem, 2.4vw, 1.5rem); font-weight: 600; color: var(--accent-2); }
+.season-hero-main p:last-child { margin-top: 1rem; color: var(--text-mid); }
+.season-hero-facts div { padding: .8rem 0; border-top: 1px solid var(--border-h); display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.season-hero-facts div:last-child { border-bottom: 1px solid var(--border-h); }
+.season-hero-facts dt { color: var(--text-mid); }
+.season-hero-facts dd { color: var(--heading); font-weight: 600; text-align: right; }
+@media (max-width: 800px) { .season-hero-inner { grid-template-columns: 1fr; } }
+
 /* ── Prose content sections ──────────────────── */
 .content-section { max-width: 720px; margin: 0 auto; padding: 2rem var(--gutter) 4rem; }
 .content-section h2 {

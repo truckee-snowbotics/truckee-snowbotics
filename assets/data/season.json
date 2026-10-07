@@ -19,7 +19,7 @@
   "calendar": {
     "enabled": true,
     "title": "Northern Nevada FTC calendar",
-    "description": "League meets, tournaments, workshops and other events in our region, straight from FIRST Nevada's official calendar. Click an event for its time and location.",
+    "description": "Note: This calendar is for Northern Nevada FTC events only and team events such as meetings and build dates will not be listed here.",
     "id": "ftc@firstnevada.org",
     "timezone": "America/Los_Angeles",
     "view": "month",
