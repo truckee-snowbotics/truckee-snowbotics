@@ -311,6 +311,7 @@ ul { list-style: none; }
 .about-body { max-width: 62ch; line-height: 1.8; font-size: 1.05rem; color: var(--text-mid); }
 .about-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
 .about-split__text .section-header { margin-bottom: 1.5rem; }
+.about-split__img { display: grid; gap: 1rem; }
 .about-split__img img {
   width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
   border-radius: var(--r); border: 1px solid var(--border);
