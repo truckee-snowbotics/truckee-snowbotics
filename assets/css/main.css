@@ -356,9 +356,12 @@ ul { list-style: none; }
 /* ── Gallery ─────────────────────────────────── */
 .gallery-track {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
 }
+@media (max-width: 1000px) { .gallery-track { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .gallery-track { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 400px) { .gallery-track { grid-template-columns: 1fr; } }
 .gallery-item {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -470,18 +473,13 @@ ul { list-style: none; }
 .donate-card-body { font-size: .925rem; color: var(--text-mid); line-height: 1.65; flex: 1; margin-bottom: .5rem; }
 .donate-card .btn-primary, .donate-card .btn-outline { align-self: flex-start; margin-top: auto; }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
+.info-text {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 4rem;
+  max-width: 1000px;
 }
-.info-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 1.5rem;
-  display: flex; flex-direction: column; gap: .6rem;
-}
-.info-card-title { font-size: 1rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; }
-.info-card-body { font-size: .9rem; color: var(--text-mid); line-height: 1.65; }
+.info-item-title { font-size: 1.15rem; font-weight: 600; color: var(--heading); letter-spacing: -.01em; margin-bottom: .45rem; }
+.info-item p { font-size: 1rem; color: var(--text-mid); line-height: 1.75; }
+@media (max-width: 760px) { .info-text { grid-template-columns: 1fr; gap: 1.75rem; } }
 
 /* ── Links & forms ───────────────────────────── */
 .links-grid {
