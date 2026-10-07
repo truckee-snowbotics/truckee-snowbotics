@@ -412,24 +412,6 @@ ul { list-style: none; }
   object-fit: contain; border-radius: var(--r-sm);
 }
 
-/* ── Nonprofit banner ────────────────────────── */
-.nonprofit-banner {
-  display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1.25rem;
-  padding: .9rem max(var(--gutter), calc((100% - var(--max)) / 2));
-  background: var(--bg-alt);
-  border-bottom: 1px solid var(--border);
-  font-size: .85rem; color: var(--text-mid);
-}
-.nonprofit-banner-badge {
-  font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--accent);
-  border: 1px solid var(--accent-line);
-  padding: .2rem .55rem; border-radius: 0; white-space: nowrap; flex-shrink: 0;
-}
-.nonprofit-banner > span:not(.nonprofit-banner-badge) { flex: 1 1 320px; }
-.nonprofit-banner a { color: var(--accent); font-weight: 500; white-space: nowrap; }
-.nonprofit-banner a:hover { text-decoration: underline; text-underline-offset: 3px; }
-
 /* ── News ────────────────────────────────────── */
 .news-grid { display: flex; flex-direction: column; }
 .news-card {
