@@ -268,7 +268,7 @@ SCHEMAS = {
             enabled=opt("bool"), name=opt("str"), description=opt("text"),
             photos=opt(("list", obj(src=req("str"), caption=opt("str")))),
             specs=opt(("list", obj(label=req("str"), value=req("str")))),
-            links=opt(("list", obj(label=req("str"), url=req("url"))))))),
+            links=opt(("list", obj(label=req("str"), url=opt("url"), link=opt("str"))))))),
 }
 PLACEHOLDERS = {}  # data file -> count of "Update..." values
 UNIQUE_IDS = {"team.json", "sponsors.json", "links.json"}

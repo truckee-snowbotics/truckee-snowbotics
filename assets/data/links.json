@@ -18,6 +18,12 @@
     "listed": true
   },
   {
+    "id": "engineeringPortfolio",
+    "label": "Engineering Portfolio",
+    "url": "#",
+    "listed": true
+  },
+  {
     "id": "githubRepo",
     "label": "Website Source",
     "url": "https://github.com/truckee-snowbotics/truckee-snowbotics",

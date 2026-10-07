@@ -114,6 +114,19 @@ def stream_section(stream, today):
 </section>'''
 
 
+def robot_link(l, ids):
+    """A robot button: "url" is a web address; "link" is an id from links.json (hidden while its url is #)."""
+    if l.get("link"):
+        if l["link"] not in set(ids.values()) | placeholder_ids():
+            sys.exit(f'error: season.json robot link "{l.get("label")}": no "{l["link"]}" in links.json')
+        return f'<a class="btn-outline" href="#" data-link-key="{esc(l["link"])}" target="_blank" rel="noopener">{esc(l["label"])}</a>'
+    return anchor(l["label"], l["url"], ids, "btn-outline")
+
+
+def placeholder_ids():
+    return {l["id"] for l in json.loads((ROOT / "assets" / "data" / "links.json").read_text())}
+
+
 def robot_section(robot):
     photos = robot.get("photos", [])
     specs = robot.get("specs", [])
@@ -140,7 +153,7 @@ def robot_section(robot):
         side.append("        </dl>")
     if links:
         side.append('        <div class="robot-links">')
-        side += ["          " + anchor(l["label"], l["url"], ids, "btn-outline") for l in links]
+        side += ["          " + robot_link(l, ids) for l in links]
         side.append("        </div>")
     if side:
         parts.append('      <div class="robot-side">')
