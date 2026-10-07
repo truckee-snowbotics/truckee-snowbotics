@@ -240,7 +240,7 @@ getLinks().then(() => {
   buttons.forEach(b => b.addEventListener('click', () => {
     const next = root.dataset.theme === 'light' ? 'dark' : 'light';
     apply(next);
-    try { localStorage.setItem('theme', next); } catch (e) { /* private mode: the choice just isn't remembered */ }
+    try { localStorage.setItem('snowbotics-theme', next); } catch (e) { /* private mode: the choice just isn't remembered */ }
   }));
 })();
 

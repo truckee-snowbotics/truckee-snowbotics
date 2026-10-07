@@ -26,7 +26,7 @@
   <meta name="twitter:image" content="https://snowbotics.org/images/site/og-card.png" />
   <!-- @endmeta -->
   <!-- @partial head-common -->
-  <script>try{var q=new URLSearchParams(location.search).get("theme");if(q==="light"||q==="dark")localStorage.setItem("theme",q);var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme="dark";}</script>
+  <script>try{var q=new URLSearchParams(location.search).get("theme");if(q==="light"||q==="dark")localStorage.setItem("snowbotics-theme",q);var t=localStorage.getItem("snowbotics-theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme="dark";}</script>
   <link rel="icon" type="image/svg+xml" href="/images/site/favicon.svg" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/images/site/apple-touch-icon.png" />
@@ -99,15 +99,6 @@
             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
           </svg>
         </a>
-        <button type="button" class="btn-icon theme-toggle" aria-label="Switch to light theme">
-          <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-          </svg>
-          <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </button>
         <a href="#" data-link-key="join" class="btn-primary">Join</a>
       </div>
 
@@ -132,7 +123,6 @@
       <a href="#" data-link-key="github" target="_blank" rel="noopener">GitHub</a>
       <a href="#" data-link-key="youtube" target="_blank" rel="noopener">YouTube</a>
       <a href="#" data-link-key="join">Join</a>
-      <button type="button" class="theme-toggle theme-toggle-text" aria-label="Switch to light theme">Switch theme</button>
     </div>
   </div>
   <!-- @endpartial header -->
@@ -144,7 +134,7 @@
       <div class="section-inner">
         <div class="section-header">
           <h1>Contact Truckee Snowbotics</h1>
-          <p>Have questions about Truckee Snowbotics FTC Team #32587, sponsorship opportunities, or want to get involved with our robotics team in Truckee, CA? Reach out below or email <a data-link-key="email" href="#">contact@snowbotics.org</a>.</p>
+          <p>Have questions, sponsorship or STEM opportunities, or want to get involved with our robotics team in Truckee, CA? Reach out below or email <a data-link-key="email" href="#">contact@snowbotics.org</a>.</p>
         </div>
         <div class="contact-split">
           <div class="contact-placeholder">
@@ -307,6 +297,7 @@
       <a href="/privacy/">Privacy Policy</a>
       <a href="/sitemap.xml">Sitemap</a>
       <a data-link-key="githubRepo" href="#" target="_blank" rel="noopener">Source</a>
+      <button type="button" class="theme-toggle theme-toggle-text" aria-label="Switch to light theme">Switch to light theme</button>
     </div>
   </footer>
   <!-- @endpartial footer -->
