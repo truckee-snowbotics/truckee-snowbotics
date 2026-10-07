@@ -51,7 +51,7 @@
     "id": "sierra-sun-article",
     "label": "Sierra Sun Article",
     "url": "https://www.sierrasun.com/news/snowbotics-truckee-highs-robotics-team-makes-a-comeback/",
-    "listed": true
+    "listed": false
   },
   {
     "id": "instagram",
@@ -99,7 +99,7 @@
     "id": "firstNevadaCalendar",
     "label": "FIRST Nevada calendar",
     "url": "https://firstnevada.org/all-events/#calendar",
-    "listed": false
+    "listed": true
   },
   {
     "id": "ftcCalendarGoogle",
