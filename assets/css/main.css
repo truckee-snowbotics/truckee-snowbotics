@@ -291,8 +291,8 @@ ul { list-style: none; }
 
 /* ── Team ────────────────────────────────────── */
 .team-group + .team-group { margin-top: 3.5rem; }
-.team-group > summary, .alumni-all > summary { list-style: none; }
-.team-group > summary::-webkit-details-marker, .alumni-all > summary::-webkit-details-marker { display: none; }
+.team-group > summary { list-style: none; }
+.team-group > summary::-webkit-details-marker { display: none; }
 .team-group-title {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   font-size: .9rem; font-weight: 600;
@@ -300,7 +300,6 @@ ul { list-style: none; }
   border-bottom: 1px solid var(--border);
 }
 .team-group-count { display: none; color: var(--text-dim); letter-spacing: .04em; }
-.alumni-all > summary { display: none; }
 .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
 .member-card {
   background: var(--surface); border: 1px solid var(--border);
@@ -745,25 +744,23 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 .not-found p { color: var(--text-mid); max-width: 36ch; margin: 0 auto 2.5rem; }
 .not-found-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-/* ── Alumni ── */
-.alumni-year { margin-top: 2.5rem; }
-.section-header + .alumni-year { margin-top: 0; }
-.alumni-year-title {
-  display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem;
-  font-size: 1.1rem; font-weight: 600; letter-spacing: .08em; color: var(--accent);
-}
-.alumni-year-title::before, .alumni-year-title::after { content: ""; flex: 1; height: 1px; background: var(--border-h); }
-.alumni-more { margin-top: 2.5rem; }
-.alumni-more > summary {
-  list-style: none; cursor: pointer; width: fit-content; margin: 0 auto;
-  padding: .7rem 1.4rem; border: 1px solid var(--border-h); color: var(--text);
-  font-size: .9rem; font-weight: 500; display: flex; align-items: center; gap: .6rem;
-}
-.alumni-more > summary::-webkit-details-marker { display: none; }
-.alumni-more > summary::after { content: "▾"; color: var(--accent); }
-.alumni-more[open] > summary::after { content: "▴"; }
-.alumni-more > summary:hover { border-color: var(--accent); }
-.alumni-more[open] > summary { margin-bottom: 2.5rem; }
+/* ── Alumni: a compact list ── */
+.section--tight { padding-block: clamp(1.75rem, 4vw, 2.75rem); }
+.section--tight .section-header { margin-bottom: 1rem; }
+.alumni-row { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 1rem; padding: .85rem 0; border-top: 1px solid var(--border); }
+.alumni-row:last-child { border-bottom: 1px solid var(--border); }
+.alumni-row-year { font-size: .95rem; font-weight: 600; color: var(--accent); line-height: 1.5; }
+.alumni-people { display: grid; gap: .6rem; }
+.alumni-people li { display: flex; gap: .75rem; align-items: center; }
+.alumni-photo { width: 44px; height: 44px; object-fit: cover; flex-shrink: 0; }
+.alumni-name { color: var(--heading); font-weight: 600; }
+.alumni-role { color: var(--text-mid); }
+.alumni-role::before { content: "· "; }
+.alumni-bio { display: block; font-size: .9rem; color: var(--text-mid); line-height: 1.5; }
+.alumni-more { margin-top: .5rem; }
+.alumni-more > summary { cursor: pointer; width: fit-content; padding: .5rem 0; font-size: .9rem; font-weight: 600; color: var(--accent); }
+.alumni-more > summary::after { content: " ▾"; }
+.alumni-more[open] > summary::after { content: " ▴"; }
 
 /* Phones: team groups and alumni collapse behind a tap target */
 @media (max-width: 700px) {
@@ -780,14 +777,6 @@ a.sponsor-bar-logo:hover { opacity: .7; }
   .team-group[open] > .team-grid { margin-top: 1.25rem; }
   .team-group:not([open]) > .team-grid { display: none; }
 
-  .alumni-all > summary {
-    display: flex; align-items: center; justify-content: space-between; cursor: pointer;
-    padding: .95rem 1rem; background: var(--surface); border: 1px solid var(--border-h);
-    font-size: .9rem; font-weight: 600; color: var(--accent);
-  }
-  .alumni-all > summary::after { content: "▾"; font-size: .9rem; }
-  .alumni-all[open] > summary::after { content: "▴"; }
-  .alumni-all[open] > summary { margin-bottom: 1.5rem; }
 }
 
 /* ── Regional calendar (Season page) ── */
