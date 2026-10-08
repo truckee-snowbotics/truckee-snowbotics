@@ -26,7 +26,7 @@ Generated files (`gallery.json`, `sitemap.xml`, the lists inside pages) are rewr
 ./build
 ```
 
-Rebuilds every generated part of the site and runs the checks; then refresh your preview (VS Code Live Preview, or any static server on the project folder). Run it after editing a data file. The first run sets up its own Python environment in `.venv`.
+Rebuilds every generated part of the site and runs the checks; then refresh your preview (VS Code Live Preview, or any static server on the project folder). Run it after editing a data file. The first run sets up its own Python environment in `.venv`. On Windows, run it from Git Bash (the VS Code terminal can use it), with Python 3 installed.
 
 ## Folders
 

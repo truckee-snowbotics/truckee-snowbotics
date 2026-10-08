@@ -2,14 +2,32 @@
 # Rebuild the site for local testing:   ./build
 # Run it after editing a data file (team, alumni, season, links...), then refresh your preview.
 # First run creates a private Python environment in .venv and installs the build tools.
+# Works on macOS/Linux and on Windows in Git Bash.
 cd "$(dirname "$0")" || exit 1
 
-if [ ! -x .venv/bin/python ]; then
+# The environment's Python lives in .venv/bin on macOS/Linux, .venv/Scripts on Windows.
+venv_python() {
+  for p in .venv/bin/python .venv/Scripts/python.exe; do
+    [ -x "$p" ] && { echo "$p"; return 0; }
+  done
+  return 1
+}
+
+if ! PY=$(venv_python); then
   echo "Setting up (first run only)..."
-  python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt || { echo "Setup failed"; exit 1; }
+  # python3 on macOS/Linux; on Windows it's often just python (skip the Microsoft Store stub).
+  SYS=
+  for c in python3 python py; do
+    "$c" -c "import sys" >/dev/null 2>&1 && { SYS=$c; break; }
+  done
+  [ -n "$SYS" ] || { echo "Python 3 not found; install it from https://www.python.org/downloads/"; exit 1; }
+  "$SYS" -m venv .venv && PY=$(venv_python) && "$PY" -m pip install -q -r requirements.txt || { echo "Setup failed"; exit 1; }
 fi
+
+# Windows Python otherwise reads/writes files in the local code page, not UTF-8.
+export PYTHONUTF8=1
 
 # macOS Python often can't find certificates; this lets the build check outside links.
 [ -f /etc/ssl/cert.pem ] && export SSL_CERT_FILE=/etc/ssl/cert.pem
 
-.venv/bin/python scripts/build.py "$@"
+"$PY" scripts/build.py "$@"

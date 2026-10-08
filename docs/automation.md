@@ -45,4 +45,4 @@ Teammates can use **Issues > New issue > Submit a gallery photo**: `gallery-phot
 On GitHub you can upload a photo to `images/gallery/` and push; CI handles the rest.
 The committed `gallery.json`/`sitemap.xml` are only used for local preview.
 Build dependencies: `pip install -r requirements.txt` (Dependabot keeps them and the
-GitHub Actions versions current). To rebuild locally: `./build`.
+GitHub Actions versions current). To rebuild locally: `./build` (on Windows, run it from Git Bash).

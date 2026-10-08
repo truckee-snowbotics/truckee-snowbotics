@@ -18,15 +18,15 @@
   },
   "calendar": {
     "enabled": true,
-    "title": "Northern Nevada FTC calendar",
-    "description": "Note: This calendar is for Northern Nevada FTC events only and team events such as meetings and build dates will not be listed here.",
-    "id": "ftc@firstnevada.org",
+    "title": "FTC Team Calendar",
+    "description": "Note: This calendar consists of all events and meetings for Truckee Snowbotics and is not the official FIRST Nevada calendar.",
+    "id": "40e0828cb3f809d7b627805e26bbf09d4e47b8df5593771eb5439e7b24760741@group.calendar.google.com",
     "timezone": "America/Los_Angeles",
     "view": "month",
     "height": 700,
     "links": [
       {
-        "label": "Full FIRST Nevada calendar",
+        "label": "Official FIRST Nevada calendar",
         "link": "firstNevadaCalendar"
       }
     ]
