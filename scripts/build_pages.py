@@ -9,7 +9,8 @@ Each page marks where a chunk goes:
 
 Edit the file in partials/, run this script (build.py does), and commit the updated
 pages. Pages stay complete HTML, so they preview locally without a build.
-Partials: head-common (icons, fonts, stylesheet), header, footer, scripts.
+Partials: head-common (icons, fonts, stylesheet), header, footer, scripts (on every page);
+support (the "Support Us" donate section, on the pages that include it).
 """
 import datetime
 import json
@@ -19,6 +20,8 @@ import sys
 from _lib import ROOT, indent
 
 PARTIALS = ROOT / "partials"
+# Partials every page must include; any other partial goes only where a page has its markers.
+REQUIRED = ("head-common", "header", "footer", "scripts")
 MARKER = re.compile(
     r"^(?P<indent>[ \t]*)<!-- @partial (?P<name>[\w-]+) -->\n.*?^[ \t]*<!-- @endpartial (?P=name) -->",
     re.S | re.M,
@@ -58,7 +61,7 @@ def main():
                     f"{ind}<!-- @endpartial {name} -->")
 
         new = MARKER.sub(fill, text)
-        for name in partials:
+        for name in REQUIRED:
             if f"<!-- @partial {name} -->" not in new:
                 print(f"error: {page.relative_to(ROOT)} is missing <!-- @partial {name} -->")
                 problems += 1

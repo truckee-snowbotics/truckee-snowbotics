@@ -16,7 +16,7 @@ Plain HTML/CSS/JS, hosted on GitHub Pages. Python scripts in `scripts/` build th
 | Home hero photo and About photo | `assets/data/site.json` | [Home and About photos](docs/content.md#home-and-about-photos) |
 | Sponsors | `assets/data/sponsors.json` | |
 | Any link or email (socials, forms, downloads) | `assets/data/links.json` | [Links](docs/content.md#links) |
-| Header, footer, shared `<head>` | `partials/` | [Build and checks](docs/automation.md#build-and-checks) |
+| Header, footer, shared `<head>`, "Support Us" section | `partials/` | [Build and checks](docs/automation.md#build-and-checks) |
 
 Generated files (`gallery.json`, `sitemap.xml`, the lists inside pages) are rewritten by the build; don't edit inside the `<!-- @... -->` markers.
 
@@ -32,7 +32,7 @@ Rebuilds every generated part of the site and runs the checks; then refresh your
 
 - `assets/` — `css/`, `js/`, `data/` (all site content), `fonts/` (Plus Jakarta Sans, self-hosted), `files/` (PDFs)
 - `images/` — `site/` (logo, favicons, social card, home photo), `gallery/`, `sponsors/`, `team/` (portraits)
-- `partials/` — shared header, footer and `<head>` chunks
+- `partials/` — shared header, footer, `<head>` and "Support Us" chunks
 - `scripts/` — build and check scripts ([what each does](docs/automation.md#build-and-checks))
 - `docs/` — [editing content](docs/content.md) and [automation and builds](docs/automation.md)
 - `.github/` — workflows, issue forms, Dependabot

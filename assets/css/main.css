@@ -62,10 +62,6 @@
   --text: #e9e7e3; --text-mid: #b4b2ad; --heading: #f7f5f1; --surface-2: #282b2f;
   --border-h: rgba(255,255,255,.2); --chip-bg: rgba(19,20,22,.92);
 }
-.sponsor-tier-badge--platinum { color: #4a5668; border-color: rgba(74,86,104,.45); }
-.sponsor-tier-badge--gold     { color: #8a6410; border-color: rgba(138,100,16,.45); }
-.sponsor-tier-badge--silver   { color: #5d6877; border-color: rgba(93,104,119,.45); }
-.sponsor-tier-badge--bronze   { color: #8f5a2c; border-color: rgba(143,90,44,.45); }
 
 /* ── Reset ──────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -433,22 +429,7 @@ ul { list-style: none; }
 .link-card-label::after { content: '↗'; font-size: .85rem; color: var(--accent); }
 
 /* ── Sponsors ────────────────────────────────── */
-.sponsor-grid { display: flex; flex-direction: column; gap: 3rem; }
-.sponsor-tier { display: flex; flex-direction: column; gap: 1.25rem; }
-.sponsor-tier-header { display: flex; align-items: center; gap: 1rem; width: 100%; min-width: 0; }
-.sponsor-tier-line { flex: 1; height: 1px; background: var(--border); }
-.sponsor-tier-badge {
-  font-family: var(--mono); font-size: .7rem; font-weight: 600;
- 
-  padding: .3rem .75rem; border-radius: 0; white-space: nowrap;
-  border: 1px solid var(--border-h); color: var(--text-mid);
-}
-.sponsor-tier-badge--platinum { color: #dfe4ec; border-color: rgba(223,228,236,.4); }
-.sponsor-tier-badge--gold     { color: #e6bd5a; border-color: rgba(230,189,90,.4); }
-.sponsor-tier-badge--silver   { color: #b9c2cf; border-color: rgba(185,194,207,.35); }
-.sponsor-tier-badge--bronze   { color: #cf9467; border-color: rgba(207,148,103,.4); }
-
-.sponsor-tier-grid {
+.sponsor-grid {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 2.5rem 4rem; padding: .5rem 0;
 }
@@ -518,7 +499,7 @@ a.sponsor-bar-logo:hover { opacity: .7; }
 @media (max-width: 600px) {
   :root { --sponsor-bar-h: 80px; --sponsor-logo-h: 110px; }
   .sponsor-bar { padding-block: 2.25rem; }
-  .sponsor-tier-grid, .sponsor-bar-logos { gap: 1.5rem 2.5rem; }
+  .sponsor-grid, .sponsor-bar-logos { gap: 1.5rem 2.5rem; }
 }
 
 /* ── Contact ─────────────────────────────────── */

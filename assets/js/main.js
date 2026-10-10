@@ -293,44 +293,20 @@ function getSponsors() {
   const container = document.querySelector('.sponsor-grid');
   if (!container) return;
 
-  const TIER_ORDER = ['platinum', 'gold', 'silver', 'bronze'];
-  const TIER_LABELS = { platinum: 'Platinum', gold: 'Gold', silver: 'Silver', bronze: 'Bronze' };
-
   getSponsors()
     .then(items => {
       if (!Array.isArray(items)) throw new Error('Invalid sponsors data');
 
-      const byTier = {};
-      items.forEach(item => {
-        const tier = (item.tier || 'bronze').toLowerCase();
-        if (!byTier[tier]) byTier[tier] = [];
-        byTier[tier].push(item);
-      });
-
-      const html = TIER_ORDER
-        .filter(tier => byTier[tier] && byTier[tier].length)
-        .map(tier => {
-          const cards = byTier[tier].map(item => {
-            const hasLink = item.website && item.website.trim();
-            const tag = hasLink ? 'a' : 'div';
-            const hrefAttr = hasLink ? ` href="${escapeHTML(item.website)}" target="_blank" rel="noopener noreferrer"` : '';
-            const banner = item.banner
-              ? `<img src="${escapeHTML(item.banner)}" alt="${escapeHTML(item.name || 'Sponsor')} banner" loading="lazy" decoding="async" />`
-              : '';
-            return `<${tag} class="sponsor-item"${hrefAttr}>${banner}</${tag}>`;
-          }).join('');
-
-          return `
-            <div class="sponsor-tier">
-              <div class="sponsor-tier-header">
-                <span class="sponsor-tier-badge sponsor-tier-badge--${escapeHTML(tier)}">${escapeHTML(TIER_LABELS[tier] || tier)}</span>
-                <span class="sponsor-tier-line"></span>
-              </div>
-              <div class="sponsor-tier-grid">${cards}</div>
-            </div>`;
-        }).join('');
-
-      container.innerHTML = html;
+      // All sponsors are shown equally, in sponsors.json order
+      container.innerHTML = items.map(item => {
+        const hasLink = item.website && item.website.trim();
+        const tag = hasLink ? 'a' : 'div';
+        const hrefAttr = hasLink ? ` href="${escapeHTML(item.website)}" target="_blank" rel="noopener noreferrer"` : '';
+        const banner = item.banner
+          ? `<img src="${escapeHTML(item.banner)}" alt="${escapeHTML(item.name || 'Sponsor')} banner" loading="lazy" decoding="async" />`
+          : '';
+        return `<${tag} class="sponsor-item"${hrefAttr}>${banner}</${tag}>`;
+      }).join('');
     })
     .catch(() => {});
 })();

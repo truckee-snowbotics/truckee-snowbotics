@@ -4,7 +4,7 @@
 ERROR (blocks deploy):
   - invalid JSON in assets/data/*.json or site.webmanifest
   - data files that don't match their schema (see SCHEMAS): wrong type, missing
-    required field, bad sponsor tier, duplicate id, more than one current season
+    required field, duplicate id, more than one current season
   - local /images/... or /assets/... paths in JSON data that don't exist
   - HTML src/href/srcset (and og:image) pointing at a local file that doesn't exist
     (exact-case match, since GitHub's Linux servers are case-sensitive)
@@ -239,8 +239,7 @@ SCHEMAS = {
     "alumni.json": ("list", obj(
         name=req("str"), year=req("int"), role=opt("text"), bio=opt("text"), photo=opt("text"))),
     "sponsors.json": ("list", obj(
-        id=req("str"), name=req("str"), banner=req("str"), website=req("weburl"),
-        tier=req(("enum", ["platinum", "gold", "silver", "bronze"])))),
+        id=req("str"), name=req("str"), banner=req("str"), website=req("weburl"))),
     "links.json": ("list", obj(
         id=req("str"), label=req("str"), url=req("url"), listed=req("bool"))),
     "gallery.json": ("list", "str"),
