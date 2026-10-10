@@ -9,6 +9,7 @@ Each page marks where a chunk goes:
 
 Edit the file in partials/, run this script (build.py does), and commit the updated
 pages. Pages stay complete HTML, so they preview locally without a build.
+The header's link to the current page gets class="active" and aria-current="page".
 Partials: head-common (icons, fonts, stylesheet), header, footer, scripts (on every page);
 support (the "Support Us" donate section, on the pages that include it).
 """
@@ -48,6 +49,9 @@ def main():
     changed, problems = 0, 0
     for page in pages:
         text = page.read_text()
+        # This page's address in the nav: index.html -> "/", about/index.html -> "/about/", 404.html -> none
+        rel = page.relative_to(ROOT).as_posix()
+        path = "/" if rel == "index.html" else "/" + rel.removesuffix("index.html") if rel.endswith("/index.html") else None
 
         def fill(m):
             name = m["name"]
@@ -57,7 +61,10 @@ def main():
                 problems += 1
                 return m.group(0)
             ind = m["indent"]
-            return (f"{ind}<!-- @partial {name} -->\n{indent(partials[name], ind)}\n"
+            body = partials[name]
+            if name == "header" and path:  # mark this page's nav links (works without JS)
+                body = body.replace(f'<a href="{path}">', f'<a href="{path}" class="active" aria-current="page">')
+            return (f"{ind}<!-- @partial {name} -->\n{indent(body, ind)}\n"
                     f"{ind}<!-- @endpartial {name} -->")
 
         new = MARKER.sub(fill, text)

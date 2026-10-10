@@ -121,9 +121,9 @@ Drop images into `images/gallery/`, optionally add a caption to
 python3 scripts/build_gallery.py
 ```
 
-This regenerates `gallery.json`, a plain list of image paths (don't edit it by hand).
-Captions are read from `gallery-captions.json` by the page itself; images without
-one use their filename.
+(or `./build`). This writes the photos, with their captions, into the Gallery page and
+regenerates `gallery.json`, a plain list of image paths (don't edit it by hand). Images
+without a caption use their filename.
 
 ## Links
 

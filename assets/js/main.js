@@ -8,8 +8,8 @@
 // ║  Each entry: { id, label, url, listed }          ║
 // ║  - id matches data-link-key / data-form-action   ║
 // ║    attributes in the HTML                        ║
-// ║  - listed: true → also rendered on the           ║
-// ║    Information page links grid and in the footer ║
+// ║  - listed: true → also in the links grid on the  ║
+// ║    Information page and footer (build_links.py)  ║
 // ║  - url "#" → no destination yet; the element is  ║
 // ║    hidden until a real URL is set                ║
 // ║  - emails are entries too, as mailto: URLs       ║
@@ -58,21 +58,6 @@ getLinks().then(items => {
     if (url && url !== '#') el.action = url;
   });
 }).catch(() => { /* keep the fallback hrefs hard-coded in the HTML */ });
-// ── Active nav link (page-based) ─────────────
-(function () {
-  const links = document.querySelectorAll('.nav a, #mobile-nav > a');
-  if (!links.length) return;
-
-  // Normalise pathname to always end with /
-  const currentPath = window.location.pathname.replace(/\/?$/, '/');
-
-  links.forEach(l => {
-    const href = l.getAttribute('href') || '';
-    const linkPath = href.split('#')[0].replace(/\/?$/, '/');
-    l.classList.toggle('active', linkPath === currentPath);
-  });
-})();
-
 // ── Nav that folds into the hamburger ────────
 // As the window narrows, the last links move into the hamburger menu one at a time. If fewer
 // than MIN_INLINE links would stay in the bar, they all move into the menu.
@@ -82,6 +67,7 @@ getLinks().then(items => {
   const drawer = document.getElementById('mobile-nav');
   if (!nav || !btn || !drawer) return;
   const MIN_INLINE = 3;
+  nav.classList.add('nav--fold');  // without JS the nav scrolls sideways instead (main.css)
   const links = Array.from(nav.querySelectorAll('a'));
   const drawerLinks = Array.from(drawer.querySelectorAll(':scope > a'));
 
@@ -177,51 +163,10 @@ function escapeHTML(value) {
   const track = document.querySelector('.gallery-track');
   if (!track) return;
 
-  // Captions live in gallery-captions.json ({"file.webp": "Caption"}); images
-  // without one fall back to their filename.
-  const loadJSON = url => fetch(url).then(response => {
-    if (!response.ok) throw new Error(url + ' not found');
-    return response.json();
-  });
+  // The photos are written into the page by scripts/build_gallery.py; each links to the
+  // full image. Here they open in the photo viewer instead.
+  attachGalleryModal();
 
-  Promise.all([
-    loadJSON('/assets/data/gallery.json'),
-    loadJSON('/assets/data/gallery-captions.json').catch(() => ({}))
-  ])
-    .then(([items, captions]) => {
-      if (!Array.isArray(items) || !items.length) throw new Error('Invalid gallery data');
-
-      const captionFor = src => {
-        const file = src.split('/').pop();
-        const stem = file.replace(/\.[^.]+$/, '');
-        const custom = captions[file] || Object.keys(captions).filter(k => k.replace(/\.[^.]+$/, '') === stem).map(k => captions[k])[0];
-        return (custom && custom.trim()) || stem.replace(/[_\-\s]+/g, ' ').trim();
-      };
-
-      // The grid loads small thumbnails (made at deploy time by
-      // scripts/optimize_images.py); the modal and the fallback use the full image.
-      const thumbFor = src => src.replace('/images/gallery/', '/images/gallery/thumbs/').replace(/\.[^.\/]+$/, '.webp');
-
-      const cards = items.map(src => {
-        src = String(src || '').trim();
-        const caption = captionFor(src);
-        const alt = caption || 'Gallery image';
-
-        return `
-          <div class="gallery-item" role="button" tabindex="0" aria-label="${escapeHTML('View photo: ' + caption)}" data-src="${escapeHTML(src)}" data-alt="${escapeHTML(alt)}" data-caption="${escapeHTML(caption)}">
-            <div class="gallery-image">
-              ${src ? `<img src="${escapeHTML(thumbFor(src))}" alt="${escapeHTML(alt)}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=this.closest('.gallery-item').dataset.src" />` : `<span>${escapeHTML(caption)}</span>`}
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      track.innerHTML = cards;
-      attachGalleryModal();
-    })
-    .catch(() => {
-      // keep the existing static markup if loading fails
-    });
   function attachGalleryModal() {
     const modal = document.querySelector('.gallery-modal');
     const modalImage = document.querySelector('.gallery-modal-image');
@@ -254,12 +199,6 @@ function escapeHTML(value) {
       track.addEventListener('click', (event) => {
         const item = event.target.closest('.gallery-item');
         if (!item) return;
-        openModal(item);
-      });
-      track.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        const item = event.target.closest('.gallery-item');
-        if (!item) return;
         event.preventDefault();
         openModal(item);
       });
@@ -273,108 +212,6 @@ function escapeHTML(value) {
       }
     });
   }
-})();
-
-// ── Sponsors data (shared by grid + bar) ─────
-let sponsorsPromise = null;
-function getSponsors() {
-  if (!sponsorsPromise) {
-    sponsorsPromise = fetch('/assets/data/sponsors.json')
-      .then(response => {
-        if (!response.ok) throw new Error('Sponsors JSON not found');
-        return response.json();
-      });
-  }
-  return sponsorsPromise;
-}
-
-// ── Load sponsors from JSON ─────────────────
-(function () {
-  const container = document.querySelector('.sponsor-grid');
-  if (!container) return;
-
-  getSponsors()
-    .then(items => {
-      if (!Array.isArray(items)) throw new Error('Invalid sponsors data');
-
-      // All sponsors are shown equally, in sponsors.json order
-      container.innerHTML = items.map(item => {
-        const hasLink = item.website && item.website.trim();
-        const tag = hasLink ? 'a' : 'div';
-        const hrefAttr = hasLink ? ` href="${escapeHTML(item.website)}" target="_blank" rel="noopener noreferrer"` : '';
-        const banner = item.banner
-          ? `<img src="${escapeHTML(item.banner)}" alt="${escapeHTML(item.name || 'Sponsor')} banner" loading="lazy" decoding="async" />`
-          : '';
-        return `<${tag} class="sponsor-item"${hrefAttr}>${banner}</${tag}>`;
-      }).join('');
-    })
-    .catch(() => {});
-})();
-
-// ── Sponsor bar ───────────────────────────────────────
-(function () {
-  const bar = document.getElementById('sponsor-bar-logos');
-  if (!bar) return;
-
-  getSponsors()
-    .then(items => {
-      if (!Array.isArray(items) || !items.length) return;
-      bar.innerHTML = items.map(item => {
-        const hasLink = item.website && item.website.trim();
-        const tag = hasLink ? 'a' : 'div';
-        const attrs = hasLink ? ` href="${escapeHTML(item.website)}" target="_blank" rel="noopener noreferrer"` : '';
-        const banner = item.banner
-          ? `<img src="${escapeHTML(item.banner)}" alt="${escapeHTML(item.name || 'Sponsor')} banner" loading="lazy" decoding="async" />`
-          : '';
-        return `<${tag} class="sponsor-bar-logo"${attrs}>${banner}</${tag}>`;
-      }).join('');
-    })
-    .catch(() => {});
-})();
-
-// ── Render listed links (Information grid + footer) ──
-(function () {
-  getLinks()
-    .then(allItems => {
-      // Only entries flagged listed, and skip entries without a real
-      // destination yet (url empty or '#')
-      const items = allItems.filter(item => {
-        const url = item.url && item.url.trim();
-        return item.listed && url && url !== '#';
-      });
-      if (!items.length) return;
-
-      const grid = document.getElementById('links-grid');
-      if (grid) {
-        grid.innerHTML = items.map(item => `
-            <a class="link-card" href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">
-              <span class="link-card-label">${escapeHTML(item.label || '')}</span>
-            </a>`).join('');
-      }
-
-      const footerLinks = document.getElementById('footer-links-list');
-      if (footerLinks) {
-        footerLinks.innerHTML = items.map(item =>
-          `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(item.label || '')}</a>`
-        ).join('');
-      }
-
-      const footerNav = document.querySelector('.footer-nav');
-      if (footerNav && !footerLinks) {
-        const sep = document.createElement('span');
-        sep.className = 'footer-nav-sep';
-        footerNav.appendChild(sep);
-        items.forEach(item => {
-          const a = document.createElement('a');
-          a.href = item.url;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          a.textContent = item.label || '';
-          footerNav.appendChild(a);
-        });
-      }
-    })
-    .catch(() => {});
 })();
 
 // ── Contact form ─────────────────────────────────────

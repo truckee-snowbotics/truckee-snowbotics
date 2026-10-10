@@ -69,7 +69,7 @@
         <a href="/information/">Information</a>
         <a href="/gallery/">Gallery</a>
         <a href="/season/">Season</a>
-        <a href="/sponsors/">Sponsors</a>
+        <a href="/sponsors/" class="active" aria-current="page">Sponsors</a>
         <a href="/contact/">Contact</a>
         <a href="/about/">About</a>
       </nav>
@@ -106,7 +106,7 @@
     <a href="/information/">Information</a>
     <a href="/gallery/">Gallery</a>
     <a href="/season/">Season</a>
-    <a href="/sponsors/">Sponsors</a>
+    <a href="/sponsors/" class="active" aria-current="page">Sponsors</a>
     <a href="/contact/">Contact</a>
     <a href="/about/">About</a>
     <div class="mobile-nav-actions">
@@ -126,7 +126,15 @@
         <div class="section-header">
           <h1>Our Sponsors</h1>
         </div>
-        <div class="sponsor-grid"></div>
+        <div class="sponsor-grid">
+          <!-- @sponsors -->
+          <a class="sponsor-item" href="https://www.drwestortho.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/west-orthodontics.jpg" alt="West Orthodontics banner" loading="lazy" decoding="async" /></a>
+          <a class="sponsor-item" href="https://www.truckeeoptimistclub.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/truckee-optimist-club.png" alt="Truckee Optimist Club banner" loading="lazy" decoding="async" /></a>
+          <a class="sponsor-item" href="https://goldenrotisserieinc.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/golden-rotisserie.png" alt="Golden Rotisserie banner" loading="lazy" decoding="async" /></a>
+          <a class="sponsor-item" href="https://www.ghaasfoundation.org/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/gene-haas-foundation.avif" alt="Gene Haas Foundation banner" loading="lazy" decoding="async" /></a>
+          <a class="sponsor-item" href="https://www.acehardware.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/ace-hardware.svg" alt="Ace Hardware banner" loading="lazy" decoding="async" /></a>
+          <!-- @endsponsors -->
+        </div>
         <div class="sponsor-cta">
           <p>Become a Sponsor</p>
           <span>Learn about sponsorship opportunities here.</span>
@@ -234,13 +242,18 @@
 
       <div class="footer-col">
         <h2>Resources</h2>
-        <!-- Replaced at runtime with every "listed" entry in links.json; the
-             links below are the fallback for visitors without JavaScript. -->
+        <!-- Every "listed" entry in links.json (written by scripts/build_links.py) -->
         <div class="footer-list" id="footer-links-list">
-          <a href="#" data-link-key="join" target="_blank" rel="noopener">Join the Team</a>
-          <a href="#" data-link-key="ftc-manual" target="_blank" rel="noopener">FTC Game Manual</a>
-          <a href="#" data-link-key="sponsorshipForm" target="_blank" rel="noopener">Sponsorship Form</a>
-          <a href="#" data-link-key="donate" target="_blank" rel="noopener">Donate</a>
+          <!-- @footerlinks -->
+          <a href="#" data-link-key="join">Join the Team</a>
+          <a href="#" data-link-key="ftc-manual">FTC Game Manual</a>
+          <a href="#" data-link-key="github">Team GitHub</a>
+          <a href="#" data-link-key="sponsorshipForm">Sponsorship Form</a>
+          <a href="#" data-link-key="photos">Photos and Videos</a>
+          <a href="#" data-link-key="donate">Donate</a>
+          <a href="#" data-link-key="submitPhoto">Submit a photo</a>
+          <a href="#" data-link-key="firstNevadaCalendar">FIRST Nevada calendar</a>
+          <!-- @endfooterlinks -->
         </div>
       </div>
 

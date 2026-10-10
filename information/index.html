@@ -65,7 +65,7 @@
 
       <nav class="nav" id="main-nav" aria-label="Main">
         <a href="/">Home</a>
-        <a href="/information/">Information</a>
+        <a href="/information/" class="active" aria-current="page">Information</a>
         <a href="/gallery/">Gallery</a>
         <a href="/season/">Season</a>
         <a href="/sponsors/">Sponsors</a>
@@ -102,7 +102,7 @@
   <!-- Mobile nav drawer -->
   <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
     <a href="/">Home</a>
-    <a href="/information/">Information</a>
+    <a href="/information/" class="active" aria-current="page">Information</a>
     <a href="/gallery/">Gallery</a>
     <a href="/season/">Season</a>
     <a href="/sponsors/">Sponsors</a>
@@ -164,7 +164,18 @@
         <div class="section-header">
           <h2>Important Links &amp; Forms</h2>
         </div>
-        <div class="links-grid" id="links-grid"></div>
+        <div class="links-grid" id="links-grid">
+          <!-- @linksgrid -->
+          <a class="link-card" href="#" data-link-key="join"><span class="link-card-label">Join the Team</span></a>
+          <a class="link-card" href="#" data-link-key="ftc-manual"><span class="link-card-label">FTC Game Manual</span></a>
+          <a class="link-card" href="#" data-link-key="github"><span class="link-card-label">Team GitHub</span></a>
+          <a class="link-card" href="#" data-link-key="sponsorshipForm"><span class="link-card-label">Sponsorship Form</span></a>
+          <a class="link-card" href="#" data-link-key="photos"><span class="link-card-label">Photos and Videos</span></a>
+          <a class="link-card" href="#" data-link-key="donate"><span class="link-card-label">Donate</span></a>
+          <a class="link-card" href="#" data-link-key="submitPhoto"><span class="link-card-label">Submit a photo</span></a>
+          <a class="link-card" href="#" data-link-key="firstNevadaCalendar"><span class="link-card-label">FIRST Nevada calendar</span></a>
+          <!-- @endlinksgrid -->
+        </div>
       </div>
     </section>
 
@@ -247,7 +258,15 @@
   <!-- ── SPONSOR BAR ───────────────────────────── -->
   <div class="sponsor-bar">
     <span class="sponsor-bar-label">Our Sponsors</span>
-    <div class="sponsor-bar-logos" id="sponsor-bar-logos"></div>
+    <div class="sponsor-bar-logos" id="sponsor-bar-logos">
+      <!-- @sponsorbar -->
+      <a class="sponsor-bar-logo" href="https://www.drwestortho.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/west-orthodontics.jpg" alt="West Orthodontics banner" loading="lazy" decoding="async" /></a>
+      <a class="sponsor-bar-logo" href="https://www.truckeeoptimistclub.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/truckee-optimist-club.png" alt="Truckee Optimist Club banner" loading="lazy" decoding="async" /></a>
+      <a class="sponsor-bar-logo" href="https://goldenrotisserieinc.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/golden-rotisserie.png" alt="Golden Rotisserie banner" loading="lazy" decoding="async" /></a>
+      <a class="sponsor-bar-logo" href="https://www.ghaasfoundation.org/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/gene-haas-foundation.avif" alt="Gene Haas Foundation banner" loading="lazy" decoding="async" /></a>
+      <a class="sponsor-bar-logo" href="https://www.acehardware.com/" target="_blank" rel="noopener noreferrer"><img src="/images/sponsors/ace-hardware.svg" alt="Ace Hardware banner" loading="lazy" decoding="async" /></a>
+      <!-- @endsponsorbar -->
+    </div>
     <a href="/sponsors/" class="sponsor-bar-link">View all →</a>
   </div>
 
@@ -285,13 +304,18 @@
 
       <div class="footer-col">
         <h2>Resources</h2>
-        <!-- Replaced at runtime with every "listed" entry in links.json; the
-             links below are the fallback for visitors without JavaScript. -->
+        <!-- Every "listed" entry in links.json (written by scripts/build_links.py) -->
         <div class="footer-list" id="footer-links-list">
-          <a href="#" data-link-key="join" target="_blank" rel="noopener">Join the Team</a>
-          <a href="#" data-link-key="ftc-manual" target="_blank" rel="noopener">FTC Game Manual</a>
-          <a href="#" data-link-key="sponsorshipForm" target="_blank" rel="noopener">Sponsorship Form</a>
-          <a href="#" data-link-key="donate" target="_blank" rel="noopener">Donate</a>
+          <!-- @footerlinks -->
+          <a href="#" data-link-key="join">Join the Team</a>
+          <a href="#" data-link-key="ftc-manual">FTC Game Manual</a>
+          <a href="#" data-link-key="github">Team GitHub</a>
+          <a href="#" data-link-key="sponsorshipForm">Sponsorship Form</a>
+          <a href="#" data-link-key="photos">Photos and Videos</a>
+          <a href="#" data-link-key="donate">Donate</a>
+          <a href="#" data-link-key="submitPhoto">Submit a photo</a>
+          <a href="#" data-link-key="firstNevadaCalendar">FIRST Nevada calendar</a>
+          <!-- @endfooterlinks -->
         </div>
       </div>
 

@@ -12,7 +12,7 @@ its output.
                                      contains an "@" with the address
   <form data-form-action="id">    -> action = that entry's url
   JSON-LD "email"                 -> the "email" entry's address
-Entries whose url is "#" are skipped (JS hides those elements at runtime).
+Links whose entry has url "#" get the hidden attribute, so no dead button shows.
 """
 import html
 import json
@@ -48,7 +48,9 @@ def main():
         if m.group(1) == "a":
             key = re.search(r'data-link-key="([^"]+)"', tag)
             url = urls.get(key.group(1)) if key else None
-            if not url or url == "#":
+            if key and (not url or url == "#"):  # no destination yet: hide it (works without JS)
+                return tag if " hidden" in tag else tag[:-1] + " hidden>"
+            if not url:
                 return tag
             tag = set_attr(tag, "href", url)
             if re.match(r"https?:", url, re.I) and "target=" not in tag:

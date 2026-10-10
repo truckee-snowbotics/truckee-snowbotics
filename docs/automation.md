@@ -26,12 +26,14 @@ requests and non-main pushes. Any ERROR stops the deploy.
 | `build_meta.py` | Writes each page's canonical URL, Open Graph/Twitter tags and breadcrumb data between `<!-- @meta -->` and `<!-- @breadcrumb -->` markers, from the page's own `<title>` and description (the only place a page's name and summary are written). For a new page, write its title and description and copy the marker pairs from another page. |
 | `build_team.py` | Writes the About page team cards and the `humans.txt` team list from `team.json`. |
 | `build_alumni.py` | Renders the Alumni section of the About page from `alumni.json`. |
+| `build_sponsors.py` | Writes the sponsor logos from `sponsors.json` into the Sponsors page grid (`<!-- @sponsors -->`) and every "Our Sponsors" bar (`<!-- @sponsorbar -->`), so they show without JavaScript. |
+| `build_links.py` | Writes the `listed` entries of `links.json` into the footer partial (`<!-- @footerlinks -->`) and the Information page links grid (`<!-- @linksgrid -->`). Runs before `build_pages.py`. |
 | `build_season.py` | Renders the Season page from `season.json` (and the on/off switch). |
 | `build_pages.py` | Copies `partials/` into pages: head-common, header, footer and scripts into every page; support (the "Support Us" section) into the pages that have its markers (home and About) between `<!-- @partial name -->` markers. Edit the partial, run the build, commit the updated pages. Don't edit inside the markers. |
 | `optimize_images.py` | Gallery: JPG/PNG → WebP capped at 1600px, plus small thumbnails (`images/gallery/thumbs/`, generated, gitignored) used by the grid. Sponsors capped at 800px and `images/site/` at 1600px, same format. Needs Pillow (skipped if missing). |
-| `build_gallery.py` | Writes `gallery.json` from the folder + captions. |
+| `build_gallery.py` | Writes the photo grid into the Gallery page (`<!-- @gallery -->`) and `gallery.json` from the folder + captions. |
 | `build_sitemap.py` | Writes `sitemap.xml` from the page folders; `lastmod` comes from git history. New pages are picked up automatically (page order is `ORDER` in the script). `sitemap.xsl` makes the file display as a styled page in browsers; search engines read the plain XML. |
-| `apply_links.py` | `--release` only: writes `links.json` URLs into the HTML (see Links). Edits HTML in place, so don't commit its output. |
+| `apply_links.py` | `--release` only: writes `links.json` URLs into the HTML (see Links), and hides links whose url is `"#"`. Edits HTML in place, so don't commit its output. |
 | `minify_assets.py` | `--release` only: minifies `main.css`/`main.js` (whitespace and comments only). Edits files in place, so don't commit its output. |
 | `stamp_assets.py` | `--release` only: adds `?v=<commit>` to CSS/JS URLs so browsers refetch after a deploy. Edits HTML in place, so don't commit its output. |
 | `check_site.py` | Fails on invalid JSON, data files that don't match their schema (`SCHEMAS` in the script: required fields, types, duplicate ids), missing files in data/HTML references (case-sensitive), `<img>` without alt, duplicate ids, missing title/lang, links that bypass `links.json`. Warns on heading problems, files nothing references, pages missing from `llms.txt`, and more. |
