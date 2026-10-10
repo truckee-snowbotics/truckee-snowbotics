@@ -1,7 +1,7 @@
 [
   {
-    "id": "bach-le",
-    "name": "Bach Le",
+    "id": "bach",
+    "name": "Bach",
     "role": "President - Chief Engineer",
     "group": "students",
     "photo": "",
@@ -9,8 +9,8 @@
     "bio": ""
   },
   {
-    "id": "jack-west",
-    "name": "Jack West",
+    "id": "jack",
+    "name": "Jack",
     "role": "Chief Software Engineer",
     "group": "students",
     "photo": "/images/team/jack-portrait.webp",
@@ -18,8 +18,8 @@
     "bio": ""
   },
   {
-    "id": "eduardo-sosa",
-    "name": "Eduardo Sosa",
+    "id": "eduardo",
+    "name": "Eduardo",
     "role": "Strategy & Control",
     "group": "students",
     "photo": "/images/team/eduardo-portrait.webp",
@@ -27,8 +27,8 @@
     "bio": ""
   },
   {
-    "id": "jonathan-bohnet",
-    "name": "Jonathan Bohnet",
+    "id": "jonathan",
+    "name": "Jonathan",
     "role": "Engineer",
     "group": "students",
     "photo": "/images/team/johnny-portrait.webp",
@@ -36,8 +36,8 @@
     "bio": ""
   },
   {
-    "id": "corbin-hoff",
-    "name": "Corbin Hoff",
+    "id": "corbin",
+    "name": "Corbin",
     "role": "Driver & Community",
     "group": "students",
     "photo": "/images/team/corbin-portrait.webp",
@@ -45,8 +45,8 @@
     "bio": ""
   },
   {
-    "id": "noah-pilon",
-    "name": "Noah Pilon",
+    "id": "noah",
+    "name": "Noah",
     "role": "Software Engineer",
     "group": "students",
     "photo": "/images/team/noah-portrait.webp",
@@ -54,8 +54,8 @@
     "bio": ""
   },
   {
-    "id": "rayce-rignes",
-    "name": "Rayce Rignes",
+    "id": "rayce",
+    "name": "Rayce",
     "role": "Team Member",
     "group": "students",
     "photo": "/images/team/rayce-portrait.webp",
@@ -63,8 +63,8 @@
     "bio": ""
   },
   {
-    "id": "dylan-jarratt",
-    "name": "Dylan Jarratt",
+    "id": "dylan",
+    "name": "Dylan",
     "role": "Team Member",
     "group": "students",
     "photo": "",
@@ -72,8 +72,8 @@
     "bio": ""
   },
   {
-    "id": "eva-lewis",
-    "name": "Eva Lewis",
+    "id": "eva",
+    "name": "Eva",
     "role": "Team Member",
     "group": "students",
     "photo": "",
@@ -81,8 +81,8 @@
     "bio": ""
   },
   {
-    "id": "marcelo-keely",
-    "name": "Marcelo Keely",
+    "id": "marcelo",
+    "name": "Marcelo",
     "role": "Team Member",
     "group": "students",
     "photo": "",
@@ -90,8 +90,8 @@
     "bio": ""
   },
   {
-    "id": "clark-rosen",
-    "name": "Clark Rosen",
+    "id": "clark",
+    "name": "Clark",
     "role": "Team Member",
     "group": "students",
     "photo": "",
@@ -99,8 +99,8 @@
     "bio": ""
   },
   {
-    "id": "ellis-west",
-    "name": "Ellis West",
+    "id": "ellis",
+    "name": "Ellis",
     "role": "Team Member",
     "group": "students",
     "photo": "",
@@ -108,8 +108,8 @@
     "bio": ""
   },
   {
-    "id": "maura-hoff",
-    "name": "Maura Hoff",
+    "id": "hoff",
+    "name": "Ms. Hoff",
     "role": "Mentor & Advisor",
     "group": "mentors",
     "photo": "/images/team/maura-portrait.webp",
@@ -117,8 +117,8 @@
     "bio": ""
   },
   {
-    "id": "izzak-eberst",
-    "name": "Izzak Eberst",
+    "id": "eberst",
+    "name": "Mr. Eberst",
     "role": "Faculty Advisor",
     "group": "mentors",
     "photo": "/images/team/eberst-portrait.webp",

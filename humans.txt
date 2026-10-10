@@ -1,18 +1,18 @@
 /* TEAM */
-  President - Chief Engineer: Bach Le
-  Chief Software Engineer: Jack West
-  Strategy & Control: Eduardo Sosa
-  Engineer: Jonathan Bohnet
-  Driver & Community: Corbin Hoff
-  Software Engineer: Noah Pilon
-  Team Member: Rayce Rignes
-  Team Member: Dylan Jarratt
-  Team Member: Eva Lewis
-  Team Member: Marcelo Keely
-  Team Member: Clark Rosen
-  Team Member: Ellis West
-  Mentor & Advisor: Maura Hoff
-  Faculty Advisor: Izzak Eberst
+  President - Chief Engineer: Bach
+  Chief Software Engineer: Jack
+  Strategy & Control: Eduardo
+  Engineer: Jonathan
+  Driver & Community: Corbin
+  Software Engineer: Noah
+  Team Member: Rayce
+  Team Member: Dylan
+  Team Member: Eva
+  Team Member: Marcelo
+  Team Member: Clark
+  Team Member: Ellis
+  Mentor & Advisor: Ms. Hoff
+  Faculty Advisor: Mr. Eberst
   Location: Truckee, California, USA
 
 /* THANKS */
